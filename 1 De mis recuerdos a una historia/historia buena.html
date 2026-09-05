@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De mis recuerdos a una historia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style id="main-styles">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0f0f0f;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --border-color: #2a2a2a;
+            --correct-color: #22c55e;
+            --incorrect-color: #ef4444;
+        }
+
+        /* Light Mode Theme */
+        body.light-mode {
+            --bg-primary: #f9fafb;
+            --bg-secondary: #f3f4f6;
+            --bg-tertiary: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --border-color: #d1d5db;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .header,
+        .chat-messages,
+        .chat-input-container,
+        .settings-container select,
+        .chat-input,
+        .user-name-input,
+        .download-quiz-btn,
+        .download-clone-btn,
+        .quiz-results,
+        .ai-message .message-content {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .ai-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .chat-messages {
+            flex: 1;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem 1rem 0 0;
+            padding: 1.5rem;
+            overflow-y: auto;
+            min-height: 400px;
+            max-height: 70vh;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .message-content {
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            width: 100%;
+        }
+
+        .ai-message .message-content {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+        }
+
+        .user-message {
+            flex-direction: row-reverse;
+        }
+
+        .user-message .message-content {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            max-width: 80%;
+            transition: background 0.3s ease;
+        }
+
+        .settings-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0 auto 1rem auto;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            flex-wrap: wrap;
+        }
+
+        .settings-group {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .settings-container select {
+            padding: 0.45rem 0.6rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        #colorPaletteBtn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 0.45rem 0.9rem;
+            border-radius: 0.375rem;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        #colorPaletteBtn:hover {
+            transform: translateY(-1px);
+        }
+
+        .settings-container label {
+            cursor: pointer;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 1rem 1rem;
+            flex-wrap: wrap;
+        }
+
+        .user-name-input {
+            width: 170px;
+            padding: 0.75rem 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-weight: 500;
+        }
+
+        .user-name-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .chat-input {
+            flex: 1;
+            min-width: 260px;
+            padding: 0.75rem 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .send-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .message-avatar {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+        }
+
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+        }
+
+        /* Contenedor de la ilustración generada con Pollinations */
+        .image-display-container {
+            margin-bottom: 1.5rem;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+
+        .image-display-container img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .rich-text-content {
+            line-height: 1.75;
+        }
+
+        /* Barra de cabecera de la historia con botón y título generado */
+        .story-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px dashed var(--border-color);
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .story-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .story-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+            align-self: flex-start;
+        }
+
+        .story-generated-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin: 0;
+        }
+
+        .download-clone-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.1rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .download-clone-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+        }
+
+        .ai-heading-2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            border-bottom: 1px solid var(--accent-secondary);
+            margin: 1.75rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .ai-paragraph {
+            margin: 0.85rem 0;
+            text-align: justify;
+        }
+
+        .question-type {
+            color: #888;
+            font-size: 0.85em;
+            font-style: italic;
+            margin-left: 0.5rem;
+        }
+
+        .quiz-container {
+            margin-top: 1.5rem;
+        }
+
+        .question-block {
+            margin-bottom: 1.5rem;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: var(--bg-secondary);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-item {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-item:hover {
+            background-color: var(--bg-tertiary);
+            border-color: var(--accent-primary);
+        }
+
+        .option-item.selected {
+            background-color: var(--accent-primary);
+            border-color: var(--accent-secondary);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-container.graded .option-item.correct {
+            background-color: rgba(34, 197, 94, 0.25) !important;
+            border-color: var(--correct-color) !important;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .quiz-container.graded .option-item.incorrect {
+            background-color: rgba(239, 68, 68, 0.25) !important;
+            border-color: var(--incorrect-color) !important;
+            color: var(--text-primary);
+        }
+
+        body.light-mode .quiz-container.graded .option-item.incorrect {
+            text-decoration: line-through;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .submit-quiz-btn,
+        .download-quiz-btn {
+            flex: 1;
+            min-width: 220px;
+            padding: 0.85rem 1.5rem;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .download-quiz-btn {
+            background: var(--bg-primary);
+            border: 1px solid var(--accent-primary);
+            color: var(--text-primary);
+        }
+
+        .submit-quiz-btn:hover,
+        .download-quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+        }
+
+        .submit-quiz-btn:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .quiz-results {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--accent-primary);
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 600;
+            transition: border-color 0.3s ease;
+        }
+
+        .site-footer {
+            padding: 1.5rem 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body id="page-body">
+    <div class="header">
+        <h1 class="ai-title" id="mainTitle">De mis recuerdos a una historia</h1>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai-message">
+                <div class="message-avatar">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                        alt="Asistente de historia" id="aiAvatar">
+                </div>
+                <div class="message-content" id="initialGreeting">
+                    ¡Hola! Soy tu asistente de historia. Dame un recuerdo y crearé una narración única para ti, acompañada de una ilustración cartoon y un cuestionario interactivo para poner a prueba tu comprensión lectora.
+                </div>
+            </div>
+        </div>
+        <div class="settings-container">
+            <!-- Selector de Idioma -->
+            <div class="settings-group">
+                <label for="languageSelector" id="languageLabel">Idioma:</label>
+                <select id="languageSelector">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
+
+            <!-- Selector de Estilo Literario -->
+            <div class="settings-group">
+                <label for="styleSelector" id="styleLabel">Estilo:</label>
+                <select id="styleSelector">
+                    <option value="epico" selected>Épico</option>
+                    <option value="realismo_magico">Realismo Mágico</option>
+                    <option value="comedia_costumbrista">Comedia Costumbrista</option>
+                    <option value="novela_negra">Novela Negra / Policial Clásico</option>
+                    <option value="epistolar">Estilo Epistolar (Carta Íntima)</option>
+                    <option value="cronica">Crónica Histórica / Periodística</option>
+                    <option value="aventuras">Novela de Aventuras Clásica</option>
+                    <option value="romantica">Comedia Romántica Clásica</option>
+                    <option value="misterio">Cuento de Misterio</option>
+                </select>
+            </div>
+
+            <!-- Selector de Modelo -->
+            <div class="settings-group">
+                <label for="modelSelector" id="modelLabel">Modelo:</label>
+                <select id="modelSelector">
+                    <option value="gemini" selected>Gemini 2.5 Flash</option>
+                    <option value="openai">GPT 5 Mini</option>
+                    <option value="mistral">Mistral 3.2</option>
+                    <option value="deepseek">Deepseek V3.2</option>
+                    <option value="perplexity-fast">Perplexity Sonar</option>
+                </select>
+            </div>
+            
+            <!-- Selector de Preguntas -->
+            <div class="settings-group">
+                <label for="numQuestionsSelector" id="numQuestionsLabel">Preguntas:</label>
+                <select id="numQuestionsSelector">
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8" selected>8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+
+            <!-- Selector de Opciones -->
+            <div class="settings-group">
+                <label for="numOptionsSelector" id="numOptionsLabel">Opciones:</label>
+                <select id="numOptionsSelector">
+                    <option value="3">3</option>
+                    <option value="4" selected>4</option>
+                </select>
+            </div>
+
+            <button id="colorPaletteBtn">Paleta</button>
+        </div>
+
+        <div class="chat-input-container">
+            <input type="text" id="userNameInput" class="user-name-input" placeholder="Tu nombre..." maxlength="40" onkeypress="handleKeyPress(event)">
+            <input type="text" id="chatInput" class="chat-input"
+                placeholder="Escribe un recuerdo para transformarlo en una historia..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" class="send-btn" id="sendButton">Enviar</button>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p id="footerText">Diseñado por Édgar Herrera Morales y Juan Guillermo Rivera Berrío con tecnología Gemini 2.5 Pro y las API de Pollinations.</p>
+    </footer>
+
+    <script>
+        // Configuración del Backend
+        const BACKEND_URL_TEXT = 'https://node.proyectodescartes.org/api/ia/text';
+        const BACKEND_URL_IMAGE = 'https://node.proyectodescartes.org/api/ia/image';
+
+        // Definición de Estilos Literarios y sus descripciones para la IA
+        const LITERARY_STYLES = {
+            epico: {
+                label: "Épico",
+                badge: "Relato Épico",
+                desc: "narrativa heroica, grandiosa y legendaria donde el protagonista enfrenta retos mitológicos o épicos con gran valentía"
+            },
+            realismo_magico: {
+                label: "Realismo Mágico",
+                badge: "Realismo Mágico",
+                desc: "tono poético al estilo de Gabriel García Márquez, donde lo cotidiano se funde naturalmente con lo insólito, prodigioso y milagroso sin asombrar a los personajes"
+            },
+            comedia_costumbrista: {
+                label: "Comedia Costumbrista",
+                badge: "Comedia Costumbrista",
+                desc: "humor simpático, costumbrista y cercano, lleno de situaciones cómicas, enredos familiares y detalles cotidianos tratados con gracia y calidez"
+            },
+            novela_negra: {
+                label: "Novela Negra / Policial Clásico",
+                badge: "Policial / Noir",
+                desc: "atmósfera de suspense, claroscuros, detectives, pistas veladas, tensión nocturna y estilo perspicaz de novela policial clásica"
+            },
+            epistolar: {
+                label: "Estilo Epistolar (Carta Íntima)",
+                badge: "Carta Íntima",
+                desc: "formato de correspondencia epistolar emotiva, íntima, reflexiva y personal, redactada como una memoria o carta dirigida a un ser querido"
+            },
+            cronica: {
+                label: "Crónica Histórica / Periodística",
+                badge: "Crónica Histórica",
+                desc: "tono periodístico y riguroso de crónica narrativa de época, con precisión descriptiva, testimonio vivo y ritmo de reportaje histórico"
+            },
+            aventuras: {
+                label: "Novela de Aventuras Clásica",
+                badge: "Aventuras",
+                desc: "ritmo vibrante al estilo de Julio Verne o Robert Louis Stevenson, lleno de expedición, peligros, descubrimientos y espíritu intrépido"
+            },
+            romantica: {
+                label: "Comedia Romántica Clásica",
+                badge: "Comedia Romántica",
+                desc: "trama afectiva luminosa, chispeante, tierna, con diálogos ingeniosos, encuentros afortunados y un encanto sentimental cautivador"
+            },
+            misterio: {
+                label: "Cuento de Misterio",
+                badge: "Cuento de Misterio",
+                desc: "atmósfera enigmática, sombras sugerentes, silencios intrigantes, giros inesperados y preguntas que mantienen al lector intrigado"
+            }
+        };
+
+        const TRANSLATIONS = {
+            es: {
+                title: "De mis recuerdos a una historia",
+                greeting: "¡Hola! Soy tu asistente de historia. Dame un recuerdo y crearé una narración única para ti, acompañada de una ilustración cartoon y un cuestionario interactivo para poner a prueba tu comprensión lectora.",
+                placeholder: "Escribe un recuerdo para transformarlo en una historia...",
+                namePlaceholder: "Tu nombre...",
+                sendBtn: "Enviar",
+                colorPaletteBtn: "Paleta",
+                languageLabel: "Idioma:",
+                styleLabel: "Estilo:",
+                modelLabel: "Modelo:",
+                numQuestionsLabel: "Preguntas:",
+                numOptionsLabel: "Opciones:",
+                workshopTitle: "## Taller de Comprensión Lectora",
+                evaluateBtn: "Evaluar Taller",
+                downloadCloneBtn: "📥 Descargar historia",
+                results: "Resultados:",
+                correctAnswers: "Has acertado",
+                of: "de",
+                questions: "preguntas",
+                footer: "Diseñado por Édgar Herrera Morales y Juan Guillermo Rivera Berrío con tecnología Gemini 2.5 Pro y las API de Pollinations.",
+                aiName: "Asistente de historia",
+                behavior: `
+TAREA OBLIGATORIA:
+1. TÍTULO: En la primera línea escribe EXACTAMENTE con este formato:
+# TÍTULO: [Escribe aquí un título atractivo, acorde al estilo '{STYLE_NAME}']
+
+2. HISTORIA: Transforma el recuerdo de {USER_NAME} en una historia corta de 5 párrafos escrita en estilo {STYLE_NAME} ({STYLE_DESC}), inspirada en: "{USER_TOPIC}".
+   - IMPORTANTE: {USER_NAME} debe ser nombrado/a y actuar como protagonista central. Conviértelo directamente en el relato vivo.
+   - NO incluyas introducciones como "Aquí tienes la historia". Empieza directamente con el relato tras el título.
+
+3. SEPARADOR: Después de la historia, escribe EXACTAMENTE: ## Taller de Comprensión Lectora
+
+4. CUESTIONARIO: Genera {QUESTIONS_COUNT} preguntas de opción múltiple basadas en la historia narrada.
+   - Formato de Pregunta (IMPORTANTE: En una sola línea):
+     Número. Pregunta (Tipo) [correct: LETRA]
+   - Tipos permitidos: (Pregunta Literal), (Pregunta Inferencial), (Pregunta Crítica).
+   - Opciones: {OPTIONS_INSTRUCTIONS}
+   - Idioma: Español.
+`
+            },
+            en: {
+                title: "From My Memories to a Story",
+                greeting: "Hello! I'm your story assistant. Give me a memory and I will create a unique story for you, accompanied by a cartoon illustration and an interactive quiz to test your comprehension.",
+                placeholder: "Write a memory to turn it into a story...",
+                namePlaceholder: "Your name...",
+                sendBtn: "Send",
+                colorPaletteBtn: "Palette",
+                languageLabel: "Language:",
+                styleLabel: "Style:",
+                modelLabel: "Model:",
+                numQuestionsLabel: "Questions:",
+                numOptionsLabel: "Options:",
+                workshopTitle: "## Reading Comprehension Workshop",
+                evaluateBtn: "Evaluate Workshop",
+                downloadCloneBtn: "📥 Download Story",
+                results: "Results:",
+                correctAnswers: "You got",
+                of: "out of",
+                questions: "questions correct",
+                footer: "Designed by Édgar Herrera Morales and Juan Guillermo Rivera Berrío with Gemini 2.5 Pro technology and Pollinations APIs.",
+                aiName: "Story Assistant",
+                behavior: `
+MANDATORY TASK:
+1. TITLE: On the first line write EXACTLY in this format:
+# TÍTULO: [Write an attractive title matching the style '{STYLE_NAME}']
+
+2. STORY: Transform {USER_NAME}'s memory into a short 5-paragraph story written in {STYLE_NAME} style ({STYLE_DESC}), inspired by: "{USER_TOPIC}".
+   - IMPORTANT: {USER_NAME} must be named and act as the central protagonist.
+   - DO NOT include introductions like "Here is the story". Start directly with the story after the title.
+
+3. SEPARATOR: After the story, write EXACTLY: ## Reading Comprehension Workshop
+
+4. QUIZ: Generate {QUESTIONS_COUNT} multiple choice questions based on the story.
+   - Question Format (IMPORTANT: In a single line):
+     Number. Question (Type) [correct: LETTER]
+   - Allowed Types: (Literal Question), (Inferential Question), (Critical Question).
+   - Options: {OPTIONS_INSTRUCTIONS}
+   - Language: English.
+`
+            },
+            fr: {
+                title: "De mes souvenirs à une histoire",
+                greeting: "Bonjour ! Je suis votre assistante d'histoire. Donnez-moi un souvenir et je créerai un récit unique avec une illustration cartoon et un questionnaire interactif.",
+                placeholder: "Écrivez un souvenir pour le transformer en histoire...",
+                namePlaceholder: "Votre nom...",
+                sendBtn: "Envoyer",
+                colorPaletteBtn: "Palette",
+                languageLabel: "Langue:",
+                styleLabel: "Style:",
+                modelLabel: "Modèle:",
+                numQuestionsLabel: "Questions:",
+                numOptionsLabel: "Options:",
+                workshopTitle: "## Atelier de Compréhension de Lecture",
+                evaluateBtn: "Évaluer l'Atelier",
+                downloadCloneBtn: "📥 Télécharger l'histoire",
+                results: "Résultats:",
+                correctAnswers: "Vous avez eu",
+                of: "sur",
+                questions: "questions correctes",
+                footer: "Conçu par Édgar Herrera Morales et Juan Guillermo Rivera Berrío avec la technologie Gemini 2.5 Pro et les API Pollinations.",
+                aiName: "Assistante d'histoire",
+                behavior: `
+TÂCHE OBLIGATOIRE:
+1. TITRE: Sur la première ligne, écrivez EXACTEMENT:
+# TÍTULO: [Écrivez un titre approprié pour le style '{STYLE_NAME}']
+
+2. HISTOIRE: Transformez le souvenir de {USER_NAME} en une histoire courte de 5 paragraphes au style {STYLE_NAME} ({STYLE_DESC}), inspirée par: "{USER_TOPIC}".
+   - IMPORTANT: {USER_NAME} doit être nommé(e) et agir comme protagoniste.
+   - NE PAS inclure d'introductions. Commencez directement par le récit après le titre.
+
+3. SÉPARATEUR: Après l'histoire, écrivez EXACTEMENT: ## Atelier de Compréhension de Lecture
+
+4. QUESTIONNAIRE: Générez {QUESTIONS_COUNT} questions à choix multiples.
+   - Format de la question (Sur une seule ligne):
+     Numéro. Question (Type) [correct: LETTRE]
+   - Types permis: (Question Littérale), (Question Inférentielle), (Question Critique).
+   - Options: {OPTIONS_INSTRUCTIONS}
+   - Langue: Français.
+`
+            },
+            de: {
+                title: "Von meinen Erinnerungen zu einer Geschichte",
+                greeting: "Hallo! Ich bin Ihre Geschichtsassistentin. Nennen Sie mir eine Erinnerung und ich erstelle eine einzigartige Geschichte mit einer Cartoon-Illustration und einem interaktiven Quiz.",
+                placeholder: "Schreiben Sie eine Erinnerung...",
+                namePlaceholder: "Ihr Name...",
+                sendBtn: "Senden",
+                colorPaletteBtn: "Palette",
+                languageLabel: "Sprache:",
+                styleLabel: "Stil:",
+                modelLabel: "Modell:",
+                numQuestionsLabel: "Fragen:",
+                numOptionsLabel: "Optionen:",
+                workshopTitle: "## Leseverständnis-Workshop",
+                evaluateBtn: "Workshop Bewerten",
+                downloadCloneBtn: "📥 Geschichte herunterladen",
+                results: "Ergebnisse:",
+                correctAnswers: "Sie haben",
+                of: "von",
+                questions: "Fragen richtig beantwortet",
+                footer: "Entworfen von Édgar Herrera Morales und Juan Guillermo Rivera Berrío mit Gemini 2.5 Pro Technologie und Pollinations APIs.",
+                aiName: "Geschichtsassistentin",
+                behavior: `
+OBLIGATORISCHE AUFGABE:
+1. TITEL: Schreiben Sie in der ersten Zeile GENAU:
+# TÍTULO: [Schreiben Sie einen passenden Titel für den Stil '{STYLE_NAME}']
+
+2. GESCHICHTE: Verwandeln Sie die Erinnerung von {USER_NAME} in eine Geschichte von 5 Absätzen im Stil {STYLE_NAME} ({STYLE_DESC}), inspiriert von: "{USER_TOPIC}".
+   - WICHTIG: {USER_NAME} muss als Hauptfigur agieren.
+   - KEINE Einleitungen. Beginnen Sie direkt mit der Erzählung nach dem Titel.
+
+3. TRENNZEICHEN: Schreiben Sie nach der Geschichte GENAU: ## Leseverständnis-Workshop
+
+4. FRAGEBOGEN: Generieren Sie {QUESTIONS_COUNT} Multiple-Choice-Fragen.
+   - Frageformat (In einer einzigen Zeile):
+     Nummer. Frage (Typ) [correct: BUCHSTABE]
+   - Erlaubte Typen: (Wörtliche Frage), (Inferentielle Frage), (Kritische Frage).
+   - Optionen: {OPTIONS_INSTRUCTIONS}
+   - Sprache: Deutsch.
+`
+            }
+        };
+
+        const PALETTES = [
+            { name: 'Indigo', accentPrimary: '#6366f1', accentSecondary: '#8b5cf6' },
+            { name: 'Emerald', accentPrimary: '#10b981', accentSecondary: '#34d399' },
+            { name: 'Rose', accentPrimary: '#f43f5e', accentSecondary: '#ec4899' },
+            { name: 'Amber', accentPrimary: '#f59e0b', accentSecondary: '#fbbf24' },
+            { name: 'Sky', accentPrimary: '#38bdf8', accentSecondary: '#0ea5e9' },
+            { name: 'Violet', accentPrimary: '#a78bfa', accentSecondary: '#c084fc' },
+            { name: 'Teal', accentPrimary: '#14b8a6', accentSecondary: '#2dd4bf' },
+            { name: 'Crimson', accentPrimary: '#dc2626', accentSecondary: '#ef4444' },
+            { name: 'Light Mode', theme: 'light', accentPrimary: '#4f46e5', accentSecondary: '#7c3aed' }
+        ];
+        let currentPaletteIndex = 0;
+        let currentLanguage = 'es';
+        const AI_CONFIG = { get name() { return TRANSLATIONS[currentLanguage].aiName; } };
+        let quizCounter = 0;
+
+        function changeColorPalette() {
+            const body = document.getElementById('page-body');
+            currentPaletteIndex = (currentPaletteIndex + 1) % PALETTES.length;
+            const newPalette = PALETTES[currentPaletteIndex];
+
+            if (newPalette.theme === 'light') {
+                body.classList.add('light-mode');
+            } else {
+                body.classList.remove('light-mode');
+            }
+            document.documentElement.style.setProperty('--accent-primary', newPalette.accentPrimary);
+            document.documentElement.style.setProperty('--accent-secondary', newPalette.accentSecondary);
+        }
+
+        document.getElementById('colorPaletteBtn').addEventListener('click', changeColorPalette);
+
+        async function fetchBackendText(systemPrompt, combinedUserPrompt, model) {
+            try {
+                const response = await fetch(BACKEND_URL_TEXT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        system: systemPrompt,
+                        prompt: combinedUserPrompt,
+                        model: model,
+                        json: false
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Network response was not ok');
+                return await response.text();
+            } catch (error) {
+                console.error("Error fetching text:", error);
+                throw error;
+            }
+        }
+
+        async function fetchImageFromBackend(prompt, seed, width = 128, height = 128) {
+            try {
+                const response = await fetch(BACKEND_URL_IMAGE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        model: 'flux', 
+                        seed: seed,
+                        width: width,
+                        height: height
+                    })
+                });
+
+                if (!response.ok) throw new Error('Image fetch failed');
+                const blob = await response.blob();
+                
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.readAsDataURL(blob);
+                });
+            } catch (error) {
+                console.error("Error fetching image:", error);
+                return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+            }
+        }
+
+        async function updateLanguage() {
+            currentLanguage = document.getElementById('languageSelector').value;
+            const t = TRANSLATIONS[currentLanguage];
+
+            document.getElementById('mainTitle').textContent = t.title;
+            document.getElementById('initialGreeting').textContent = t.greeting;
+            document.getElementById('chatInput').placeholder = t.placeholder;
+            document.getElementById('userNameInput').placeholder = t.namePlaceholder;
+            document.getElementById('sendButton').textContent = t.sendBtn;
+            document.getElementById('colorPaletteBtn').textContent = t.colorPaletteBtn;
+            document.getElementById('languageLabel').textContent = t.languageLabel;
+            document.getElementById('styleLabel').textContent = t.styleLabel;
+            document.getElementById('modelLabel').textContent = t.modelLabel;
+            document.getElementById('numQuestionsLabel').textContent = t.numQuestionsLabel;
+            document.getElementById('numOptionsLabel').textContent = t.numOptionsLabel;
+            document.getElementById('footerText').textContent = t.footer;
+
+            const avatarSeed = Math.floor(Math.random() * 1000);
+            const avatarUrl = await fetchImageFromBackend(t.aiName + ", friendly storyteller portrait, cartoon vector style, vibrant colors", avatarSeed, 128, 128);
+            const aiAvatarImg = document.getElementById('aiAvatar');
+            aiAvatarImg.src = avatarUrl;
+            aiAvatarImg.alt = t.aiName;
+        }
+
+        document.getElementById('languageSelector').addEventListener('change', updateLanguage);
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                if (e.target.id === 'userNameInput' && !document.getElementById('chatInput').value.trim()) {
+                    document.getElementById('chatInput').focus();
+                } else {
+                    sendMessage();
+                }
+            }
+        }
+
+        async function sendMessage() {
+            const nameInput = document.getElementById('userNameInput');
+            const chatInput = document.getElementById('chatInput');
+            const selectedStyleKey = document.getElementById('styleSelector').value;
+            const styleConfig = LITERARY_STYLES[selectedStyleKey] || LITERARY_STYLES.epico;
+            
+            const rawUserName = nameInput.value.trim();
+            const userName = rawUserName || 'Protagonista';
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Avatar del usuario estilo cartoon
+            const studentSeed = Math.floor(Math.random() * 1000);
+            const studentAvatarUrl = await fetchImageFromBackend("friendly young protagonist character, cartoon style, colorful illustration", studentSeed, 128, 128);
+            
+            const userDisplayMessage = rawUserName ? `<strong>${userName}:</strong> ${message}` : message;
+            addMessage(userDisplayMessage, 'user', { userAvatar: studentAvatarUrl });
+            chatInput.value = '';
+
+            // Generación de imagen con Flux estilo cartoon (proporción 800x450, equivalente al tamaño del reproductor de video anterior)
+            const sceneSeed = Math.floor(Math.random() * 10000);
+            const sceneImagePrompt = `vibrant cartoon illustration, animated movie style, storybook art: ${message}, style of ${styleConfig.label}, character ${userName}, colorful, high quality vector cartoon aesthetic, cinematic lighting`;
+            const imagePromise = fetchImageFromBackend(sceneImagePrompt, sceneSeed, 800, 450);
+
+            let aiResponseText;
+            try {
+                aiResponseText = await generateAIResponse(message, userName, styleConfig);
+            } catch (e) {
+                const t = TRANSLATIONS[currentLanguage];
+                aiResponseText = t.greeting.includes("Hola") ? "Error conectando con el servidor. Intenta nuevamente." : "Error connecting to server. Try again.";
+            }
+
+            const finalImageUrl = await imagePromise;
+            const aiAvatarUrl = document.getElementById('aiAvatar').src;
+            
+            addMessage(aiResponseText, 'ai', { 
+                userPrompt: message, 
+                userName: userName,
+                styleBadge: styleConfig.badge,
+                imageUrl: finalImageUrl, 
+                aiAvatar: aiAvatarUrl 
+            });
+        }
+
+        function formatQuiz(quizText, userPrompt, storyTitle, userName, styleBadge) {
+            quizCounter++;
+            const quizId = `quiz-container-${quizCounter}`;
+            const t = TRANSLATIONS[currentLanguage];
+            let html = `<div class="quiz-container" id="${quizId}">`;
+            let questionCount = 0;
+            const numOptions = document.getElementById('numOptionsSelector').value;
+
+            const questionPatterns = {
+                '3': /(\d+\.\s.*?\(.*?(?:Pregunta|Question|Frage).*?\)\s*\[correct:\s*([A-C])\])\s*A\)\s(.*?)\s*B\)\s(.*?)\s*C\)\s(.*?)(?=\n\d+\.|$)/gis,
+                '4': /(\d+\.\s.*?\(.*?(?:Pregunta|Question|Frage).*?\)\s*\[correct:\s*([A-D])\])\s*A\)\s(.*?)\s*B\)\s(.*?)\s*C\)\s(.*?)\s*D\)\s(.*?)(?=\n\d+\.|$)/gis
+            };
+
+            const questionsRegex = questionPatterns[numOptions];
+            let match;
+            
+            const cleanText = quizText.replace(/(\d+\.)/g, '\n$1');
+
+            while ((match = questionsRegex.exec(cleanText)) !== null) {
+                questionCount++;
+                const lineParser = /(.*?)\s*(\(.*?\))/;
+                const lineMatch = match[1].match(lineParser);
+                if (lineMatch) {
+                    const [, questionText, questionType] = lineMatch;
+                    const correctAnswer = match[2].trim();
+                    const options = match.slice(3, 3 + parseInt(numOptions)).map(opt => opt ? opt.trim() : '');
+
+                    html += `<div class="question-block" data-correct-answer="${correctAnswer}">
+                                <p class="question-text">${questionText.trim()} <span class="question-type">${questionType.trim()}</span></p>
+                                <ul class="options-list">`;
+                    options.forEach((opt, index) => {
+                        const letter = String.fromCharCode(65 + index);
+                        html += `<li class="option-item" data-option="${letter}">${letter}) ${opt}</li>`;
+                    });
+                    html += `</ul></div>`;
+                }
+            }
+            if (questionCount > 0) {
+                html += `<div class="quiz-actions">
+                            <button class="submit-quiz-btn" onclick="gradeQuiz('${quizId}')">✓ ${t.evaluateBtn}</button>
+                            <button class="download-quiz-btn" data-title="${encodeURIComponent(storyTitle)}" data-badge="${encodeURIComponent(styleBadge || '')}" data-username="${encodeURIComponent(userName)}" data-prompt="${encodeURIComponent(userPrompt)}" onclick="downloadFunctionalClone(this)">${t.downloadCloneBtn}</button>
+                          </div>`;
+            } else {
+                html += `<p><em>${t.greeting.includes("Hola") ? "No se pudo generar el formato interactivo. Por favor intenta de nuevo." : "Could not generate interactive format. Please try again."}</em></p>`;
+                html += `<div style="white-space: pre-wrap; font-size: 0.9em; margin-top: 1rem; color: var(--text-secondary);">${quizText}</div>`;
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function formatRichText(rawText, userPrompt, userName, styleBadge) {
+            const t = TRANSLATIONS[currentLanguage];
+            let text = rawText;
+            
+            // 1. Extraer título generado por la IA
+            let storyTitle = '';
+            const titleRegex = /#?\s*(?:T[IÍ]TULO|TITLE|TITRE|TITEL)?:\s*([^\n\r]+)/i;
+            const titleMatch = text.match(titleRegex);
+            if (titleMatch && titleMatch[1].trim()) {
+                storyTitle = titleMatch[1].replace(/[*_#\[\]]/g, '').trim();
+                text = text.replace(titleRegex, '').trim();
+            } else {
+                const firstLineMatch = text.match(/^#+\s*([^\n\r]+)/);
+                if (firstLineMatch && firstLineMatch[1].length < 90) {
+                    storyTitle = firstLineMatch[1].replace(/[*_#\[\]]/g, '').trim();
+                    text = text.replace(/^#+\s*[^\n\r]+\n?/, '').trim();
+                } else {
+                    storyTitle = userName ? `La Historia de ${userName}` : (currentLanguage === 'es' ? "Relato Inolvidable" : "Unforgettable Tale");
+                }
+            }
+
+            // 2. Separar fragmento narrativo y cuestionario
+            const workshopTitleRegex = new RegExp(`##\\s*${t.workshopTitle.replace('## ', '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i');
+            
+            const parts = text.split(workshopTitleRegex);
+            let literaryFragment = parts[0];
+            let quizPart = parts.length > 1 ? parts.slice(1).join('') : '';
+            
+            const activeBadge = styleBadge || 'Relato';
+
+            // Barra superior con título dinámico generado por la IA y botón de descarga
+            let headerBarHtml = userPrompt ? `
+                <div class="story-header-bar">
+                    <div class="story-title-group">
+                        <span class="story-badge">✨ ${activeBadge}</span>
+                        <h3 class="story-generated-title">${storyTitle}</h3>
+                    </div>
+                    <button class="download-clone-btn" data-title="${encodeURIComponent(storyTitle)}" data-badge="${encodeURIComponent(activeBadge)}" data-username="${encodeURIComponent(userName)}" data-prompt="${encodeURIComponent(userPrompt)}" onclick="downloadFunctionalClone(this)">
+                        ${t.downloadCloneBtn}
+                    </button>
+                </div>
+            ` : '';
+
+            let fragmentHtml = `<div class="literary-fragment">${literaryFragment.split(/\n\s*\n/).map(p => p.trim() ? `<p class="ai-paragraph">${p}</p>` : '').join('')}</div>`;
+            let quizHtml = '';
+            
+            if (quizPart.trim() && userPrompt) {
+                quizHtml = `<div class="quiz-section">
+                                <h2 class="ai-heading-2">${t.workshopTitle.replace('## ', '')}</h2>
+                                ${formatQuiz(quizPart, userPrompt, storyTitle, userName, activeBadge)}
+                            </div>`;
+            } else {
+                 if (text.includes("1.") && text.includes("A)")) {
+                    const possibleQuizStart = text.indexOf("1.");
+                    if (possibleQuizStart > 300) {
+                        quizPart = text.substring(possibleQuizStart);
+                        literaryFragment = text.substring(0, possibleQuizStart);
+                        fragmentHtml = `<div class="literary-fragment">${literaryFragment.split(/\n\s*\n/).map(p => p.trim() ? `<p class="ai-paragraph">${p}</p>` : '').join('')}</div>`;
+                        quizHtml = `<div class="quiz-section">
+                                <h2 class="ai-heading-2">${t.workshopTitle.replace('## ', '')}</h2>
+                                ${formatQuiz(quizPart, userPrompt, storyTitle, userName, activeBadge)}
+                            </div>`;
+                    }
+                 }
+            }
+            return headerBarHtml + fragmentHtml + quizHtml;
+        }
+
+        function addMessage(message, sender, options = {}) {
+            const { userPrompt, userName, styleBadge, imageUrl, userAvatar, aiAvatar } = options;
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            let imageHtml = '';
+            if (sender === 'ai' && imageUrl) {
+                imageHtml = `<div class="image-display-container"><img src="${imageUrl}" alt="Ilustración estilo cartoon de la historia" loading="lazy"></div>`;
+            }
+            let messageContent = (sender === 'ai') ? formatRichText(message, userPrompt, userName, styleBadge) : message;
+            
+            if (sender === 'user') {
+                const avatarSrc = userAvatar || "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+                messageDiv.innerHTML = `<div class="message-avatar"><img src="${avatarSrc}" alt="Usuario"></div>
+                    <div class="message-content">${messageContent}</div>`;
+            } else {
+                const avatarSrc = aiAvatar || document.getElementById('aiAvatar').src;
+                messageDiv.innerHTML = `<div class="message-avatar"><img src="${avatarSrc}" alt="${AI_CONFIG.name}"></div>
+                    <div class="message-content rich-text-content">${imageHtml}${messageContent}</div>`;
+            }
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        document.getElementById('chatMessages').addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('option-item')) {
+                const quizContainer = e.target.closest('.quiz-container');
+                if (quizContainer && !quizContainer.classList.contains('graded')) {
+                    e.target.parentElement.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                }
+            }
+        });
+
+        function gradeQuiz(quizId) {
+            const quizContainer = document.getElementById(quizId);
+            if (!quizContainer || quizContainer.classList.contains('graded')) return;
+            quizContainer.classList.add('graded');
+            const questionBlocks = quizContainer.querySelectorAll('.question-block');
+            let score = 0;
+            questionBlocks.forEach(block => {
+                const correctAnswer = (block.dataset.correctAnswer || '').trim().toUpperCase();
+                const selectedOption = block.querySelector('.option-item.selected');
+                if (selectedOption) {
+                    if (selectedOption.dataset.option.trim().toUpperCase() === correctAnswer) {
+                        score++;
+                        selectedOption.classList.add('correct');
+                    } else {
+                        selectedOption.classList.add('incorrect');
+                        const correctLi = block.querySelector(`.option-item[data-option="${correctAnswer}"]`);
+                        if (correctLi) correctLi.classList.add('correct');
+                    }
+                } else {
+                    const correctLi = block.querySelector(`.option-item[data-option="${correctAnswer}"]`);
+                    if (correctLi) correctLi.classList.add('correct');
+                }
+            });
+            const submitButton = quizContainer.querySelector('.submit-quiz-btn');
+            if (submitButton) submitButton.disabled = true;
+            const resultsDiv = document.createElement('div');
+            resultsDiv.className = 'quiz-results';
+            const t = TRANSLATIONS[currentLanguage];
+            resultsDiv.innerHTML = `<strong>${t.results}</strong> ${t.correctAnswers} ${score} ${t.of} ${questionBlocks.length} ${t.questions}.`;
+            quizContainer.appendChild(resultsDiv);
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Descarga del CLON FUNCIONAL con la imagen Cartoon y estilo seleccionado
+        function downloadFunctionalClone(buttonElement) {
+            const userPrompt = decodeURIComponent(buttonElement.dataset.prompt || '');
+            const userName = decodeURIComponent(buttonElement.dataset.username || '');
+            const styleBadge = decodeURIComponent(buttonElement.dataset.badge || 'Relato');
+            const storyTitle = decodeURIComponent(buttonElement.dataset.title || '') || (userName ? `Historia de ${userName}` : 'Historia');
+            const aiMessageContent = buttonElement.closest('.ai-message .message-content');
+            if (!aiMessageContent) return;
+
+            const t = TRANSLATIONS[currentLanguage];
+            
+            // Imagen cartoon generada
+            const imgElem = aiMessageContent.querySelector('.image-display-container img');
+            let imageHtml = '';
+            if (imgElem && imgElem.src) {
+                imageHtml = `<div class="image-display-container">
+                    <img src="${imgElem.src}" alt="${storyTitle}">
+                </div>`;
+            }
+
+            // Fragmento de la historia
+            const fragmentElem = aiMessageContent.querySelector('.literary-fragment');
+            const fragmentHtml = fragmentElem ? fragmentElem.innerHTML : '';
+
+            // Cuestionario limpio
+            const quizSectionElem = aiMessageContent.querySelector('.quiz-section');
+            let quizHtml = '';
+            if (quizSectionElem) {
+                const quizClone = quizSectionElem.cloneNode(true);
+                quizClone.querySelectorAll('.download-quiz-btn, .download-clone-btn').forEach(btn => btn.remove());
+                quizClone.querySelectorAll('.quiz-container').forEach(qc => qc.classList.remove('graded'));
+                quizClone.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+                quizClone.querySelectorAll('.quiz-results').forEach(res => res.remove());
+                quizClone.querySelectorAll('.submit-quiz-btn').forEach(btn => btn.disabled = false);
+                quizHtml = quizClone.innerHTML;
+            }
+
+            const styles = document.getElementById('main-styles').innerHTML;
+            const rootStyles = getComputedStyle(document.documentElement);
+            const accentPrimary = rootStyles.getPropertyValue('--accent-primary').trim();
+            const accentSecondary = rootStyles.getPropertyValue('--accent-secondary').trim();
+            const colorOverrideStyle = `<style>:root { --accent-primary: ${accentPrimary}; --accent-secondary: ${accentSecondary}; }</style>`;
+            const bodyClass = document.getElementById('page-body').className;
+
+            const fileContent = `<!DOCTYPE html>
+<html lang="${currentLanguage}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${storyTitle}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        ${styles}
+        .standalone-card {
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 2.25rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .standalone-meta {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .standalone-meta strong {
+            color: var(--accent-primary);
+        }
+    </style>
+    ${colorOverrideStyle}
+</head>
+<body class="${bodyClass}">
+    <header class="header">
+        <h1 class="ai-title">${storyTitle}</h1>
+    </header>
+
+    <main class="chat-container" style="max-width: 850px;">
+        <div class="standalone-card">
+            <div style="margin-bottom: 0.85rem;">
+                <span class="story-badge">✨ ${styleBadge}</span>
+            </div>
+            <div class="standalone-meta">
+                Protagonista: <strong>${userName}</strong> | Recuerdo original: <em>«${userPrompt}»</em>
+            </div>
+
+            <article class="rich-text-content">
+                ${imageHtml}
+                <div class="literary-fragment">
+                    ${fragmentHtml}
+                </div>
+                <section class="quiz-section">
+                    ${quizHtml}
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>${t.footer}</p>
+    </footer>
+
+    <script>
+        const currentLang = '${currentLanguage}';
+        const t = ${JSON.stringify(t)};
+
+        document.addEventListener('click', function(e) {
+            const option = e.target.closest('.option-item');
+            if (option) {
+                const quizContainer = option.closest('.quiz-container');
+                if (quizContainer && !quizContainer.classList.contains('graded')) {
+                    option.parentElement.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+                    option.classList.add('selected');
+                }
+            }
+        });
+
+        function gradeQuiz(id) {
+            const quiz = document.getElementById(id);
+            if (!quiz || quiz.classList.contains('graded')) return;
+            quiz.classList.add('graded');
+            
+            let score = 0;
+            const questions = quiz.querySelectorAll('.question-block');
+            questions.forEach(q => {
+                const correct = (q.dataset.correctAnswer || '').trim().toUpperCase();
+                const selected = q.querySelector('.option-item.selected');
+                if (selected) {
+                    const chosen = (selected.dataset.option || '').trim().toUpperCase();
+                    if (chosen === correct) {
+                        score++;
+                        selected.classList.add('correct');
+                    } else {
+                        selected.classList.add('incorrect');
+                    }
+                }
+                const correctLi = q.querySelector('.option-item[data-option="' + correct + '"]');
+                if (correctLi) correctLi.classList.add('correct');
+            });
+
+            const submitBtn = quiz.querySelector('.submit-quiz-btn');
+            if (submitBtn) submitBtn.disabled = true;
+
+            let results = quiz.querySelector('.quiz-results');
+            if (!results) {
+                results = document.createElement('div');
+                results.className = 'quiz-results';
+                quiz.appendChild(results);
+            }
+            
+            const pct = Math.round((score / questions.length) * 100);
+            results.innerHTML = '<strong>' + t.results + '</strong> ' + t.correctAnswers + ' ' + score + ' ' + t.of + ' ' + questions.length + ' ' + t.questions + ' (' + pct + '%).';
+
+            const resetBtn = document.createElement('button');
+            resetBtn.className = 'submit-quiz-btn';
+            resetBtn.style.marginTop = '1rem';
+            resetBtn.style.background = 'var(--accent-secondary)';
+            resetBtn.textContent = '🔄 ' + (currentLang === 'es' ? 'Intentar de nuevo' : 'Try again');
+            resetBtn.onclick = function() {
+                quiz.classList.remove('graded');
+                quiz.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+                results.remove();
+                if (submitBtn) submitBtn.disabled = false;
+            };
+            results.appendChild(document.createElement('br'));
+            results.appendChild(resetBtn);
+            results.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    <\/script>
+</body>
+</html>`;
+
+            const blob = new Blob([fileContent], { type: 'text/html;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            const safeFileName = storyTitle.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s_-]/g, '').trim().replace(/\s+/g, '-').toLowerCase() || 'historia';
+            a.download = `${safeFileName}.html`;
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(a.href);
+        }
+
+        async function generateAIResponse(userMessage, userName, styleConfig) {
+            const numQuestions = document.getElementById('numQuestionsSelector').value;
+            const numOptions = document.getElementById('numOptionsSelector').value;
+            const selectedModel = document.getElementById('modelSelector').value;
+
+            let optionsList = numOptions === '3' ? 'A, B, C' : 'A, B, C, D';
+            let optionsInstructions = {
+                es: numOptions === '3' ?
+                    `Las tres opciones (A, B, C) DEBEN ir en las siguientes tres líneas, cada una en una nueva línea, comenzando con 'A) ', 'B) ', 'C) '.` :
+                    `Las cuatro opciones (A, B, C, D) DEBEN ir en las siguientes cuatro líneas, cada una en una nueva línea, comenzando con 'A) ', 'B) ', 'C) ', y 'D) '.`,
+                en: numOptions === '3' ?
+                    `The three options (A, B, C) MUST go in the following three lines, each on a new line, starting with 'A) ', 'B) ', 'C) '.` :
+                    `The four options (A, B, C, D) MUST go in the following four lines, each on a new line, starting with 'A) ', 'B) ', 'C) ', and 'D) '.`,
+                fr: numOptions === '3' ?
+                    `Les trois options (A, B, C) DOIVENT aller dans les trois lignes suivantes, chacune sur une nouvelle ligne, commençant par 'A) ', 'B) ', 'C) '.` :
+                    `Les quatre options (A, B, C, D) DOIVENT aller dans les quatre lignes suivantes, chacune sur une nouvelle ligne, commençant par 'A) ', 'B) ', 'C) ', et 'D) '.`,
+                de: numOptions === '3' ?
+                    `Die drei Optionen (A, B, C) MÜSSEN in den folgenden drei Zeilen stehen, jede in einer neuen Zeile, beginnend mit 'A) ', 'B) ', 'C) '.` :
+                    `Die vier Optionen (A, B, C, D) MÜSSEN in den folgenden vier Zeilen stehen, jede in einer neuen Zeile, beginnend mit 'A) ', 'B) ', 'C) '.`
+            }[currentLanguage];
+
+            let rawBehavior = TRANSLATIONS[currentLanguage].behavior;
+            
+            let instructions = rawBehavior
+                .replace(/{USER_TOPIC}/g, userMessage)
+                .replace(/{USER_NAME}/g, userName)
+                .replace(/{STYLE_NAME}/g, styleConfig.label)
+                .replace(/{STYLE_DESC}/g, styleConfig.desc)
+                .replace('{QUESTIONS_COUNT}', numQuestions)
+                .replace('{OPTIONS_LIST}', optionsList)
+                .replace('{OPTIONS_INSTRUCTIONS}', optionsInstructions);
+
+            const combinedUserPrompt = `
+            ${instructions}
+            
+            ------------------------------------------
+            ESTILO LITERARIO ELEGIDO: "${styleConfig.label}"
+            RECUERDO: "${userMessage}"
+            PROTAGONISTA: "${userName}"
+            `;
+
+            const systemIdentity = `You are ${AI_CONFIG.name}, a versatile literary master who transforms real-life memories into magnificent stories written in specific literary styles (such as ${styleConfig.label}).`;
+
+            return await fetchBackendText(systemIdentity, combinedUserPrompt, selectedModel);
+        }
+
+        // Inicializar al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLanguage();
+        });
+    </script>
+</body>
+
+</html>
