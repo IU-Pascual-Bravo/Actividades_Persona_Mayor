@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento Exportado — OmniConvert Pro</title>
+    <style>
+        :root { --bg:#f1f5f9; --text:#1e293b; --card:#ffffff; }
+        body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); margin:0; padding:15px; min-height:100vh; }
+        .container { max-width:1200px; margin:0 auto; background:var(--card); padding:20px; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); }
+        img,video,iframe { max-width:100%; height:auto; border-radius:8px; }
+        .table-responsive-wrapper { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:1.5rem; border-radius:6px; box-shadow:0 0 0 1px #e2e8f0; }
+        table { width:100%; border-collapse:collapse; min-width:600px; }
+        pre { background:#f8fafc; padding:15px; border-radius:8px; overflow-x:auto; font-size:.9em; border:1px solid #e2e8f0; }
+        footer { text-align:center; margin-top:40px; padding-top:20px; color:#64748b; font-size:.875rem; border-top:1px solid #e2e8f0; }
+        @media(min-width:768px){ body{padding:40px;} .container{padding:50px;} table{min-width:100%;} }
+    </style>
+</head>
+<body>
+    <div class="container"><h1>IA Critica Mi Dibujo</h1>
+<p>Aplicación educativa que permite a una persona crear un dibujo, generar una imagen con inteligencia artificial y recibir una crítica artística en español.</p>
+<h2>Propósito</h2>
+<p>Esta actividad está diseñada especialmente para <strong>personas adultas mayores</strong>. Busca facilitar un acercamiento amable y entretenido a la inteligencia artificial mediante una experiencia visual, creativa y sencilla.</p>
+<p>La aplicación permite:</p>
+<ul>
+<li>Escribir una descripción y generar una imagen con IA.</li>
+<li>Dibujar directamente sobre un lienzo digital.</li>
+<li>Usar colores, grosor de pincel y herramienta de relleno.</li>
+<li>Elegir el tono de la crítica artística.</li>
+<li>Escuchar la crítica mediante audio.</li>
+<li>Descargar la obra junto con su crítica.</li>
+</ul>
+<h2>Uso básico</h2>
+<ol>
+<li>Escriba qué imagen desea crear y pulse <strong>Generar con IA</strong>, o dibuje directamente en el lienzo.</li>
+<li>Seleccione el tono de la crítica.</li>
+<li>Pulse <strong>Enviar a Crítica</strong>.</li>
+<li>Espere la descripción y el comentario de la inteligencia artificial.</li>
+<li>Use <strong>Repetir</strong> para escuchar nuevamente el comentario o <strong>Descarga tu Obra</strong> para conservarlo.</li>
+</ol>
+<h2>Accesibilidad y facilidad de uso</h2>
+<ul>
+<li>Los controles tienen textos claros y visibles.</li>
+<li>La interfaz utiliza botones grandes y una distribución sencilla.</li>
+<li>La aplicación funciona en computador, tableta y teléfono.</li>
+<li>No es necesario introducir una clave de API: las credenciales se mantienen protegidas en el servidor.</li>
+<li>La crítica puede adoptar un tono humorístico, poético, técnico o descriptivo.</li>
+</ul>
+<h2>Arquitectura</h2>
+<ul>
+<li><code>index.html</code>: interfaz principal y funcionamiento de la actividad.</li>
+<li><code>style.css</code>: estilos visuales y adaptación a dispositivos móviles.</li>
+<li><code>script.js</code>: versión auxiliar de la lógica de interacción.</li>
+<li><code>logoPB1.png</code>: logo de la Institución Universitaria Pascual Bravo.</li>
+<li><code>logo_escuela.png</code>: logo de la Escuela de Pensamiento Educativo y Pedagógico.</li>
+</ul>
+<p>Las solicitudes de texto, imagen y audio se realizan mediante peticiones <code>POST</code> al backend Node.js:</p>
+<ul>
+<li><code>https://node.proyectodescartes.org/api/ia/text</code></li>
+<li><code>https://node.proyectodescartes.org/api/ia/image</code></li>
+<li><code>https://node.proyectodescartes.org/api/ia/audio</code></li>
+</ul>
+<p>La clave del proveedor se administra exclusivamente en las variables de entorno del backend y nunca se expone en el navegador.</p>
+<h2>Créditos</h2>
+<p>Diseñado por Juan Guillermo Rivera Berrío con tecnología de inteligencia artificial y las API de Pollinations.</p>
+</div>
+    <footer><p>Exportado con OmniConvert Pro</p></footer>
+</body>
+</html>

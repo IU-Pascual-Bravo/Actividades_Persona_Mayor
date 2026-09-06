@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento Exportado — OmniConvert Pro</title>
+    <style>
+        :root { --bg:#f1f5f9; --text:#1e293b; --card:#ffffff; }
+        body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); margin:0; padding:15px; min-height:100vh; }
+        .container { max-width:1200px; margin:0 auto; background:var(--card); padding:20px; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); }
+        img,video,iframe { max-width:100%; height:auto; border-radius:8px; }
+        .table-responsive-wrapper { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:1.5rem; border-radius:6px; box-shadow:0 0 0 1px #e2e8f0; }
+        table { width:100%; border-collapse:collapse; min-width:600px; }
+        pre { background:#f8fafc; padding:15px; border-radius:8px; overflow-x:auto; font-size:.9em; border:1px solid #e2e8f0; }
+        footer { text-align:center; margin-top:40px; padding-top:20px; color:#64748b; font-size:.875rem; border-top:1px solid #e2e8f0; }
+        @media(min-width:768px){ body{padding:40px;} .container{padding:50px;} table{min-width:100%;} }
+    </style>
+</head>
+<body>
+    <div class="container"><h1>De mis recuerdos a una historia</h1>
+<p>Aplicación educativa para convertir recuerdos personales en relatos ilustrados y en un taller sencillo de comprensión lectora. Está pensada especialmente para que las personas mayores puedan compartir experiencias de vida, recuperar su memoria autobiográfica y disfrutar de sus historias junto con familiares, cuidadores, docentes o compañeros.</p>
+<h2>¿Qué permite hacer?</h2>
+<ul>
+<li>Escribir un recuerdo y convertirlo en una historia de cinco párrafos.</li>
+<li>Elegir el nombre de la persona que será protagonista del relato.</li>
+<li>Seleccionar un estilo literario: épico, realismo mágico, comedia costumbrista, policial, carta íntima, crónica histórica, aventuras, comedia romántica o misterio.</li>
+<li>Generar una ilustración tipo cartoon relacionada con el recuerdo.</li>
+<li>Crear entre 5 y 10 preguntas de comprensión, con 3 o 4 opciones por pregunta.</li>
+<li>Responder el cuestionario y ver el resultado inmediatamente.</li>
+<li>Descargar cada historia como un archivo HTML independiente para conservarla, compartirla o imprimirla.</li>
+<li>Usar la interfaz en español, inglés, francés o alemán.</li>
+<li>Cambiar entre varias paletas de color, incluida una opción de modo claro.</li>
+</ul>
+<h2>Público y propósito</h2>
+<p>La aplicación puede utilizarse en:</p>
+<ul>
+<li>Talleres de memoria y escritura con personas mayores.</li>
+<li>Actividades familiares para conservar anécdotas y tradiciones.</li>
+<li>Procesos de alfabetización digital acompañados.</li>
+<li>Ejercicios de lectura, conversación y expresión oral.</li>
+<li>Espacios educativos, comunitarios o institucionales.</li>
+</ul>
+<p>La herramienta no pretende evaluar la memoria de una persona ni reemplazar una conversación humana. El cuestionario es una actividad lúdica de lectura: equivocarse está bien y puede servir para conversar sobre el relato.</p>
+<h2>Cómo abrirla</h2>
+<h3>Opción rápida</h3>
+<ol>
+<li>Abra la carpeta del proyecto.</li>
+<li>Haga doble clic en <code>index.html</code>.</li>
+<li>Si el navegador pregunta si desea permitir la conexión a Internet, acéptela para generar historias e ilustraciones.</li>
+</ol>
+<h3>Opción recomendada para una institución</h3>
+<p>Sirva la carpeta mediante un servidor web local. Por ejemplo, si tiene Python instalado:</p>
+<pre><code class="language-bash">python -m http.server 8000
+</code></pre>
+<p>Después abra <code>http://localhost:8000/</code> en el navegador.</p>
+<p>Usar un servidor local evita algunas restricciones de los navegadores al abrir archivos directamente y facilita el trabajo en computadores de una sala, biblioteca o centro de atención.</p>
+<h2>Guía para la persona mayor</h2>
+<h3>Antes de comenzar</h3>
+<ul>
+<li>Use un computador o tableta con pantalla suficientemente grande.</li>
+<li>Aumente el zoom del navegador si las letras se ven pequeñas. En Windows puede usar <code>Ctrl</code> + <code>+</code>; para volver al tamaño normal, use <code>Ctrl</code> + <code>0</code>.</li>
+<li>Procure contar con una conexión estable a Internet.</li>
+<li>Si es posible, realice la actividad con un familiar, cuidador, docente o compañero que pueda ayudar con el teclado y el navegador.</li>
+</ul>
+<h3>Crear una historia</h3>
+<ol>
+<li>Abra <code>index.html</code>.</li>
+<li>En <strong>Tu nombre</strong>, escriba el nombre de la persona que contará el recuerdo. Este campo es opcional.</li>
+<li>En el campo grande, escriba un recuerdo. No hace falta redactarlo perfectamente. Puede escribir frases cortas, por ejemplo: <code>La primera vez que viajé en tren con mi hermana</code>.</li>
+<li>Si desea, escoja un estilo. Para una experiencia cercana y amable se recomiendan <strong>Comedia Costumbrista</strong>, <strong>Crónica Histórica</strong> o <strong>Carta Íntima</strong>.</li>
+<li>Revise el número de preguntas y de opciones. Para una primera actividad conviene empezar con 5 preguntas y 3 opciones, si esas opciones están disponibles en la versión que se está usando.</li>
+<li>Pulse <strong>Enviar</strong>. La aplicación mostrará el relato y una ilustración.</li>
+<li>Lea con calma. También puede leer la historia en voz alta o comentarla con otra persona.</li>
+</ol>
+<h3>Resolver el taller</h3>
+<ol>
+<li>Desplácese hasta <strong>Taller de Comprensión Lectora</strong>.</li>
+<li>Lea una pregunta cada vez.</li>
+<li>Toque o haga clic en la respuesta que considere correcta. La opción elegida quedará resaltada.</li>
+<li>Pulse <strong>Evaluar Taller</strong>.</li>
+<li>Revise el resultado. La aplicación marca las respuestas correctas y, cuando corresponde, muestra cuál era la opción correcta.</li>
+</ol>
+<h3>Guardar y compartir</h3>
+<p>Pulse <strong>Descargar historia</strong>. El navegador descargará un archivo <code>.html</code> que puede:</p>
+<ul>
+<li>Abrirse sin volver a generar la historia.</li>
+<li>Guardarse con un nombre reconocible, por ejemplo <code>historia-de-maria.html</code>.</li>
+<li>Enviarse como adjunto por correo o mensajería.</li>
+<li>Imprimirse desde el navegador.</li>
+</ul>
+<p>El archivo descargado conserva el relato, la ilustración y el cuestionario. Para volver a responderlo, ábralo y seleccione las opciones nuevamente.</p>
+<h2>Recomendaciones de accesibilidad y acompañamiento</h2>
+<p>La aplicación incluye texto ampliable, diseño adaptable a pantallas pequeñas, etiquetas visibles, contraste entre fondos y textos, modo claro, varias paletas y cambio de idioma. También permite avanzar con la tecla <code>Enter</code> desde los campos de nombre y recuerdo.</p>
+<p>Para una experiencia más cómoda:</p>
+<ul>
+<li>Prefiera el modo claro si el fondo oscuro produce cansancio visual.</li>
+<li>Pruebe la paleta que ofrezca mayor contraste para cada persona. La percepción del color puede variar.</li>
+<li>Lea las instrucciones en voz alta cuando sea necesario.</li>
+<li>Dé tiempo suficiente para recordar y escribir; no es necesario responder rápidamente.</li>
+<li>Permita que la persona dicte el recuerdo mientras otra persona lo escribe, si el teclado resulta difícil.</li>
+<li>Use el zoom del navegador en vez de acercarse demasiado a la pantalla.</li>
+<li>Evite presentar muchos controles a la vez durante una sesión; configure idioma, estilo y preguntas al principio.</li>
+<li>Acompañe siempre el uso si el contenido despierta recuerdos tristes, difíciles o muy personales.</li>
+</ul>
+<h3>Importante sobre accesibilidad</h3>
+<p>La app está orientada a un uso sencillo, pero no reemplaza una auditoría formal de accesibilidad. Las respuestas del cuestionario se implementan como elementos seleccionables y conviene usar ratón o pantalla táctil. Si una persona no puede utilizar estos dispositivos con comodidad, un acompañante puede seleccionar las opciones mientras la persona decide y conversa.</p>
+<h2>Ejemplos incluidos</h2>
+<p>La carpeta contiene historias autónomas ya generadas para mostrar el resultado final:</p>
+<ul>
+<li><code>luisa-las-tiendas-de-sábanas-y-la-tormenta-que-pidió-permiso.html</code></li>
+<li><code>juan-y-la-tarde-prohibida-del-billar-errante.html</code></li>
+<li><code>la-fila-de-las-horas-crónica-del-primer-televisor-del-barrio.html</code></li>
+<li><code>adriana-el-molino-y-el-gran-misterio-de-las-arepas.html</code></li>
+</ul>
+<p>Estas páginas se pueden abrir directamente para leer un ejemplo, incluso sin iniciar una nueva generación. <code>index0.html</code> e <code>historia buena.html</code> son variantes anteriores de la interfaz; para comenzar una actividad nueva se recomienda <code>index.html</code>.</p>
+<h2>Requisitos</h2>
+<ul>
+<li>Navegador moderno: Chrome, Edge, Firefox o Safari actualizado.</li>
+<li>JavaScript habilitado.</li>
+<li>Conexión a Internet para generar texto, avatares e ilustraciones.</li>
+<li>No se requiere instalar dependencias ni configurar una clave API para el uso normal.</li>
+</ul>
+<h2>Cómo funciona técnicamente</h2>
+<p>Es una aplicación estática, sin framework ni proceso de compilación:</p>
+<ul>
+<li>HTML, CSS y JavaScript están integrados en <code>index.html</code>.</li>
+<li>El texto se solicita mediante <code>https://node.proyectodescartes.org/api/ia/text</code>.</li>
+<li>Las imágenes se solicitan mediante <code>https://node.proyectodescartes.org/api/ia/image</code>.</li>
+<li>La respuesta textual se transforma en una historia y un cuestionario interactivo en el navegador.</li>
+<li>Los logos institucionales tienen una versión integrada en Base64, por lo que la página puede mantenerse funcional aunque no encuentre los archivos locales de logos.</li>
+<li>La descarga genera otro HTML autónomo con el contenido de la historia y sus estilos.</li>
+</ul>
+<h2>Privacidad y uso responsable</h2>
+<p>El recuerdo escrito se envía a un servicio remoto de inteligencia artificial para generar el texto y la imagen. Antes de usar la app en un taller:</p>
+<ul>
+<li>Explique esta condición a las personas participantes.</li>
+<li>No escriba números de documento, direcciones, teléfonos, contraseñas ni información médica.</li>
+<li>Use nombres de pila o seudónimos cuando la actividad sea pública.</li>
+<li>Pida autorización antes de compartir o publicar una historia.</li>
+<li>Recuerde que una historia generada por IA puede inventar detalles o cambiar el sentido del recuerdo original. Revísela y corríjala conversando con la persona protagonista.</li>
+</ul>
+<p>La aplicación no muestra un sistema propio de cuentas ni un historial en servidor. Las historias generadas permanecen en la pantalla hasta cerrar o recargar la página, salvo que se descarguen como archivo.</p>
+<h2>Solución de problemas</h2>
+<h3>No aparece la historia</h3>
+<ul>
+<li>Compruebe que haya conexión a Internet.</li>
+<li>Espere unos segundos: se generan texto e imagen por separado.</li>
+<li>Recargue la página y pruebe con un recuerdo más corto.</li>
+<li>Si continúa el mensaje de error, el servicio remoto puede estar temporalmente fuera de línea.</li>
+</ul>
+<h3>La ilustración no carga</h3>
+<p>La generación de imágenes depende de un servicio remoto distinto al del texto. La historia puede seguir apareciendo aunque la imagen falle. Revise la conexión o intente nuevamente.</p>
+<h3>El archivo descargado no abre</h3>
+<ul>
+<li>Asegúrese de conservar la extensión <code>.html</code>.</li>
+<li>Ábralo con un navegador, no con un procesador de texto.</li>
+<li>Si se va a compartir, envíe el archivo completo y no copie solamente el texto.</li>
+</ul>
+<h3>Las letras son pequeñas</h3>
+<p>Aumente el zoom del navegador con <code>Ctrl</code> + <code>+</code> o utilice las opciones de accesibilidad del sistema operativo. La interfaz se adapta al tamaño disponible de la pantalla.</p>
+<h2>Mantenimiento y mejoras futuras</h2>
+<p>Antes de publicar una nueva versión conviene verificar especialmente:</p>
+<ul>
+<li>Que los servicios remotos sigan disponibles y acepten los modelos mostrados en el selector.</li>
+<li>Que las opciones del cuestionario puedan seleccionarse con teclado y lectores de pantalla.</li>
+<li>Que cada botón tenga un tamaño cómodo para personas con poca precisión motora.</li>
+<li>Que el contenido generado sea revisado antes de imprimirse o compartirse.</li>
+<li>Que los textos, colores y tamaños se prueben con personas mayores reales.</li>
+</ul>
+<h2>Autoría</h2>
+<p>Diseñado por Juan Guillermo Rivera Berrío para la Escuela de Pensamiento Educativo y Pedagógico de la Institución Universitaria Pascual Bravo. Utiliza tecnología de generación de texto e imágenes mediante las API indicadas en la propia aplicación.</p>
+</div>
+    <footer><p>Exportado con OmniConvert Pro</p></footer>
+</body>
+</html>

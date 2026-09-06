@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento Exportado — OmniConvert Pro</title>
+    <style>
+        :root { --bg:#f1f5f9; --text:#1e293b; --card:#ffffff; }
+        body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); margin:0; padding:15px; min-height:100vh; }
+        .container { max-width:1200px; margin:0 auto; background:var(--card); padding:20px; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); }
+        img,video,iframe { max-width:100%; height:auto; border-radius:8px; }
+        .table-responsive-wrapper { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:1.5rem; border-radius:6px; box-shadow:0 0 0 1px #e2e8f0; }
+        table { width:100%; border-collapse:collapse; min-width:600px; }
+        pre { background:#f8fafc; padding:15px; border-radius:8px; overflow-x:auto; font-size:.9em; border:1px solid #e2e8f0; }
+        footer { text-align:center; margin-top:40px; padding-top:20px; color:#64748b; font-size:.875rem; border-top:1px solid #e2e8f0; }
+        @media(min-width:768px){ body{padding:40px;} .container{padding:50px;} table{min-width:100%;} }
+    </style>
+</head>
+<body>
+    <div class="container"><h1>La música de mi época</h1>
+<p>Aplicación educativa para que las personas mayores puedan recordar, explorar y conversar sobre la música de habla hispana de un año significativo de sus vidas.</p>
+<h2>Propósito</h2>
+<p>La aplicación convierte un año en una experiencia de memoria y aprendizaje. La persona usuaria escribe un año y el asistente genera:</p>
+<ul>
+<li>Una narración sobre la música de habla hispana de ese periodo.</li>
+<li>Cantantes o grupos destacados.</li>
+<li>Canciones representativas.</li>
+<li>Hechos importantes de la historia musical.</li>
+<li>Una ilustración estilo cartoon.</li>
+<li>Un cuestionario interactivo de comprensión lectora.</li>
+</ul>
+<p>El objetivo es estimular los recuerdos, la conversación, la lectura y la participación activa de las personas mayores, sin exigir conocimientos técnicos ni musicales previos.</p>
+<h2>Uso para personas mayores</h2>
+<ol>
+<li>Abra <code>index.html</code> en un navegador moderno.</li>
+<li>Lea el mensaje inicial del asistente.</li>
+<li>Escriba un año de cuatro cifras, por ejemplo <code>1968</code>, <code>1975</code> o <code>1989</code>.</li>
+<li>Pulse <strong>Enviar</strong> o presione la tecla <code>Enter</code>.</li>
+<li>Lea la narración y observe la ilustración generada.</li>
+<li>Responda el cuestionario seleccionando una opción por pregunta.</li>
+<li>Pulse <strong>Evaluar Taller</strong> para conocer el resultado.</li>
+<li>Pulse <strong>Nueva consulta</strong> para comenzar con otro año sin recargar la página.</li>
+</ol>
+<h2>Diseño accesible</h2>
+<p>La interfaz está pensada para facilitar el uso durante actividades de acompañamiento, alfabetización digital y memoria autobiográfica:</p>
+<ul>
+<li>Instrucciones iniciales claras y directas.</li>
+<li>Una sola entrada principal: el año que se desea consultar.</li>
+<li>Mensajes y botones visibles en español.</li>
+<li>Validación que indica cuando el año no tiene cuatro cifras.</li>
+<li>Contraste entre el fondo, el texto y los controles.</li>
+<li>Tipografía sans-serif de lectura sencilla.</li>
+<li>Botón <strong>Nueva consulta</strong> para evitar pasos técnicos como recargar la página.</li>
+<li>Cuestionario visual con opciones grandes y resultados inmediatos.</li>
+<li>Selector de paletas, incluido un modo claro.</li>
+<li>La experiencia puede realizarse con acompañamiento de un familiar, docente o cuidador.</li>
+</ul>
+<p>Se recomienda usar la aplicación en una pantalla con buen tamaño, mantener el zoom del navegador entre 110 % y 125 % cuando sea necesario y leer en voz alta las instrucciones durante actividades grupales.</p>
+<h2>Preferencias disponibles</h2>
+<p>La aplicación permite ajustar:</p>
+<ul>
+<li>Idioma de la interfaz.</li>
+<li>Estilo de la narración.</li>
+<li>Modelo de inteligencia artificial.</li>
+<li>Modelo de imagen: <code>zimage</code>, <code>flux</code>, <code>klein</code> o <code>gptimage</code>.</li>
+<li>Número de preguntas.</li>
+<li>Número de opciones por pregunta.</li>
+<li>Paleta de colores o modo claro.</li>
+</ul>
+<p>Estas preferencias permanecen al iniciar una nueva consulta.</p>
+<h2>Funcionamiento técnico</h2>
+<p>La aplicación está construida como una página web autónoma en <code>index.html</code>, con HTML, CSS y JavaScript integrados. Utiliza los siguientes servicios remotos:</p>
+<ul>
+<li>API de texto: <code>https://node.proyectodescartes.org/api/ia/text</code></li>
+<li>API de imágenes: <code>https://node.proyectodescartes.org/api/ia/image</code></li>
+</ul>
+<p>El prompt enviado al modelo solicita información sobre cantantes, canciones y hechos importantes de la música de habla hispana del año indicado. La respuesta se transforma en una narración y un cuestionario interactivo dentro de la página.</p>
+<p>Para usarla sin conexión a internet sería necesario incorporar un modelo de texto y un generador de imágenes locales; la versión actual requiere conexión para generar el contenido.</p>
+<h2>Consideraciones pedagógicas</h2>
+<p>La aplicación puede utilizarse para:</p>
+<ul>
+<li>Evocar recuerdos asociados a una época de la vida.</li>
+<li>Comparar gustos musicales entre generaciones.</li>
+<li>Practicar comprensión lectora.</li>
+<li>Conversar sobre cambios culturales y tecnológicos.</li>
+<li>Fortalecer la autonomía digital de las personas mayores.</li>
+</ul>
+<p>La información generada por inteligencia artificial debe revisarse y conversarse con la persona usuaria. Cuando un dato histórico o musical sea importante, se recomienda contrastarlo con fuentes confiables.</p>
+<h2>Autoría</h2>
+<p>Proyecto educativo de la Institución Universitaria Pascual Bravo y la Escuela de Pensamiento Educativo y Pedagógico.</p>
+</div>
+    <footer><p>Exportado con OmniConvert Pro</p></footer>
+</body>
+</html>

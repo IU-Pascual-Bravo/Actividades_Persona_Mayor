@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La música de mi época</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style id="main-styles">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0f0f0f;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --border-color: #2a2a2a;
+            --correct-color: #22c55e;
+            --incorrect-color: #ef4444;
+        }
+
+        /* Light Mode Theme */
+        body.light-mode {
+            --bg-primary: #f9fafb;
+            --bg-secondary: #f3f4f6;
+            --bg-tertiary: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --border-color: #d1d5db;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .header,
+        .chat-messages,
+        .chat-input-container,
+        .settings-container select,
+        .chat-input,
+        .download-quiz-btn,
+        .download-clone-btn,
+        .quiz-results,
+        .ai-message .message-content {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Encabezado con distribución estética de logos */
+        .header {
+            padding: 1.25rem 2rem;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            max-width: 1350px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Contenedores con contraste óptimo para ambos temas */
+        .header-logo-left {
+            background: rgba(11, 28, 51, 0.7);
+            padding: 0.4rem 0.85rem;
+            border-radius: 0.65rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        }
+
+        .header-logo-right {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 0.4rem 0.85rem;
+            border-radius: 0.65rem;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-logo img {
+            height: 70px;
+            max-width: 260px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.25s ease;
+        }
+
+        /* Anchura extendida para el logo de la Escuela */
+        .header-logo-right img {
+            max-width: 320px;
+        }
+
+        .header-logo img:hover {
+            transform: scale(1.03);
+        }
+
+        .header-title-wrapper {
+            flex: 1;
+            text-align: center;
+            min-width: 260px;
+        }
+
+        .ai-title {
+            font-size: 2.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 960px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .header-logo img {
+                height: 55px;
+                max-width: 220px;
+            }
+            .header-logo-right img {
+                max-width: 280px;
+            }
+            .ai-title {
+                font-size: 1.7rem;
+            }
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .chat-messages {
+            flex: 1;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem 1rem 0 0;
+            padding: 1.5rem;
+            overflow-y: auto;
+            min-height: 400px;
+            max-height: 70vh;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .message-content {
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            width: 100%;
+        }
+
+        .ai-message .message-content {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+        }
+
+        .user-message {
+            flex-direction: row-reverse;
+        }
+
+        .user-message .message-content {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            max-width: 80%;
+            transition: background 0.3s ease;
+        }
+
+        .settings-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0 auto 1rem auto;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            flex-wrap: wrap;
+        }
+
+        .settings-group {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .settings-container select {
+            padding: 0.45rem 0.6rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        #colorPaletteBtn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 0.45rem 0.9rem;
+            border-radius: 0.375rem;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        #colorPaletteBtn:hover {
+            transform: translateY(-1px);
+        }
+
+        .settings-container label {
+            cursor: pointer;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 1rem 1rem;
+            flex-wrap: wrap;
+        }
+
+        .user-name-input {
+            width: 170px;
+            padding: 0.75rem 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-weight: 500;
+        }
+
+        .user-name-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .chat-input {
+            flex: 1;
+            min-width: 260px;
+            padding: 0.75rem 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .send-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .new-query-btn {
+            padding: 0.75rem 1.25rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--accent-primary);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .new-query-btn:hover {
+            transform: translateY(-1px);
+            background: var(--bg-tertiary);
+        }
+
+        .message-avatar {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+        }
+
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+        }
+
+        .image-display-container {
+            margin-bottom: 1.5rem;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+
+        .image-display-container img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .rich-text-content {
+            line-height: 1.75;
+        }
+
+        .story-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px dashed var(--border-color);
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .story-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .story-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+            align-self: flex-start;
+        }
+
+        .story-generated-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin: 0;
+        }
+
+        .download-clone-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.1rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .download-clone-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+        }
+
+        .ai-heading-2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            border-bottom: 1px solid var(--accent-secondary);
+            margin: 1.75rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .ai-paragraph {
+            margin: 0.85rem 0;
+            text-align: justify;
+        }
+
+        .question-type {
+            color: #888;
+            font-size: 0.85em;
+            font-style: italic;
+            margin-left: 0.5rem;
+        }
+
+        .quiz-container {
+            margin-top: 1.5rem;
+        }
+
+        .question-block {
+            margin-bottom: 1.5rem;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: var(--bg-secondary);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-item {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-item:hover {
+            background-color: var(--bg-tertiary);
+            border-color: var(--accent-primary);
+        }
+
+        .option-item.selected {
+            background-color: var(--accent-primary);
+            border-color: var(--accent-secondary);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-container.graded .option-item.correct {
+            background-color: rgba(34, 197, 94, 0.25) !important;
+            border-color: var(--correct-color) !important;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .quiz-container.graded .option-item.incorrect {
+            background-color: rgba(239, 68, 68, 0.25) !important;
+            border-color: var(--incorrect-color) !important;
+            color: var(--text-primary);
+        }
+
+        body.light-mode .quiz-container.graded .option-item.incorrect {
+            text-decoration: line-through;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .submit-quiz-btn,
+        .download-quiz-btn {
+            flex: 1;
+            min-width: 220px;
+            padding: 0.85rem 1.5rem;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .download-quiz-btn {
+            background: var(--bg-primary);
+            border: 1px solid var(--accent-primary);
+            color: var(--text-primary);
+        }
+
+        .submit-quiz-btn:hover,
+        .download-quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+        }
+
+        .submit-quiz-btn:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .quiz-results {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--accent-primary);
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 600;
+            transition: border-color 0.3s ease;
+        }
+
+        .site-footer {
+            padding: 1.5rem 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body id="page-body">
+    <!-- Encabezado con logos en esquinas izquierda y derecha -->
+    <header class="header">
+        <div class="header-content">
+            <!-- Esquina superior izquierda -->
+            <div class="header-logo header-logo-left" title="Institución Universitaria Pascual Bravo">
+                <img id="logoPascualBravo" alt="Logo Institución Universitaria Pascual Bravo - Acreditados en Alta Calidad">
+            </div>
+
+            <!-- Título central -->
+            <div class="header-title-wrapper">
+             <h1 class="ai-title" id="mainTitle">La música de mi época</h1>
+            </div>
+
+            <!-- Esquina superior derecha (con ancho alargado para texto completo) -->
+            <div class="header-logo header-logo-right" title="Escuela de Pensamiento Educativo y Pedagógico">
+                <img id="logoEscuela" alt="Logo Escuela de Pensamiento Educativo y Pedagógico">
+            </div>
+        </div>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai-message">
+                <div class="message-avatar">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                        alt="Asistente de historia" id="aiAvatar">
+                </div>
+                <div class="message-content" id="initialGreeting">
+                     ¡Hola! Soy tu asistente musical. Dame un año y crearé una narración única para ti, acompañada de una ilustración cartoon y un cuestionario interactivo para poner a prueba tu comprensión lectora.
+                </div>
+            </div>
+        </div>
+        <div class="settings-container">
+            <!-- Idioma -->
+            <div class="settings-group">
+                <label for="languageSelector" id="languageLabel">Idioma:</label>
+                <select id="languageSelector">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
+
+            <!-- Estilo Literario -->
+            <div class="settings-group">
+                <label for="styleSelector" id="styleLabel">Estilo:</label>
+                <select id="styleSelector">
+                    <option value="epico" selected>Épico</option>
+                    <option value="realismo_magico">Realismo Mágico</option>
+                    <option value="comedia_costumbrista">Comedia Costumbrista</option>
+                    <option value="novela_negra">Novela Negra / Policial Clásico</option>
+                    <option value="epistolar">Estilo Epistolar (Carta Íntima)</option>
+                    <option value="cronica">Crónica Histórica / Periodística</option>
+                    <option value="aventuras">Novela de Aventuras Clásica</option>
+                    <option value="romantica">Comedia Romántica Clásica</option>
+                    <option value="misterio">Cuento de Misterio</option>
+                </select>
+            </div>
+
+            <!-- Modelo IA -->
+            <div class="settings-group">
+                <label for="modelSelector" id="modelLabel">Modelo de IA:</label>
+                <select id="modelSelector">
+                    <option value="openai" selected>GPT 5.4</option>
+                    <option value="mistral">Mistral small 4</option>
+                    <option value="deepseek">DeepSeek V4 Flash</option>
+                </select>
+            </div>
+
+            <!-- Modelo de generación de imágenes -->
+            <div class="settings-group">
+                <label for="imageModelSelector" id="imageModelLabel">Modelo de imagen:</label>
+                <select id="imageModelSelector">
+                    <option value="zimage">zimage</option>
+                    <option value="flux" selected>flux</option>
+                    <option value="klein">klein</option>
+                    <option value="gptimage">gptimage</option>
+                </select>
+            </div>
+            
+            <!-- Preguntas -->
+            <div class="settings-group">
+                <label for="numQuestionsSelector" id="numQuestionsLabel">Preguntas:</label>
+                <select id="numQuestionsSelector">
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8" selected>8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+
+            <!-- Opciones -->
+            <div class="settings-group">
+                <label for="numOptionsSelector" id="numOptionsLabel">Opciones:</label>
+                <select id="numOptionsSelector">
+                    <option value="3">3</option>
+                    <option value="4" selected>4</option>
+                </select>
+            </div>
+
+            <button id="colorPaletteBtn">Paleta</button>
+        </div>
+
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" class="chat-input"
+                placeholder="Escribe un año para descubrir la música de esa época..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" class="send-btn" id="sendButton">Enviar</button>
+            <button onclick="startNewQuery()" class="new-query-btn" id="newQueryButton" type="button">Nueva consulta</button>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p id="footerText">Diseñado por Juan Guillermo Rivera Berrío con tecnología Gemini 3.8 Flash y las API de Pollinations.</p>
+    </footer>
+
+    <script>
+        const BACKEND_URL_TEXT = 'https://node.proyectodescartes.org/api/ia/text';
+        const BACKEND_URL_IMAGE = 'https://node.proyectodescartes.org/api/ia/image';
+
+        /* ==========================================================================
+           LOGOS EN BASE64 (Autonomía total para la App y la Historia descargada)
+           ========================================================================== */
+
+        // 1. Logo Pascual Bravo con franja "Acreditados en Alta Calidad" en Base64
+        let logoPascualBravoBase64 = "data:image/svg+xml;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 115" width="460" height="115">
+            <text x="230" y="38" text-anchor="middle" font-family="'Inter', sans-serif" font-size="19" font-weight="700" fill="#ffffff" letter-spacing="2.2">INSTITUCIÓN UNIVERSITARIA</text>
+            <text x="230" y="74" text-anchor="middle" font-family="'Inter', sans-serif" font-size="31" font-weight="900" fill="#ffffff" letter-spacing="1.5">PASCUAL BRAVO</text>
+            <rect x="15" y="86" width="430" height="25" rx="3" fill="#ffd100"/>
+            <text x="230" y="103.5" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="900" fill="#0b1c33" letter-spacing="2.6">ACREDITADOS EN ALTA CALIDAD</text>
+        </svg>`)));
+
+        // 2. Logo Escuela de Pensamiento Educativo y Pedagógico (Alargado a 680px de ancho para evitar cortes de texto)
+        let logoEscuelaBase64 = "data:image/svg+xml;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 160" width="560" height="160">
+            <g transform="translate(10, 0)">
+                <!-- Árbol Cerebral / Circuitos -->
+                <path d="M 80 120 C 60 118 45 110 35 95 C 22 75 30 50 48 42 C 45 28 55 12 72 10 C 88 8 100 20 102 28 C 112 18 128 18 136 28 C 145 38 142 52 140 60 C 155 70 152 95 138 108 C 128 116 110 120 90 120 Z" fill="#ffffff" stroke="#1d2a44" stroke-width="4.5" stroke-linejoin="round"/>
+                
+                <!-- Conexiones y Nodos Tecnológicos -->
+                <circle cx="58" cy="55" r="9" fill="none" stroke="#1d2a44" stroke-width="3"/>
+                <circle cx="58" cy="55" r="4.5" fill="#00a3c4"/>
+                <circle cx="85" cy="40" r="8" fill="none" stroke="#1d2a44" stroke-width="3"/>
+                <circle cx="85" cy="40" r="4" fill="#00a3c4"/>
+                <circle cx="115" cy="55" r="9" fill="none" stroke="#1d2a44" stroke-width="3"/>
+                <circle cx="115" cy="55" r="4.5" fill="#00a3c4"/>
+                <circle cx="70" cy="85" r="8.5" fill="none" stroke="#1d2a44" stroke-width="3"/>
+                <circle cx="70" cy="85" r="4" fill="#00a3c4"/>
+                <circle cx="120" cy="88" r="8.5" fill="none" stroke="#1d2a44" stroke-width="3"/>
+                <circle cx="120" cy="88" r="4" fill="#00a3c4"/>
+                <circle cx="95" cy="72" r="8" fill="none" stroke="#1d2a44" stroke-width="3"/>
+                <circle cx="95" cy="72" r="4" fill="#00a3c4"/>
+
+                <!-- Circuitos y Tronco -->
+                <path d="M 83 48 L 83 120 M 58 64 L 58 85 L 83 95 M 115 64 L 115 88 L 83 100" fill="none" stroke="#00a3c4" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M 80 120 L 80 65" stroke="#f6b800" stroke-width="3.5" stroke-linecap="round"/>
+
+                <!-- Base Libro Abierto -->
+                <path d="M 20 138 Q 85 130 87 148 Q 89 130 154 138 L 154 146 Q 89 138 87 154 Q 85 138 20 146 Z" fill="#00a3c4"/>
+                <path d="M 18 146 Q 85 138 87 154 Q 89 138 156 146 L 152 153 Q 89 146 87 158 Q 85 146 22 153 Z" fill="#1d2a44"/>
+            </g>
+            
+            <!-- Tipografía Institucional con amplio espacio horizontal -->
+            <g transform="translate(178, 0)">
+                <text x="0" y="68" font-family="'Inter', sans-serif" font-size="44" font-weight="900" fill="#1d2a44" letter-spacing="1.5">ESCUELA</text>
+                <text x="0" y="104" font-family="'Inter', sans-serif" font-size="21.5" font-weight="800" fill="#1d2a44" letter-spacing="0.3">DE PENSAMIENTO EDUCATIVO</text>
+                <text x="0" y="136" font-family="'Inter', sans-serif" font-size="21.5" font-weight="800" fill="#1d2a44" letter-spacing="0.3">Y PEDAGÓGICO</text>
+            </g>
+        </svg>`)));
+
+        /**
+         * Carga los logos en pantalla e intenta convertirlos desde archivos locales
+         * (Logo-I.U.Pascual-Bravo-2.png y logo_escuela.png) a Base64 dinámicamente.
+         */
+        async function initLogos() {
+            const imgPB = document.getElementById('logoPascualBravo');
+            const imgEscuela = document.getElementById('logoEscuela');
+
+            if (imgPB) imgPB.src = logoPascualBravoBase64;
+            if (imgEscuela) imgEscuela.src = logoEscuelaBase64;
+
+            const convertImageToBase64 = (srcUrl) => {
+                return new Promise((resolve) => {
+                    const tempImg = new Image();
+                    tempImg.crossOrigin = 'Anonymous';
+                    tempImg.onload = function () {
+                        try {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = tempImg.naturalWidth || tempImg.width;
+                            canvas.height = tempImg.naturalHeight || tempImg.height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(tempImg, 0, 0);
+                            resolve(canvas.toDataURL('image/png'));
+                        } catch (e) {
+                            resolve(null);
+                        }
+                    };
+                    tempImg.onerror = () => resolve(null);
+                    tempImg.src = srcUrl;
+                });
+            };
+
+            try {
+                const pbBase64Local = await convertImageToBase64('Logo-I.U.Pascual-Bravo-2.png');
+                if (pbBase64Local) {
+                    logoPascualBravoBase64 = pbBase64Local;
+                    if (imgPB) imgPB.src = pbBase64Local;
+                }
+
+                const escuelaBase64Local = await convertImageToBase64('logo_escuela.png');
+                if (escuelaBase64Local) {
+                    logoEscuelaBase64 = escuelaBase64Local;
+                    if (imgEscuela) imgEscuela.src = escuelaBase64Local;
+                }
+            } catch (err) {
+                console.log('Usando Base64 autónomos integrados.');
+            }
+        }
+
+        const LITERARY_STYLES = {
+            epico: {
+                label: "Épico",
+                badge: "Relato Épico",
+                desc: "narrativa heroica, grandiosa y legendaria donde el protagonista enfrenta retos mitológicos o épicos con gran valentía"
+            },
+            realismo_magico: {
+                label: "Realismo Mágico",
+                badge: "Realismo Mágico",
+                desc: "tono poético donde lo cotidiano se funde con lo insólito, prodigioso y milagroso de forma natural"
+            },
+            comedia_costumbrista: {
+                label: "Comedia Costumbrista",
+                badge: "Comedia Costumbrista",
+                desc: "humor simpático, enredos familiares y detalles cotidianos tratados con mucha gracia y calidez"
+            },
+            novela_negra: {
+                label: "Novela Negra / Policial Clásico",
+                badge: "Policial / Noir",
+                desc: "atmósfera de suspense, detectives, pistas veladas, tensión nocturna y estilo perspicaz"
+            },
+            epistolar: {
+                label: "Estilo Epistolar (Carta Íntima)",
+                badge: "Carta Íntima",
+                desc: "formato de correspondencia epistolar emotiva, reflexiva y personal dirigida a un ser querido"
+            },
+            cronica: {
+                label: "Crónica Histórica / Periodística",
+                badge: "Crónica Histórica",
+                desc: "tono periodístico riguroso de crónica narrativa de época, precisión descriptiva y testimonio vivo"
+            },
+            aventuras: {
+                label: "Novela de Aventuras Clásica",
+                badge: "Aventuras",
+                desc: "ritmo vibrante de expedición, peligros por superar, descubrimientos y espíritu intrépido"
+            },
+            romantica: {
+                label: "Comedia Romántica Clásica",
+                badge: "Comedia Romántica",
+                desc: "trama afectiva luminosa, chispeante, tierna, con diálogos ingeniosos y encanto sentimental"
+            },
+            misterio: {
+                label: "Cuento de Misterio",
+                badge: "Cuento de Misterio",
+                desc: "atmósfera enigmática, sombras sugerentes, silencios intrigantes y giros inesperados"
+            }
+        };
+
+        const TRANSLATIONS = {
+            es: {
+                title: "La música de mi época",
+                greeting: "¡Hola! Soy tu asistente musical. Dame un año y crearé una narración única para ti, acompañada de una ilustración cartoon y un cuestionario interactivo para poner a prueba tu comprensión lectora.",
+                placeholder: "Escribe un año para descubrir la música de esa época...",
+                sendBtn: "Enviar",
+                newQueryBtn: "Nueva consulta",
+                colorPaletteBtn: "Paleta",
+                languageLabel: "Idioma:",
+                styleLabel: "Estilo:",
+                modelLabel: "Modelo:",
+                imageModelLabel: "Modelo de imagen:",
+                numQuestionsLabel: "Preguntas:",
+                numOptionsLabel: "Opciones:",
+                workshopTitle: "## Taller de Comprensión Lectora",
+                evaluateBtn: "Evaluar Taller",
+                downloadCloneBtn: "📥 Descargar historia",
+                results: "Resultados:",
+                correctAnswers: "Has acertado",
+                of: "de",
+                questions: "preguntas",
+                footer: "Diseñado por Juan Guillermo Rivera Berrío con tecnología Gemini 3.8 Flash y las API de Pollinations.",
+                aiName: "Asistente musical",
+                behavior: `
+INSTRUCCIONES OBLIGATORIAS:
+1. TÍTULO: Escribe en la primera línea exactamente:
+# TÍTULO: [Título atractivo sobre la música de {USER_TOPIC}]
+
+2. INVESTIGACIÓN MUSICAL: Consulta tus conocimientos sobre la música de habla hispana del año {USER_TOPIC}. Identifica y verifica, sin inventar datos, cantantes o grupos destacados, canciones representativas y hechos importantes de la música de esa época. Si el año no corresponde a un periodo con información suficiente, indícalo con honestidad.
+
+3. NARRACIÓN: Relata una narración de 7 párrafos en estilo {STYLE_NAME} ({STYLE_DESC}) que integre de forma clara esos cantantes, canciones y hechos musicales. Empieza directamente con el relato, sin preámbulos.
+
+4. SEPARADOR OBLIGATORIO: Tras el séptimo párrafo escribe exactamente:
+## Taller de Comprensión Lectora
+
+5. CUESTIONARIO OBLIGATORIO: Genera exactamente {QUESTIONS_COUNT} preguntas con el siguiente formato estricto:
+
+EJEMPLO DE ESTRUCTURA QUE DEBES SEGUIR AL PIE DE LA LETRA:
+1. ¿Pregunta de comprensión? (Pregunta Literal) [correct: A]
+A) Primera opción
+B) Segunda opción
+C) Tercera opción
+{FOURTH_OPTION_EXAMPLE}
+
+REGLAS INFLEXIBLES:
+- La etiqueta de la respuesta correcta [correct: LETRA] DEBE ir al final de la línea de la pregunta.
+- Cada opción DEBE empezar en una línea separada con A), B), C){AND_D}.
+- NO uses asteriscos en los números ni viñetas en las opciones.
+- NO agregues conclusiones ni mensajes de despedida al final.
+`
+            },
+            en: {
+                title: "From My Memories to a Story",
+                greeting: "Hello! I'm your story assistant. Give me a memory and I will create a unique story for you, accompanied by a cartoon illustration and an interactive quiz.",
+                placeholder: "Write a memory to turn it into a story...",
+                namePlaceholder: "Your name...",
+                sendBtn: "Send",
+                newQueryBtn: "New query",
+                colorPaletteBtn: "Palette",
+                languageLabel: "Language:",
+                styleLabel: "Style:",
+                modelLabel: "Model:",
+                imageModelLabel: "Image model:",
+                numQuestionsLabel: "Questions:",
+                numOptionsLabel: "Options:",
+                workshopTitle: "## Reading Comprehension Workshop",
+                evaluateBtn: "Evaluate Workshop",
+                downloadCloneBtn: "📥 Download Story",
+                results: "Results:",
+                correctAnswers: "You got",
+                of: "out of",
+                questions: "questions correct",
+                footer: "Designed by Juan Guillermo Rivera Berrío with Gemini 3.8 Flash technology and Pollinations APIs.",
+                aiName: "Story Assistant",
+                behavior: `
+MANDATORY INSTRUCTIONS:
+1. TITLE: On the first line write exactly:
+# TÍTULO: [Catchy title matching the style '{STYLE_NAME}']
+
+2. STORY: Write a 7-paragraph story in {STYLE_NAME} style ({STYLE_DESC}), inspired by: "{USER_TOPIC}".
+   - Start immediately with the story.
+
+3. MANDATORY SEPARATOR: After paragraph 7 write exactly:
+## Reading Comprehension Workshop
+
+4. MANDATORY QUIZ: Generate exactly {QUESTIONS_COUNT} questions using this strict format:
+
+EXAMPLE STRUCTURE TO FOLLOW STRICTLY:
+1. Comprehension question? (Literal Question) [correct: A]
+A) First option
+B) Second option
+C) Third option
+{FOURTH_OPTION_EXAMPLE}
+
+INFLEXIBLE RULES:
+- The tag [correct: LETTER] MUST be placed at the end of each question line.
+- Each option MUST start on its own line with A), B), C){AND_D}.
+- DO NOT use bullet points or markdown asterisks on options.
+- DO NOT add concluding remarks.
+`
+            },
+            fr: {
+                title: "De mes souvenirs à une histoire",
+                greeting: "Bonjour ! Je suis votre assistante d'histoire. Donnez-moi un souvenir et je créerai un récit unique avec une illustration cartoon et un questionnaire interactif.",
+                placeholder: "Écrivez un souvenir...",
+                namePlaceholder: "Votre nom...",
+                sendBtn: "Envoyer",
+                newQueryBtn: "Nouvelle consultation",
+                colorPaletteBtn: "Palette",
+                languageLabel: "Langue:",
+                styleLabel: "Style:",
+                modelLabel: "Modèle:",
+                imageModelLabel: "Modèle d'image:",
+                numQuestionsLabel: "Questions:",
+                numOptionsLabel: "Options:",
+                workshopTitle: "## Atelier de Compréhension de Lecture",
+                evaluateBtn: "Évaluer l'Atelier",
+                downloadCloneBtn: "📥 Télécharger l'histoire",
+                results: "Résultats:",
+                correctAnswers: "Vous avez eu",
+                of: "sur",
+                questions: "questions correctes",
+                footer: "Conçu par Juan Guillermo Rivera Berrío avec la technologie Gemini 3.8 Flash et les API Pollinations.",
+                aiName: "Assistante d'histoire",
+                behavior: `
+INSTRUCTIONS OBLIGATOIRES:
+1. TITRE: Sur la première línea, écrivez exactement:
+# TÍTULO: [Titre attrayant correspondant au style '{STYLE_NAME}']
+
+2. HISTOIRE: Racontez une histoire de 7 paragraphes au style {STYLE_NAME} ({STYLE_DESC}), inspirée de: "{USER_TOPIC}".
+
+3. SÉPARATEUR: Après l'histoire écrivez exactement:
+## Atelier de Compréhension de Lecture
+
+4. QUESTIONNAIRE: Générez exactement {QUESTIONS_COUNT} questions avec ce format strict:
+1. Question posée ? (Question Littérale) [correct: A]
+A) Option A
+B) Option B
+C) Option C
+{FOURTH_OPTION_EXAMPLE}
+`
+            },
+            de: {
+                title: "Von meinen Erinnerungen zu einer Geschichte",
+                greeting: "Hallo! Ich bin Ihre Geschichtsassistentin. Nennen Sie mir eine Erinnerung und ich erstelle eine Geschichte mit Cartoon-Bild und Quiz.",
+                placeholder: "Schreiben Sie eine Erinnerung...",
+                namePlaceholder: "Ihr Name...",
+                sendBtn: "Senden",
+                newQueryBtn: "Neue Abfrage",
+                colorPaletteBtn: "Palette",
+                languageLabel: "Sprache:",
+                styleLabel: "Stil:",
+                modelLabel: "Modell:",
+                imageModelLabel: "Bildmodell:",
+                numQuestionsLabel: "Fragen:",
+                numOptionsLabel: "Optionen:",
+                workshopTitle: "## Leseverständnis-Workshop",
+                evaluateBtn: "Workshop Bewerten",
+                downloadCloneBtn: "📥 Geschichte herunterladen",
+                results: "Ergebnisse:",
+                correctAnswers: "Sie haben",
+                of: "von",
+                questions: "Fragen richtig beantwortet",
+                footer: "Entworfen von Juan Guillermo Rivera Berrío mit Gemini 3.8 Flash Technologie und Pollinations APIs.",
+                aiName: "Geschichtsassistentin",
+                behavior: `
+OBLIGATORISCHE ANWEISUNGEN:
+1. TITEL: In der ersten Zeile schreiben Sie genau:
+# TÍTULO: [Passender Titel zum Stil '{STYLE_NAME}']
+
+2. GESCHICHTE: Erzählen Sie eine Geschichte in 7 Absätzen im Stil {STYLE_NAME} ({STYLE_DESC}), inspiriert von: "{USER_TOPIC}".
+
+3. TRENNZEICHEN: Schreiben Sie genau:
+## Leseverständnis-Workshop
+
+4. FRAGEBOGEN: Generieren Sie genau {QUESTIONS_COUNT} Fragen in folgendem Format:
+1. Frage hier? (Wörtliche Frage) [correct: A]
+A) Option A
+B) Option B
+C) Option C
+{FOURTH_OPTION_EXAMPLE}
+`
+            }
+        };
+
+        const PALETTES = [
+            { name: 'Indigo', accentPrimary: '#6366f1', accentSecondary: '#8b5cf6' },
+            { name: 'Emerald', accentPrimary: '#10b981', accentSecondary: '#34d399' },
+            { name: 'Rose', accentPrimary: '#f43f5e', accentSecondary: '#ec4899' },
+            { name: 'Amber', accentPrimary: '#f59e0b', accentSecondary: '#fbbf24' },
+            { name: 'Sky', accentPrimary: '#38bdf8', accentSecondary: '#0ea5e9' },
+            { name: 'Violet', accentPrimary: '#a78bfa', accentSecondary: '#c084fc' },
+            { name: 'Teal', accentPrimary: '#14b8a6', accentSecondary: '#2dd4bf' },
+            { name: 'Crimson', accentPrimary: '#dc2626', accentSecondary: '#ef4444' },
+            { name: 'Light Mode', theme: 'light', accentPrimary: '#4f46e5', accentSecondary: '#7c3aed' }
+        ];
+        let currentPaletteIndex = 0;
+        let currentLanguage = 'es';
+        const AI_CONFIG = { get name() { return TRANSLATIONS[currentLanguage].aiName; } };
+        let quizCounter = 0;
+
+        function changeColorPalette() {
+            const body = document.getElementById('page-body');
+            currentPaletteIndex = (currentPaletteIndex + 1) % PALETTES.length;
+            const newPalette = PALETTES[currentPaletteIndex];
+
+            if (newPalette.theme === 'light') {
+                body.classList.add('light-mode');
+            } else {
+                body.classList.remove('light-mode');
+            }
+            document.documentElement.style.setProperty('--accent-primary', newPalette.accentPrimary);
+            document.documentElement.style.setProperty('--accent-secondary', newPalette.accentSecondary);
+        }
+
+        document.getElementById('colorPaletteBtn').addEventListener('click', changeColorPalette);
+
+        async function fetchBackendText(systemPrompt, combinedUserPrompt, model) {
+            try {
+                const response = await fetch(BACKEND_URL_TEXT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        system: systemPrompt,
+                        prompt: combinedUserPrompt,
+                        model: model,
+                        json: false
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Network response was not ok');
+                return await response.text();
+            } catch (error) {
+                console.error("Error fetching text:", error);
+                throw error;
+            }
+        }
+
+        async function fetchImageFromBackend(prompt, seed, width = 128, height = 128, model = 'flux') {
+            try {
+                const response = await fetch(BACKEND_URL_IMAGE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        model: model,
+                        seed: seed,
+                        width: width,
+                        height: height
+                    })
+                });
+
+                if (!response.ok) throw new Error('Image fetch failed');
+                const blob = await response.blob();
+                
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.readAsDataURL(blob);
+                });
+            } catch (error) {
+                console.error("Error fetching image:", error);
+                return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+            }
+        }
+
+        async function updateLanguage() {
+            currentLanguage = document.getElementById('languageSelector').value;
+            const t = TRANSLATIONS[currentLanguage];
+
+            document.getElementById('mainTitle').textContent = t.title;
+            document.getElementById('initialGreeting').textContent = t.greeting;
+            document.getElementById('chatInput').placeholder = t.placeholder;
+            document.getElementById('sendButton').textContent = t.sendBtn;
+            document.getElementById('newQueryButton').textContent = t.newQueryBtn;
+            document.getElementById('colorPaletteBtn').textContent = t.colorPaletteBtn;
+            document.getElementById('languageLabel').textContent = t.languageLabel;
+            document.getElementById('styleLabel').textContent = t.styleLabel;
+            document.getElementById('modelLabel').textContent = t.modelLabel;
+            document.getElementById('imageModelLabel').textContent = t.imageModelLabel;
+            document.getElementById('numQuestionsLabel').textContent = t.numQuestionsLabel;
+            document.getElementById('numOptionsLabel').textContent = t.numOptionsLabel;
+            document.getElementById('footerText').textContent = t.footer;
+
+            const avatarSeed = Math.floor(Math.random() * 1000);
+            const imageModel = document.getElementById('imageModelSelector').value;
+            const avatarUrl = await fetchImageFromBackend(t.aiName + ", friendly music expert portrait, cartoon vector style, vibrant colors", avatarSeed, 128, 128, imageModel);
+            const aiAvatarImg = document.getElementById('aiAvatar');
+            aiAvatarImg.src = avatarUrl;
+            aiAvatarImg.alt = t.aiName;
+        }
+
+        document.getElementById('languageSelector').addEventListener('change', updateLanguage);
+
+        function startNewQuery() {
+            const messagesContainer = document.getElementById('chatMessages');
+            const aiAvatar = document.getElementById('aiAvatar');
+            const avatarSrc = aiAvatar.src;
+
+            messagesContainer.innerHTML = `<div class="message ai-message">
+                <div class="message-avatar">
+                    <img src="${avatarSrc}" alt="${AI_CONFIG.name}" id="aiAvatar">
+                </div>
+                <div class="message-content">${TRANSLATIONS[currentLanguage].greeting}</div>
+            </div>`;
+
+            document.getElementById('chatInput').value = '';
+            document.getElementById('chatInput').setCustomValidity('');
+            quizCounter = 0;
+            document.getElementById('chatInput').focus();
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const selectedStyleKey = document.getElementById('styleSelector').value;
+            const styleConfig = LITERARY_STYLES[selectedStyleKey] || LITERARY_STYLES.epico;
+            const imageModel = document.getElementById('imageModelSelector').value;
+
+            const year = chatInput.value.trim();
+            if (!/^\d{4}$/.test(year)) {
+                chatInput.setCustomValidity('Escribe un año válido con cuatro cifras.');
+                chatInput.reportValidity();
+                return;
+            }
+            chatInput.setCustomValidity('');
+            const userName = `Año ${year}`;
+            
+            const studentSeed = Math.floor(Math.random() * 1000);
+            const studentAvatarUrl = await fetchImageFromBackend("vintage musical notes and a colorful record, cartoon style", studentSeed, 128, 128, imageModel);
+            
+            const userDisplayMessage = `Año: ${year}`;
+            addMessage(userDisplayMessage, 'user', { userAvatar: studentAvatarUrl });
+            chatInput.value = '';
+
+            const sceneSeed = Math.floor(Math.random() * 10000);
+            const sceneImagePrompt = `vibrant cartoon illustration, animated movie style, storybook art about Hispanic music in ${year}, singers, songs, vinyl records and musical instruments, style of ${styleConfig.label}, colorful, high quality vector cartoon aesthetic, cinematic lighting`;
+            const imagePromise = fetchImageFromBackend(sceneImagePrompt, sceneSeed, 800, 450, imageModel);
+
+            let aiResponseText;
+            try {
+                aiResponseText = await generateAIResponse(year, userName, styleConfig);
+            } catch (e) {
+                const t = TRANSLATIONS[currentLanguage];
+                aiResponseText = t.greeting.includes("Hola") ? "Error conectando con el servidor. Intenta nuevamente." : "Error connecting to server. Try again.";
+            }
+
+            const finalImageUrl = await imagePromise;
+            const aiAvatarUrl = document.getElementById('aiAvatar').src;
+            
+            addMessage(aiResponseText, 'ai', { 
+                userPrompt: year, 
+                userName: userName,
+                styleBadge: styleConfig.badge,
+                imageUrl: finalImageUrl, 
+                aiAvatar: aiAvatarUrl 
+            });
+        }
+
+        function parseQuestions(quizText, expectedOptionsCount) {
+            const questions = [];
+            const cleanText = quizText.replace(/\r\n/g, '\n');
+
+            const qSplitRegex = /(?:^|\n)\s*(?:###?\s*)?(?:\*\*)?(?:Pregunta|Question|Frage)?\s*(\d+)[\.\:\)]\s*(?:\*\*)?/gi;
+            const matches = [];
+            let m;
+            while ((m = qSplitRegex.exec(cleanText)) !== null) {
+                matches.push({ index: m.index, num: m[1], matchLen: m[0].length });
+            }
+
+            if (matches.length === 0) return [];
+
+            for (let i = 0; i < matches.length; i++) {
+                const start = matches[i].index + matches[i].matchLen;
+                const end = (i + 1 < matches.length) ? matches[i + 1].index : cleanText.length;
+                const block = cleanText.substring(start, end).trim();
+
+                let correctAnswer = '';
+                const correctMatch = block.match(/(?:\[|\()?\s*(?:correct[ao]?|respuesta(?:\s*correcta)?|solution|answer)?\s*:\s*([A-D])\s*(?:\]|\))?/i)
+                                  || block.match(/\[([A-D])\]/i)
+                                  || block.match(/(?:respuesta(?:\s*correcta)?|correct answer)\s*(?:es|is)?\s*[:=\-]?\s*([A-D])\b/i);
+
+                if (correctMatch) {
+                    correctAnswer = correctMatch[1].toUpperCase();
+                }
+
+                const optRegex = /(?:^|\n)\s*(?:[-*•]\s*)?(?:\*\*)?([A-D])[\.\)\:\-]\s*(?:\*\*)?\s*(.*?)(?=(?:\n\s*(?:[-*•]\s*)?(?:\*\*)?[A-D][\.\)\:\-]|\n\s*(?:Respuesta|Correct|Solution)|\n\s*(?:Pregunta|Question|\d+[\.\)])|$))/gis;
+                let optM;
+                const foundOptions = {};
+                while ((optM = optRegex.exec(block)) !== null) {
+                    const letter = optM[1].toUpperCase();
+                    let optText = optM[2].trim()
+                        .replace(/\s*\[correct:?\s*[A-D]?\]/gi, '')
+                        .replace(/\(correcta\)/gi, '')
+                        .trim();
+
+                    if (!correctAnswer && (optM[2].toLowerCase().includes('correcta') || optM[2].toLowerCase().includes('correct'))) {
+                        correctAnswer = letter;
+                    }
+                    foundOptions[letter] = optText;
+                }
+
+                const availableLetters = ['A', 'B', 'C', 'D'].filter(l => foundOptions[l] !== undefined);
+
+                if (availableLetters.length >= 2) {
+                    const firstOptIndex = block.search(/(?:^|\n)\s*(?:[-*•]\s*)?(?:\*\*)?[A-D][\.\)\:\-]/i);
+                    let qTextRaw = (firstOptIndex !== -1 ? block.substring(0, firstOptIndex) : block).trim();
+
+                    qTextRaw = qTextRaw
+                        .replace(/(?:\[|\()?\s*(?:correct[ao]?|respuesta(?:\s*correcta)?|answer)?\s*:\s*[A-D]\s*(?:\]|\))?/gi, '')
+                        .replace(/\[[A-D]\]/g, '')
+                        .trim();
+
+                    let qType = '';
+                    const typeMatch = qTextRaw.match(/\(([^)]*(?:literal|inferencial|cr[ií]tic|comprehension|comprensión|opción|multiple|frage)[^)]*)\)/i);
+                    if (typeMatch) {
+                        qType = typeMatch[0];
+                        qTextRaw = qTextRaw.replace(typeMatch[0], '').trim();
+                    }
+
+                    if (!correctAnswer || !foundOptions[correctAnswer]) {
+                        correctAnswer = availableLetters[0];
+                    }
+
+                    questions.push({
+                        num: matches[i].num,
+                        text: qTextRaw.replace(/^\*+|\*+$/g, '').trim(),
+                        type: qType,
+                        correctAnswer: correctAnswer,
+                        options: availableLetters.map(l => ({ letter: l, text: foundOptions[l] }))
+                    });
+                }
+            }
+
+            return questions;
+        }
+
+        function renderMarkdown(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\*\*(.+?)\*\*/gs, '<strong>$1</strong>')
+                .replace(/`([^`\n]+)`/g, '<code>$1</code>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function formatQuiz(quizText, userPrompt, storyTitle, userName, styleBadge) {
+            quizCounter++;
+            const quizId = `quiz-container-${quizCounter}`;
+            const t = TRANSLATIONS[currentLanguage];
+            const numOptions = parseInt(document.getElementById('numOptionsSelector').value) || 4;
+
+            const questions = parseQuestions(quizText, numOptions);
+
+            let html = `<div class="quiz-container" id="${quizId}">`;
+
+            if (questions.length > 0) {
+                questions.forEach(q => {
+                    html += `<div class="question-block" data-correct-answer="${q.correctAnswer}">
+                                <p class="question-text">${q.num}. ${renderMarkdown(q.text)} ${q.type ? `<span class="question-type">${renderMarkdown(q.type)}</span>` : ''}</p>
+                                <ul class="options-list">`;
+                    q.options.forEach(opt => {
+                        html += `<li class="option-item" data-option="${opt.letter}">${opt.letter}) ${renderMarkdown(opt.text)}</li>`;
+                    });
+                    html += `</ul></div>`;
+                });
+
+                html += `<div class="quiz-actions">
+                            <button class="submit-quiz-btn" onclick="gradeQuiz('${quizId}')">✓ ${t.evaluateBtn}</button>
+                            <button class="download-quiz-btn" data-title="${encodeURIComponent(storyTitle)}" data-badge="${encodeURIComponent(styleBadge || '')}" data-username="${encodeURIComponent(userName)}" data-prompt="${encodeURIComponent(userPrompt)}" onclick="downloadFunctionalClone(this)">${t.downloadCloneBtn}</button>
+                          </div>`;
+            } else {
+                html += `<div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; background: var(--bg-secondary);">
+                            <p><em>${t.greeting.includes("Hola") ? "Cuestionario generado (formato de texto):" : "Generated questions:"}</em></p>
+                            <div style="white-space: pre-wrap; font-size: 0.95em; margin-top: 0.75rem; color: var(--text-secondary);">${renderMarkdown(quizText)}</div>
+                         </div>`;
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function formatRichText(rawText, userPrompt, userName, styleBadge) {
+            const t = TRANSLATIONS[currentLanguage];
+            let text = rawText;
+            
+            let storyTitle = '';
+            const titleRegex = /#?\s*(?:T[IÍ]TULO|TITLE|TITRE|TITEL)?:\s*([^\n\r]+)/i;
+            const titleMatch = text.match(titleRegex);
+            if (titleMatch && titleMatch[1].trim()) {
+                storyTitle = titleMatch[1].replace(/[*_#\[\]]/g, '').trim();
+                text = text.replace(titleRegex, '').trim();
+            } else {
+                const firstLineMatch = text.match(/^#+\s*([^\n\r]+)/);
+                if (firstLineMatch && firstLineMatch[1].length < 90) {
+                    storyTitle = firstLineMatch[1].replace(/[*_#\[\]]/g, '').trim();
+                    text = text.replace(/^#+\s*[^\n\r]+\n?/, '').trim();
+                } else {
+                    storyTitle = userName ? `La Historia de ${userName}` : (currentLanguage === 'es' ? "Relato Inolvidable" : "Unforgettable Tale");
+                }
+            }
+
+            let workshopIndex = -1;
+            const workshopRegex = /(?:^|\n)\s*(?:##+|\*{2,}|_{2,})?\s*(?:Taller|Comprensión|Reading Comprehension|Atelier|Leseverständnis|Cuestionario|Quiz|Preguntas|Questions|Fragen)[^\n]*/i;
+            const matchW = text.match(workshopRegex);
+
+            if (matchW) {
+                workshopIndex = matchW.index;
+            } else {
+                const firstQMatch = text.match(/(?:^|\n)\s*(?:###?\s*)?(?:\*\*)?(?:Pregunta\s*)?1[\.\:\)]\s+/i);
+                if (firstQMatch && firstQMatch.index > 150) {
+                    workshopIndex = firstQMatch.index;
+                }
+            }
+
+            let literaryFragment = text;
+            let quizPart = '';
+
+            if (workshopIndex !== -1) {
+                literaryFragment = text.substring(0, workshopIndex);
+                quizPart = text.substring(workshopIndex);
+                quizPart = quizPart.replace(workshopRegex, '').trim();
+            }
+
+            const activeBadge = styleBadge || 'Relato';
+
+            let headerBarHtml = userPrompt ? `
+                <div class="story-header-bar">
+                    <div class="story-title-group">
+                        <span class="story-badge">✨ ${activeBadge}</span>
+                        <h3 class="story-generated-title">${storyTitle}</h3>
+                    </div>
+                    <button class="download-clone-btn" data-title="${encodeURIComponent(storyTitle)}" data-badge="${encodeURIComponent(activeBadge)}" data-username="${encodeURIComponent(userName)}" data-prompt="${encodeURIComponent(userPrompt)}" onclick="downloadFunctionalClone(this)">
+                        ${t.downloadCloneBtn}
+                    </button>
+                </div>
+            ` : '';
+
+            let fragmentHtml = `<div class="literary-fragment">${literaryFragment.split(/\n\s*\n/).map(p => p.trim() ? `<p class="ai-paragraph">${renderMarkdown(p.trim())}</p>` : '').join('')}</div>`;
+            let quizHtml = '';
+            
+            if (quizPart.trim() && userPrompt) {
+                quizHtml = `<div class="quiz-section">
+                                <h2 class="ai-heading-2">${t.workshopTitle.replace('## ', '')}</h2>
+                                ${formatQuiz(quizPart, userPrompt, storyTitle, userName, activeBadge)}
+                            </div>`;
+            }
+
+            return headerBarHtml + fragmentHtml + quizHtml;
+        }
+
+        function addMessage(message, sender, options = {}) {
+            const { userPrompt, userName, styleBadge, imageUrl, userAvatar, aiAvatar } = options;
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            let imageHtml = '';
+            if (sender === 'ai' && imageUrl) {
+                imageHtml = `<div class="image-display-container"><img src="${imageUrl}" alt="Ilustración estilo cartoon de la historia" loading="lazy"></div>`;
+            }
+            let messageContent = (sender === 'ai') ? formatRichText(message, userPrompt, userName, styleBadge) : message;
+            
+            if (sender === 'user') {
+                const avatarSrc = userAvatar || "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+                messageDiv.innerHTML = `<div class="message-avatar"><img src="${avatarSrc}" alt="Usuario"></div>
+                    <div class="message-content">${messageContent}</div>`;
+            } else {
+                const avatarSrc = aiAvatar || document.getElementById('aiAvatar').src;
+                messageDiv.innerHTML = `<div class="message-avatar"><img src="${avatarSrc}" alt="${AI_CONFIG.name}"></div>
+                    <div class="message-content rich-text-content">${imageHtml}${messageContent}</div>`;
+            }
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        document.getElementById('chatMessages').addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('option-item')) {
+                const quizContainer = e.target.closest('.quiz-container');
+                if (quizContainer && !quizContainer.classList.contains('graded')) {
+                    e.target.parentElement.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                }
+            }
+        });
+
+        function gradeQuiz(quizId) {
+            const quizContainer = document.getElementById(quizId);
+            if (!quizContainer || quizContainer.classList.contains('graded')) return;
+            quizContainer.classList.add('graded');
+            const questionBlocks = quizContainer.querySelectorAll('.question-block');
+            let score = 0;
+            questionBlocks.forEach(block => {
+                const correctAnswer = (block.dataset.correctAnswer || '').trim().toUpperCase();
+                const selectedOption = block.querySelector('.option-item.selected');
+                if (selectedOption) {
+                    if (selectedOption.dataset.option.trim().toUpperCase() === correctAnswer) {
+                        score++;
+                        selectedOption.classList.add('correct');
+                    } else {
+                        selectedOption.classList.add('incorrect');
+                        const correctLi = block.querySelector(`.option-item[data-option="${correctAnswer}"]`);
+                        if (correctLi) correctLi.classList.add('correct');
+                    }
+                } else {
+                    const correctLi = block.querySelector(`.option-item[data-option="${correctAnswer}"]`);
+                    if (correctLi) correctLi.classList.add('correct');
+                }
+            });
+            const submitButton = quizContainer.querySelector('.submit-quiz-btn');
+            if (submitButton) submitButton.disabled = true;
+            const resultsDiv = document.createElement('div');
+            resultsDiv.className = 'quiz-results';
+            const t = TRANSLATIONS[currentLanguage];
+            resultsDiv.innerHTML = `<strong>${t.results}</strong> ${t.correctAnswers} ${score} ${t.of} ${questionBlocks.length} ${t.questions}.`;
+            quizContainer.appendChild(resultsDiv);
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        /**
+         * Descarga la historia generada como archivo autónomo, incrustando los logos en Base64
+         */
+        function downloadFunctionalClone(buttonElement) {
+            const userPrompt = decodeURIComponent(buttonElement.dataset.prompt || '');
+            const userName = decodeURIComponent(buttonElement.dataset.username || '');
+            const styleBadge = decodeURIComponent(buttonElement.dataset.badge || 'Relato');
+            const storyTitle = decodeURIComponent(buttonElement.dataset.title || '') || (userName ? `Historia de ${userName}` : 'Historia');
+            const aiMessageContent = buttonElement.closest('.ai-message .message-content');
+            if (!aiMessageContent) return;
+
+            const t = TRANSLATIONS[currentLanguage];
+            
+            const imgElem = aiMessageContent.querySelector('.image-display-container img');
+            let imageHtml = '';
+            if (imgElem && imgElem.src) {
+                imageHtml = `<div class="image-display-container">
+                    <img src="${imgElem.src}" alt="${storyTitle}">
+                </div>`;
+            }
+
+            const fragmentElem = aiMessageContent.querySelector('.literary-fragment');
+            const fragmentHtml = fragmentElem ? fragmentElem.innerHTML : '';
+
+            const quizSectionElem = aiMessageContent.querySelector('.quiz-section');
+            let quizHtml = '';
+            if (quizSectionElem) {
+                const quizClone = quizSectionElem.cloneNode(true);
+                quizClone.querySelectorAll('.download-quiz-btn, .download-clone-btn').forEach(btn => btn.remove());
+                quizClone.querySelectorAll('.quiz-container').forEach(qc => qc.classList.remove('graded'));
+                quizClone.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+                quizClone.querySelectorAll('.quiz-results').forEach(res => res.remove());
+                quizClone.querySelectorAll('.submit-quiz-btn').forEach(btn => btn.disabled = false);
+                quizHtml = quizClone.innerHTML;
+            }
+
+            const styles = document.getElementById('main-styles').innerHTML;
+            const rootStyles = getComputedStyle(document.documentElement);
+            const accentPrimary = rootStyles.getPropertyValue('--accent-primary').trim();
+            const accentSecondary = rootStyles.getPropertyValue('--accent-secondary').trim();
+            const colorOverrideStyle = `<style>:root { --accent-primary: ${accentPrimary}; --accent-secondary: ${accentSecondary}; }</style>`;
+            const bodyClass = document.getElementById('page-body').className;
+
+            const fileContent = `<!DOCTYPE html>
+<html lang="${currentLanguage}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${storyTitle}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        ${styles}
+        .standalone-card {
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 2.25rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .standalone-meta {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .standalone-meta strong {
+            color: var(--accent-primary);
+        }
+    </style>
+    ${colorOverrideStyle}
+</head>
+<body class="${bodyClass}">
+    <!-- Encabezado con logos autónomos en Base64 -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-logo header-logo-left">
+                <img src="${logoPascualBravoBase64}" alt="Institución Universitaria Pascual Bravo" style="height: 70px; max-width: 260px; object-fit: contain;">
+            </div>
+            <div class="header-title-wrapper">
+                <h1 class="ai-title">${storyTitle}</h1>
+            </div>
+            <div class="header-logo header-logo-right">
+                <img src="${logoEscuelaBase64}" alt="Escuela de Pensamiento Educativo y Pedagógico" style="height: 70px; max-width: 320px; object-fit: contain;">
+            </div>
+        </div>
+    </header>
+
+    <main class="chat-container" style="max-width: 850px;">
+        <div class="standalone-card">
+            <div style="margin-bottom: 0.85rem;">
+                <span class="story-badge">✨ ${styleBadge}</span>
+            </div>
+            <div class="standalone-meta">
+                Protagonista: <strong>${userName}</strong> | Recuerdo original: <em>«${userPrompt}»</em>
+            </div>
+
+            <article class="rich-text-content">
+                ${imageHtml}
+                <div class="literary-fragment">
+                    ${fragmentHtml}
+                </div>
+                <section class="quiz-section">
+                    ${quizHtml}
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>${t.footer}</p>
+    </footer>
+
+    <script>
+        const currentLang = '${currentLanguage}';
+        const t = ${JSON.stringify(t)};
+
+        document.addEventListener('click', function(e) {
+            const option = e.target.closest('.option-item');
+            if (option) {
+                const quizContainer = option.closest('.quiz-container');
+                if (quizContainer && !quizContainer.classList.contains('graded')) {
+                    option.parentElement.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+                    option.classList.add('selected');
+                }
+            }
+        });
+
+        function gradeQuiz(id) {
+            const quiz = document.getElementById(id);
+            if (!quiz || quiz.classList.contains('graded')) return;
+            quiz.classList.add('graded');
+            
+            let score = 0;
+            const questions = quiz.querySelectorAll('.question-block');
+            questions.forEach(q => {
+                const correct = (q.dataset.correctAnswer || '').trim().toUpperCase();
+                const selected = q.querySelector('.option-item.selected');
+                if (selected) {
+                    const chosen = (selected.dataset.option || '').trim().toUpperCase();
+                    if (chosen === correct) {
+                        score++;
+                        selected.classList.add('correct');
+                    } else {
+                        selected.classList.add('incorrect');
+                    }
+                }
+                const correctLi = q.querySelector('.option-item[data-option="' + correct + '"]');
+                if (correctLi) correctLi.classList.add('correct');
+            });
+
+            const submitBtn = quiz.querySelector('.submit-quiz-btn');
+            if (submitBtn) submitBtn.disabled = true;
+
+            let results = quiz.querySelector('.quiz-results');
+            if (!results) {
+                results = document.createElement('div');
+                results.className = 'quiz-results';
+                quiz.appendChild(results);
+            }
+            
+            const pct = Math.round((score / questions.length) * 100);
+            results.innerHTML = '<strong>' + t.results + '</strong> ' + t.correctAnswers + ' ' + score + ' ' + t.of + ' ' + questions.length + ' ' + t.questions + ' (' + pct + '%).';
+
+            const resetBtn = document.createElement('button');
+            resetBtn.className = 'submit-quiz-btn';
+            resetBtn.style.marginTop = '1rem';
+            resetBtn.style.background = 'var(--accent-secondary)';
+            resetBtn.textContent = '🔄 ' + (currentLang === 'es' ? 'Intentar de nuevo' : 'Try again');
+            resetBtn.onclick = function() {
+                quiz.classList.remove('graded');
+                quiz.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+                results.remove();
+                if (submitBtn) submitBtn.disabled = false;
+            };
+            results.appendChild(document.createElement('br'));
+            results.appendChild(resetBtn);
+            results.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    <\/script>
+</body>
+</html>`;
+
+            const blob = new Blob([fileContent], { type: 'text/html;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            const safeFileName = storyTitle.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s_-]/g, '').trim().replace(/\s+/g, '-').toLowerCase() || 'historia';
+            a.download = `${safeFileName}.html`;
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(a.href);
+        }
+
+        async function generateAIResponse(userMessage, userName, styleConfig) {
+            const numQuestions = document.getElementById('numQuestionsSelector').value;
+            const numOptions = document.getElementById('numOptionsSelector').value;
+            const selectedModel = document.getElementById('modelSelector').value;
+
+            const fourthOptionExample = numOptions === '4' ? 'D) Cuarta opción' : '';
+            const andD = numOptions === '4' ? ' y D)' : '';
+
+            let rawBehavior = TRANSLATIONS[currentLanguage].behavior;
+            
+            let instructions = rawBehavior
+                .replace(/{USER_TOPIC}/g, userMessage)
+                .replace(/{STYLE_NAME}/g, styleConfig.label)
+                .replace(/{STYLE_DESC}/g, styleConfig.desc)
+                .replace(/{QUESTIONS_COUNT}/g, numQuestions)
+                .replace(/{FOURTH_OPTION_EXAMPLE}/g, fourthOptionExample)
+                .replace(/{AND_D}/g, andD);
+
+            const combinedUserPrompt = `
+${instructions}
+
+------------------------------------------
+ESTILO LITERARIO: "${styleConfig.label}"
+PROTAGONISTA: "${userName}"
+AÑO DE CONSULTA MUSICAL: "${userMessage}"
+NUMERO DE PREGUNTAS A GENERAR OBLIGATORIAMENTE: ${numQuestions}
+NUMERO DE OPCIONES POR PREGUNTA: ${numOptions}
+`;
+
+            const systemIdentity = `You are ${AI_CONFIG.name}, an expert in Hispanic music, cultural history, storytelling and educational evaluation. Research from your reliable knowledge the singers, songs and important music events for the requested year. You MUST ALWAYS provide both the requested musical narrative and the exact multiple-choice interactive quiz workshop formatted with [correct: X] tag for each question. Never omit the questions or the options.`;
+
+            return await fetchBackendText(systemIdentity, combinedUserPrompt, selectedModel);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initLogos();
+            updateLanguage();
+        });
+    </script>
+</body>
+
+</html>

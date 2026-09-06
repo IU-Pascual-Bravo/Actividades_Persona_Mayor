@@ -1,0 +1,20 @@
+# Procedimiento de migracion: API protegida por backend
+
+El frontend no contiene credenciales del proveedor. Todas las operaciones de IA se envian mediante `POST` al servidor Node.js.
+
+El servidor obtiene la credencial desde `.env` y la anade a las peticiones del proveedor. El navegador solo conoce las rutas del backend.
+
+## Endpoints
+
+- Texto: `POST https://node.proyectodescartes.org/api/ia/text`
+- Imagen: `POST https://node.proyectodescartes.org/api/ia/image`
+- Audio: `POST https://node.proyectodescartes.org/api/ia/audio`
+
+## Cuerpo de texto
+
+```json
+{
+  "prompt": "{prompt_a_enviar}",
+  "model": "openai"
+}
+```

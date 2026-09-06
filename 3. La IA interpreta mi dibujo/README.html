@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento Exportado — OmniConvert Pro</title>
+    <style>
+        :root { --bg:#f1f5f9; --text:#1e293b; --card:#ffffff; }
+        body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); margin:0; padding:15px; min-height:100vh; }
+        .container { max-width:1200px; margin:0 auto; background:var(--card); padding:20px; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); }
+        img,video,iframe { max-width:100%; height:auto; border-radius:8px; }
+        .table-responsive-wrapper { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:1.5rem; border-radius:6px; box-shadow:0 0 0 1px #e2e8f0; }
+        table { width:100%; border-collapse:collapse; min-width:600px; }
+        pre { background:#f8fafc; padding:15px; border-radius:8px; overflow-x:auto; font-size:.9em; border:1px solid #e2e8f0; }
+        footer { text-align:center; margin-top:40px; padding-top:20px; color:#64748b; font-size:.875rem; border-top:1px solid #e2e8f0; }
+        @media(min-width:768px){ body{padding:40px;} .container{padding:50px;} table{min-width:100%;} }
+    </style>
+</head>
+<body>
+    <div class="container"><h1>IA interpreta mi boceto</h1>
+<p>Aplicación educativa para que las personas mayores puedan dibujar o subir un boceto, recibir una descripción mediante inteligencia artificial y generar una imagen a partir de esa idea.</p>
+<h2>Uso previsto</h2>
+<p>La herramienta está diseñada para adultos mayores como una experiencia sencilla, visual y accesible de exploración creativa. No requiere conocimientos técnicos ni una cuenta de inteligencia artificial: las credenciales se gestionan exclusivamente en el backend.</p>
+<h2>Funciones principales</h2>
+<ul>
+<li>Dibujar con ratón, pantalla táctil o tableta.</li>
+<li>Elegir colores desde una paleta amplia o mediante el selector de color.</li>
+<li>Usar la herramienta de relleno y el borrador.</li>
+<li>Deshacer los últimos trazos o rellenos.</li>
+<li>Subir un boceto existente como imagen.</li>
+<li>Analizar el boceto con el endpoint de visión del backend.</li>
+<li>Generar una imagen con modelos autorizados.</li>
+<li>Comparar el boceto y la imagen generada mediante el deslizador.</li>
+<li>Descargar el boceto y la imagen generada con IA.</li>
+</ul>
+<h2>Cómo utilizarla</h2>
+<ol>
+<li>Dibuja una idea en el lienzo o pulsa <strong>Subir Boceto</strong> para cargar una imagen.</li>
+<li>Usa <strong>Borrador</strong>, <strong>Rellenar</strong>, <strong>Deshacer</strong> y la paleta para editarla.</li>
+<li>Pulsa <strong>Analizar tu obra</strong> y espera la descripción del dibujo.</li>
+<li>Elige un estilo y un modelo de imagen.</li>
+<li>Pulsa <strong>Generar con IA</strong>.</li>
+<li>Utiliza el deslizador para comparar ambas imágenes.</li>
+<li>Descarga el boceto o la imagen generada cuando lo desees.</li>
+</ol>
+<h2>Seguridad</h2>
+<p>El frontend no contiene API keys. Todas las solicitudes de texto, visión e imagen se realizan mediante el servidor Node.js configurado en:</p>
+<p><code>https://node.proyectodescartes.org/</code></p>
+<p>La API key se mantiene en las variables de entorno del backend y no se almacena en el navegador.</p>
+<h2>Archivos de imagen</h2>
+<ul>
+<li><code>logo_escuela.png</code>: logo de la Escuela de Pensamiento Educativo y Pedagógico.</li>
+<li><code>logoPB1.png</code>: logo disponible de la Institución Universitaria Pascual Bravo. El frontend también intenta primero <code>logoPB10.png</code> y usa <code>logoPB1.png</code> como respaldo.</li>
+</ul>
+</div>
+    <footer><p>Exportado con OmniConvert Pro</p></footer>
+</body>
+</html>

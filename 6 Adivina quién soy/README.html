@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento Exportado — OmniConvert Pro</title>
+    <style>
+        :root { --bg:#f1f5f9; --text:#1e293b; --card:#ffffff; }
+        body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); margin:0; padding:15px; min-height:100vh; }
+        .container { max-width:1200px; margin:0 auto; background:var(--card); padding:20px; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); }
+        img,video,iframe { max-width:100%; height:auto; border-radius:8px; }
+        .table-responsive-wrapper { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:1.5rem; border-radius:6px; box-shadow:0 0 0 1px #e2e8f0; }
+        table { width:100%; border-collapse:collapse; min-width:600px; }
+        pre { background:#f8fafc; padding:15px; border-radius:8px; overflow-x:auto; font-size:.9em; border:1px solid #e2e8f0; }
+        footer { text-align:center; margin-top:40px; padding-top:20px; color:#64748b; font-size:.875rem; border-top:1px solid #e2e8f0; }
+        @media(min-width:768px){ body{padding:40px;} .container{padding:50px;} table{min-width:100%;} }
+    </style>
+</head>
+<body>
+    <div class="container"><h1>🧩 Adivina quién soy</h1>
+<p>Aplicación web educativa, de un solo archivo (<code>adivina-quien-soy.html</code>),
+diseñada especialmente para el <strong>entrenamiento cognitivo de adultos
+mayores</strong>. El ejercicio invita a reconocer un personaje, un lugar o un
+acontecimiento de una época pasada del siglo XX a partir de pistas, y a
+escribir la respuesta letra por letra.</p>
+<p>Desarrollado por <strong>Juan Guillermo Rivera Berrío</strong> para la
+<strong>Escuela de Pensamiento Educativo y Pedagógico</strong>, en el marco de la
+<strong>Institución Universitaria Pascual Bravo</strong>.</p>
+<hr>
+<h2>1. ¿Para qué sirve?</h2>
+<p>Este ejercicio está inspirado en las dinámicas de <strong>estimulación de la
+memoria a largo plazo</strong> y <strong>reminiscencia</strong> que se usan en programas de
+envejecimiento activo, porque:</p>
+<ul>
+<li>Invita a <strong>recordar hechos, personas y lugares de su propia juventud o
+adultez</strong> (los años 50, 60, 70, 80...), lo cual suele despertar recuerdos
+vívidos y agradables, además de conversación con quien lo acompañe.</li>
+<li>Ejercita la <strong>memoria semántica</strong> (asociar pistas con un nombre) y la
+<strong>memoria de trabajo</strong> (mantener la palabra mientras se completan las
+letras).</li>
+<li>Refuerza la <strong>atención y concentración</strong>, al comparar cada letra escrita
+con la posición correcta.</li>
+<li>Da una sensación de <strong>logro inmediato</strong>, gracias a la retroalimentación
+instantánea (verde/rojo) en cada letra.</li>
+</ul>
+<p>A diferencia de un juego con límite de tiempo o penalizaciones fuertes,
+aquí el objetivo es disfrutar el proceso de recordar, con ayudas
+disponibles en todo momento para que nadie se quede "trabado" sin poder
+avanzar.</p>
+<h2>2. Diseño pensado para personas mayores</h2>
+<ul>
+<li><strong>Letra grande por defecto</strong> (tamaño base de 19px, títulos y pistas aún
+más grandes) para reducir el esfuerzo visual.</li>
+<li><strong>Alto contraste de color</strong>: textos oscuros sobre fondos claros y textos
+claros sobre fondos oscuros.</li>
+<li><strong>Una sola letra por casilla</strong>, con foco automático a la siguiente: no
+hay que hacer clic en cada casilla, solo escribir y el cursor avanza
+solo, lo cual es mucho más simple que arrastrar objetos con el mouse.</li>
+<li><strong>Retroalimentación inmediata y clara</strong>: cada letra se pinta de verde
+(correcta) o rojo (incorrecta) apenas se escribe, sin esperar a completar
+toda la palabra ni leer mensajes largos.</li>
+<li><strong>Nunca se llega a un punto sin salida</strong>: siempre hay pistas adicionales
+disponibles y un botón "Me rindo, mostrar respuesta" que revela la
+palabra sin culpa ni penalización dura, para que la sesión pueda seguir
+fluyendo.</li>
+<li><strong>Botones grandes y espaciados</strong> (altura mínima de ~56px), fáciles de
+presionar incluso con menor precisión motriz o en pantallas táctiles.</li>
+<li><strong>Foco visible al usar el teclado</strong> (para quien navegue con tabulador en
+lugar de mouse) y navegación también posible con las flechas
+izquierda/derecha entre casillas.</li>
+<li><strong>Sin límite de tiempo, sin música ni sonidos súbitos, sin animaciones
+bruscas</strong>: el ritmo lo marca completamente la persona que juega.</li>
+<li><strong>Diseño responsivo</strong>: en pantallas pequeñas (tabletas o celulares) los
+logos y las casillas se reacomodan para seguir siendo grandes y fáciles
+de usar.</li>
+</ul>
+<h2>3. Cómo se usa (guía rápida)</h2>
+<ol>
+<li><strong>Abrir el archivo</strong> <code>adivina-quien-soy.html</code> con doble clic; se abre
+en el navegador predeterminado (Chrome, Edge, Firefox, Safari). No
+requiere instalación ni cuentas.</li>
+<li><strong>Elegir una época</strong> del siglo pasado en la lista desplegable (años 20
+a 90), o la opción "Sorpréndeme" para que la época sea una sorpresa. Se
+recomienda elegir la década que la persona mayor vivió más de cerca
+(por ejemplo, su juventud), para activar recuerdos personales.</li>
+<li><strong>Elegir cuántas rondas</strong> tendrá el juego (entre 3 y 10). Para una
+primera sesión, se sugiere empezar con 3 a 5 rondas para no cansar.</li>
+<li>Presionar <strong>"Comenzar Juego"</strong>. La aplicación pide a un servicio de
+inteligencia artificial que genere personajes, lugares o hechos de esa
+época junto con sus pistas; si no hay conexión a internet, el juego usa
+automáticamente un banco de preguntas de respaldo para que la actividad
+nunca se interrumpa.</li>
+<li>En cada ronda aparece una <strong>etiqueta de categoría</strong> (🧑 Personaje,
+📍 Lugar o 📅 Acontecimiento) y una <strong>primera pista</strong>. Se puede pedir
+hasta <strong>2 pistas adicionales</strong> con el botón "Mostrar otra pista" si la
+persona lo necesita.</li>
+<li><strong>Escribir la respuesta</strong> letra por letra en las casillas: al escribir
+una letra correcta se pone verde y el cursor avanza solo a la
+siguiente; si la letra no es correcta se pone roja y se puede corregir
+con la tecla de retroceso.</li>
+<li>Si la persona no logra recordar la palabra, puede presionar
+<strong>"Me rindo, mostrar respuesta"</strong> para verla y continuar sin frustración.</li>
+<li>Al completar todas las rondas aparece el <strong>puntaje final</strong> y el
+porcentaje de acierto.</li>
+<li>El botón <strong>"Descargar Juego"</strong> guarda una copia del ejercicio en el
+punto exacto en que se encuentra (incluyendo las letras ya escritas)
+como un archivo HTML independiente, útil para continuar después o
+compartirlo con un familiar, cuidador o terapeuta ocupacional.</li>
+</ol>
+<h3>Recomendaciones para quien acompañe la sesión</h3>
+<ul>
+<li>Sentarse junto a la persona, sobre todo las primeras veces, para leer
+las pistas en voz alta si lo prefiere.</li>
+<li>Elegir la época con la persona mayor, dejando que ella misma decida qué
+década quiere recordar.</li>
+<li>Aprovechar cada pista y cada respuesta como punto de partida para
+conversar: "¿Te acuerdas de cuando...?", "¿Qué recuerdas de esa época?".</li>
+<li>No apurar la actividad ni corregir por la persona: dejar que use las
+pistas y el botón de rendirse a su propio ritmo.</li>
+<li>Si una época no genera buenos recuerdos o resulta confusa, cambiarla sin
+problema; el objetivo es disfrutar, no acertar todo.</li>
+</ul>
+<h2>4. Requisitos técnicos</h2>
+<ul>
+<li>Un navegador web moderno (Chrome, Edge, Firefox o Safari).</li>
+<li>Conexión a internet <strong>solo</strong> para generar preguntas nuevas con IA sobre
+la época elegida. Si no hay conexión, o el servicio no responde, la
+aplicación usa automáticamente un banco de personajes, lugares y hechos
+predefinidos para cada década (20 a 90).</li>
+<li>No requiere instalación, registro ni claves de acceso: es un único
+archivo HTML autocontenido (incluye los logos institucionales
+integrados).</li>
+</ul>
+<h2>5. Estructura del archivo</h2>
+<p>Todo el proyecto vive en <code>adivina-quien-soy.html</code>:</p>
+<ul>
+<li><strong>HTML</strong>: encabezado con los logos institucionales, formulario de
+configuración (época y número de rondas), área de juego (categoría,
+pistas, casillas de letras) y resultados finales.</li>
+<li><strong>CSS</strong> (dentro de <code>&lt;style&gt;</code>): paleta de colores institucional con
+fondos degradados, tipografía ampliada y estilos accesibles, coherente
+con el resto de juegos de la serie.</li>
+<li><strong>JavaScript</strong> (dentro de <code>&lt;script&gt;</code>): lógica del juego (generación de
+rondas, verificación letra por letra, sistema de pistas y puntaje,
+descarga del clon funcional) y la conexión con la API de texto de
+Pollinations AI para generar las preguntas.</li>
+</ul>
+<h2>6. Créditos</h2>
+<p>Diseñado por <strong>Juan Guillermo Rivera Berrío</strong>, con generación de
+contenido vía Pollinations AI, para la Escuela de Pensamiento Educativo y
+Pedagógico de la Institución Universitaria Pascual Bravo.</p>
+</div>
+    <footer><p>Exportado con OmniConvert Pro</p></footer>
+</body>
+</html>
