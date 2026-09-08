@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento Exportado — OmniConvert Pro</title>
+    <style>
+        :root { --bg:#f1f5f9; --text:#1e293b; --card:#ffffff; }
+        body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); margin:0; padding:15px; min-height:100vh; }
+        .container { max-width:1200px; margin:0 auto; background:var(--card); padding:20px; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); }
+        img,video,iframe { max-width:100%; height:auto; border-radius:8px; }
+        .table-responsive-wrapper { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:1.5rem; border-radius:6px; box-shadow:0 0 0 1px #e2e8f0; }
+        table { width:100%; border-collapse:collapse; min-width:600px; }
+        pre { background:#f8fafc; padding:15px; border-radius:8px; overflow-x:auto; font-size:.9em; border:1px solid #e2e8f0; }
+        footer { text-align:center; margin-top:40px; padding-top:20px; color:#64748b; font-size:.875rem; border-top:1px solid #e2e8f0; }
+        @media(min-width:768px){ body{padding:40px;} .container{padding:50px;} table{min-width:100%;} }
+    </style>
+</head>
+<body>
+    <div class="container"><h1>🧓 Chatbot para Personas Mayores</h1>
+<p>Aplicación web (un único archivo <code>chatbot.html</code>) que ofrece un <strong>acompañante conversacional pensado, diseñado y calibrado para personas mayores</strong>: combate la soledad, ejercita la memoria y ofrece entretenimiento terapéutico a través de una interfaz simple, cálida y accesible.</p>
+<p>Proyecto desarrollado para la <strong>Institución Universitaria Pascual Bravo</strong> — Escuela de Pensamiento Educativo y Pedagógico.</p>
+<hr>
+<h2>👵👴 Enfoque en la persona mayor</h2>
+<p>Todo el diseño de esta app gira alrededor de las necesidades de una persona mayor, no de un usuario genérico:</p>
+<ul>
+<li><strong>Compañía, no solo respuestas.</strong> El asistente no está configurado como un buscador de información: se presenta como un <em>acompañante empático y estimulador cognitivo</em>, interesado genuinamente en el día a día del usuario (su ánimo, sus comidas, su música, sus recuerdos).</li>
+<li><strong>Avatar de persona mayor.</strong> El chatbot conversa a través de un avatar que representa a una persona mayor sonriente y cálida (una figura de "abuelo/abuela" cercana), generado automáticamente con IA y con un ícono de respaldo mientras se genera.</li>
+<li><strong>Estimulación cognitiva y de memoria (reminiscencia).</strong> El asistente dirige la charla hacia temas nostálgicos y agradables (infancia, música de juventud, películas antiguas, historia) y recuerda detalles de la conversación para darle continuidad, como ejercicio de memoria.</li>
+<li><strong>Ritmo pausado y sin presión.</strong> El lenguaje evitado es el técnico o apresurado: frases claras, cortas y cálidas. Si la persona mayor muestra cansancio o quiere despedirse, el asistente cierra la conversación de inmediato, sin insistir con más preguntas.</li>
+<li><strong>Juegos mentales suaves.</strong> Incluye un módulo de juegos de palabras (por ejemplo, palabras desordenadas por temática) como entrenamiento cerebral entretenido y no exigente.</li>
+<li><strong>Salvaguardas de bienestar.</strong> El asistente hace, de forma natural, preguntas que ayudan a detectar tempranamente señales de pérdida de memoria o de aislamiento/depresión, y ante señales de riesgo prioriza reconectar a la persona con su red familiar real o activar protocolos de alerta, en lugar de validar el aislamiento. Siempre se presenta como un "compañero virtual de Inteligencia Artificial", sin fingir ser humano.</li>
+<li><strong>Accesibilidad pensada para ojos y oídos que se cansan más rápido:</strong><ul>
+<li>Texto leído en voz alta (síntesis de voz en español) para quienes prefieren escuchar antes que leer, con controles grandes de <strong>reproducir / pausar / detener</strong>.</li>
+<li>Botones grandes, redondeados, con colores contrastantes y sombra, fáciles de identificar y de tocar.</li>
+<li>Opción de <strong>mostrar u ocultar las imágenes</strong> del chat, para no sobrecargar visualmente a quien lo prefiera más simple.</li>
+<li>Interfaz limpia, con una sola columna de conversación y botones de preguntas frecuentes ("¿Qué es?", "Importancia", "Curiosidades") para quienes prefieren tocar en lugar de escribir.</li>
+</ul>
+</li>
+<li><strong>Recuerdo imprimible.</strong> Botón para exportar toda la conversación a PDF, útil para que un familiar o cuidador revise después cómo estuvo la charla.</li>
+</ul>
+<hr>
+<h2>✨ Interfaz</h2>
+<ul>
+<li>Barra superior con los logos de la <strong>Institución Universitaria Pascual Bravo</strong> y la <strong>Escuela de Pensamiento Educativo y Pedagógico</strong>, y el título <strong>"Chatbot para personas mayores"</strong> centrado, con degradados de color animados y un subtítulo dinámico que rota mensajes de bienvenida.</li>
+<li>Burbujas de chat con degradados suaves para diferenciar claramente los mensajes del usuario y del asistente.</li>
+<li>Botones de audio y PDF rediseñados con colores por función (verde cuando el audio está activo, ámbar para pausar, rojo para detener/exportar), para que la persona mayor identifique de un vistazo qué hace cada uno.</li>
+<li>Imágenes de apoyo generadas en <strong>estilo cartoon</strong>, con instrucciones explícitas para que la IA nunca incluya texto, letras o números ilegibles dentro de la imagen.</li>
+</ul>
+<hr>
+<h2>⚙️ Funcionalidades técnicas</h2>
+<div class="table-responsive-wrapper"><table>
+<thead>
+<tr>
+<th>Función</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chat con IA</td>
+<td>Conversación en español vía API de texto (modelo configurable, por defecto <code>openai</code>)</td>
+</tr>
+<tr>
+<td>Voz</td>
+<td>Lectura en voz alta de las respuestas (Web Speech API, voz en español) con reproducir/pausar/detener</td>
+</tr>
+<tr>
+<td>Imágenes</td>
+<td>Generación opcional de imágenes cartoon de apoyo por cada respuesta (activable/desactivable)</td>
+</tr>
+<tr>
+<td>Avatar del bot</td>
+<td>Generado por IA como persona mayor amable; con ícono de respaldo mientras carga</td>
+</tr>
+<tr>
+<td>Matemáticas</td>
+<td>Renderizado de fórmulas con MathJax (notación LaTeX)</td>
+</tr>
+<tr>
+<td>Exportar PDF</td>
+<td>Descarga de la conversación completa en PDF</td>
+</tr>
+<tr>
+<td>Preguntas frecuentes</td>
+<td>Botones rápidos de "¿Qué es?", "Importancia" y "Curiosidades" sobre el tema configurado</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2>🔧 Configuración rápida</h2>
+<p>Dentro de <code>chatbot.html</code>, al inicio del bloque <code>&lt;script&gt;</code>, se pueden ajustar variables como:</p>
+<pre><code class="language-js">var TOPIC = "Persona mayor";   // Tema/nombre del asistente
+var PERSONA = "";              // Rasgos de personalidad adicionales del avatar
+var USE_IMAGES = true;         // Mostrar imágenes por defecto (también editable desde la interfaz)
+var USE_MATHJAX = true;        // Activar renderizado de fórmulas matemáticas
+</code></pre>
+<p>No requiere instalación: es un único archivo HTML que se abre directamente en el navegador.</p>
+<hr>
+<p><em>Diseñado por Juan Guillermo Rivera Berrío, con tecnología Claude Sonnet 5.</em></p>
+</div>
+    <footer><p>Exportado con OmniConvert Pro</p></footer>
+</body>
+</html>

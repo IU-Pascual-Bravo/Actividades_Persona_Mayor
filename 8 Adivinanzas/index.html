@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adivinanzas: Cuestionario</title>
+<style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    :root {
+      --color-primary: #4a148c;
+      --color-secondary: #7e57c2;
+      --color-hover: #673ab7;
+      --color-gradient-start: #6a11cb;
+      --color-gradient-end: #2575fc;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+      gap: 20px;
+      transition: background 0.5s ease;
+    }
+
+    #setup-container,
+    #quiz-container {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      width: clamp(300px, 95%, 1000px);
+      max-width: 1000px;
+    }
+
+    #setup-container {
+      padding: 30px;
+      text-align: center;
+    }
+
+    #setup-title {
+      color: var(--color-primary);
+      margin-top: 0;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      font-family: 'Poppins', sans-serif;
+      box-sizing: border-box;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .primary-btn {
+      background-color: var(--color-primary);
+    }
+
+    .secondary-btn {
+      background-color: var(--color-secondary);
+      margin-top: 15px;
+    }
+
+    .primary-btn:hover:not(:disabled),
+    .secondary-btn:hover:not(:disabled) {
+      background-color: var(--color-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .primary-btn:disabled {
+      background-color: #9e9e9e;
+      cursor: not-allowed;
+    }
+
+    .question-header {
+      background-color: var(--color-primary);
+      color: #fff;
+      padding: 20px;
+      font-size: clamp(1.1em, 3vw, 1.4em);
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      line-height: 1.3;
+      word-wrap: break-word;
+      hyphens: auto;
+    }
+
+    .question-content {
+      display: flex;
+      padding: 20px;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .question-image-container {
+      flex: 0 0 auto;
+      width: clamp(200px, 40%, 350px);
+      min-width: 200px;
+    }
+
+    .question-image {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #f0f0f0;
+      display: block;
+    }
+
+    .image-controls-container {
+      margin-top: 10px;
+    }
+
+    .image-prompt-input {
+      width: 100%;
+      padding: 8px;
+      font-size: clamp(0.7em, 2vw, 0.9em);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      box-sizing: border-box;
+    }
+
+    .regenerate-image-btn {
+      width: 100%;
+      padding: 8px;
+      background-color: var(--color-secondary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: clamp(0.8em, 2vw, 0.95em);
+      transition: background-color 0.3s;
+    }
+
+    .regenerate-image-btn:hover {
+      background-color: var(--color-hover);
+    }
+
+    .options {
+      flex: 1;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      min-width: 0;
+    }
+
+    .options li {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .options label {
+      display: block;
+      padding: 12px 15px;
+      background-color: var(--color-secondary);
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: clamp(0.9em, 2.5vw, 1.1em);
+      font-weight: 600;
+      word-wrap: break-word;
+      hyphens: auto;
+      line-height: 1.4;
+    }
+
+    .options label:hover {
+      background-color: var(--color-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    input[type="radio"]:checked+label {
+      background-color: var(--color-hover);
+    }
+
+    .correct {
+      background-color: #4caf50 !important;
+    }
+
+    .incorrect {
+      background-color: #f44336 !important;
+    }
+
+    .btn-container {
+      padding: 0 20px 20px 20px;
+    }
+
+    .quiz-progress-header {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 18px 25px;
+      border-bottom: 3px solid var(--color-primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-text {
+      text-align: center;
+      font-weight: 700;
+      font-size: clamp(1em, 2.8vw, 1.2em);
+      color: var(--color-primary);
+      margin-bottom: 12px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .progress-container {
+      background-color: #e0e0e0;
+      height: 14px;
+      width: 100%;
+      border-radius: 7px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+      border: 1px solid #d0d0d0;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 7px;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .timer-container {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+      padding: 15px 20px;
+      border-top: 2px solid #f39c12;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .timer-text {
+      text-align: center;
+      font-weight: 700;
+      font-size: clamp(0.9em, 2.5vw, 1.1em);
+      color: #d68910;
+      margin-bottom: 8px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .timer-bar-container {
+      background-color: #f8d7da;
+      height: 8px;
+      width: 100%;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #f5c6cb;
+    }
+
+    .timer-bar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #28a745, #ffc107, #dc3545);
+      transition: width 0.1s linear;
+      border-radius: 4px;
+    }
+
+    .timer-warning {
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    #result {
+      text-align: center;
+      padding: 30px;
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Estilos para el clon descargado */
+    .downloaded-quiz .question.hidden,
+    .downloaded-quiz .result-screen.hidden {
+      display: none;
+    }
+
+    .downloaded-quiz .question {
+      border-bottom: none;
+    }
+
+    .downloaded-btn-container {
+      padding: 20px;
+    }
+
+    /* Responsive breakpoints */
+    @media (max-width: 1200px) {
+      .question-image-container {
+        width: clamp(180px, 35%, 300px);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .question-content {
+        gap: 15px;
+        padding: 15px;
+      }
+
+      .question-image-container {
+        width: clamp(160px, 32%, 250px);
+      }
+
+      .options label {
+        padding: 10px 12px;
+        font-size: clamp(0.85em, 2.8vw, 1em);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .question-content {
+        gap: 12px;
+        padding: 12px;
+      }
+
+      .question-image-container {
+        width: clamp(140px, 30%, 200px);
+      }
+
+      .question-header {
+        padding: 15px;
+        font-size: clamp(1em, 3.5vw, 1.2em);
+      }
+    }
+
+    @media (max-width: 550px) {
+      .question-content {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .question-image-container {
+        width: clamp(200px, 70%, 300px);
+        max-width: 300px;
+      }
+
+      .options {
+        width: 100%;
+      }
+
+      .options label {
+        font-size: clamp(0.9em, 4vw, 1.1em);
+        padding: 12px 15px;
+      }
+
+      .quiz-progress-header {
+        padding: 12px 15px;
+      }
+
+      .progress-text {
+        font-size: clamp(0.8em, 3.5vw, 1em);
+        margin-bottom: 8px;
+      }
+
+      .timer-container {
+        padding: 12px 15px;
+      }
+
+      .timer-text {
+        font-size: clamp(0.8em, 3.5vw, 1em);
+        margin-bottom: 6px;
+      }
+
+      .app-header {
+        justify-content: center;
+      }
+
+      .app-header .logo-left,
+      .app-header .logo-right {
+        height: 36px;
+      }
+
+      .progress-header-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #new-quiz-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      body {
+        padding: 10px;
+      }
+
+      .question-content {
+        padding: 10px;
+      }
+
+      .question-image-container {
+        width: clamp(180px, 80%, 250px);
+      }
+
+      .question-header {
+        padding: 12px;
+        font-size: clamp(0.95em, 4vw, 1.1em);
+      }
+
+      .options label {
+        font-size: clamp(0.85em, 4.5vw, 1em);
+        padding: 10px 12px;
+      }
+
+      .quiz-progress-header {
+        padding: 10px 12px;
+      }
+
+      .progress-text {
+        font-size: clamp(0.75em, 4vw, 0.9em);
+        margin-bottom: 6px;
+      }
+
+      .progress-container {
+        height: 10px;
+      }
+
+      .timer-container {
+        padding: 10px 12px;
+      }
+
+      .timer-text {
+        font-size: clamp(0.75em, 4vw, 0.9em);
+        margin-bottom: 5px;
+      }
+
+      .timer-bar-container {
+        height: 6px;
+      }
+    }
+
+    /* Loading overlay para descarga */
+    .download-loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .download-loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-top: 5px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .download-progress-text {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+
+    .download-progress-bar {
+      width: 300px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .download-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
+      transition: width 0.3s ease;
+      border-radius: 5px;
+    }
+   
+
+    /* Estilos adicionales para la app de Adivinanzas */
+    .hidden { display: none !important; }
+
+    .app-header {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      width: clamp(300px, 95%, 1000px);
+      max-width: 1000px;
+      padding: 15px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .app-header .logo-left,
+    .app-header .logo-right {
+      flex: 0 0 auto;
+      height: clamp(40px, 6vw, 60px);
+      max-width: 160px;
+      object-fit: contain;
+    }
+
+    .app-header h1 {
+      margin: 0;
+      color: var(--color-primary);
+      font-size: clamp(1.2em, 3vw, 1.7em);
+      text-align: center;
+      flex: 1 1 auto;
+    }
+
+    .progress-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .progress-header-row .progress-text {
+      margin-bottom: 0;
+      flex: 1 1 auto;
+      text-align: left;
+    }
+
+    #new-quiz-btn {
+      width: auto;
+      padding: 10px 18px;
+      margin-top: 0;
+      white-space: nowrap;
+      font-size: clamp(0.75em, 2vw, 0.95em);
+    }
+
+    .loading-message {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2em;
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <img src="logoPB1.png" alt="Institución Universitaria Pascual Bravo" class="logo-left">
+  <h1>🧩 Adivinanzas</h1>
+  <img src="logo_escuela.png" alt="Escuela de Pensamiento Educativo y Pedagógico" class="logo-right">
+</div>
+
+<div id="quiz-container">
+  <div class="quiz-progress-header">
+    <div class="progress-header-row">
+      <div class="progress-text" id="progress-text">Pregunta 1 de 15</div>
+      <button id="new-quiz-btn" class="secondary-btn">🔄 Nuevo cuestionario</button>
+    </div>
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <div id="questions-wrapper">
+    <p class="loading-message">Cargando cuestionario...</p>
+  </div>
+
+  <div class="timer-container" id="timer-container" style="display: none;">
+    <div class="timer-text" id="timer-text">Tiempo: 60s</div>
+    <div class="timer-bar-container">
+      <div class="timer-bar" id="timer-bar" style="width: 100%;"></div>
+    </div>
+  </div>
+
+  <div class="result-screen hidden">
+    <h2>¡Cuestionario completado!</h2>
+    <p id="final-score-text"></p>
+    <p id="final-message"></p>
+    <div class="btn-container" style="padding-top: 20px;">
+      <button class="primary-btn" id="restart-btn">🔄 Nuevo cuestionario</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Repositorio de 50 adivinanzas
+const QUESTIONS_POOL = [{"id":1,"adivinanza":"Oro parece, plata no es. Quien no lo adivine, bien tonto es.","opciones":["Plátano","Naranja","Manzana"],"respuesta_correcta":"Plátano"},{"id":2,"adivinanza":"Blanca por dentro, verde por fuera. Si quieres que te lo diga, espera.","opciones":["Pera","Sandía","Coco"],"respuesta_correcta":"Pera"},{"id":3,"adivinanza":"Tengo agujas y no sé coser; tengo números y no sé leer.","opciones":["Reloj","Teléfono","Calendario"],"respuesta_correcta":"Reloj"},{"id":4,"adivinanza":"Vuelo sin alas, lloro sin ojos. ¿Qué soy?","opciones":["Nube","Pájaro","Cometa"],"respuesta_correcta":"Nube"},{"id":5,"adivinanza":"Cuanto más le quitas, más grande se vuelve.","opciones":["Un agujero","Una montaña","Una caja"],"respuesta_correcta":"Un agujero"},{"id":6,"adivinanza":"Tiene dientes y no come, tiene cabeza y no es persona.","opciones":["Ajo","Peine","Martillo"],"respuesta_correcta":"Ajo"},{"id":7,"adivinanza":"Todos me quieren para descansar. Si ya te lo he dicho, no me busques más.","opciones":["Silla","Cama","Mesa"],"respuesta_correcta":"Cama"},{"id":8,"adivinanza":"Sube llena y baja vacía. Si no se da prisa, la sopa se enfría.","opciones":["Cuchara","Botella","Taza"],"respuesta_correcta":"Cuchara"},{"id":9,"adivinanza":"Tiene hojas y no es árbol, tiene letras y no sabe hablar.","opciones":["Libro","Cuaderno","Periódico"],"respuesta_correcta":"Libro"},{"id":10,"adivinanza":"Cuatro patas tiene y no puede andar; sobre ella puedes comer y trabajar.","opciones":["Mesa","Silla","Cama"],"respuesta_correcta":"Mesa"},{"id":11,"adivinanza":"En el agua se hace y en el agua se deshace.","opciones":["Sal","Azúcar","Hielo"],"respuesta_correcta":"Sal"},{"id":12,"adivinanza":"Tengo capa sobre capa; si me las quieres quitar, nadie se libra de llorar.","opciones":["Cebolla","Ajo","Lechuga"],"respuesta_correcta":"Cebolla"},{"id":13,"adivinanza":"Verde por fuera, roja por dentro, y con semillas negras en el centro.","opciones":["Sandía","Melón","Fresa"],"respuesta_correcta":"Sandía"},{"id":14,"adivinanza":"Siempre mirando al sol y no soy un caracol. Mi fruto tiene pipas y mi flor es amarilla.","opciones":["Girasol","Rosa","Margarita"],"respuesta_correcta":"Girasol"},{"id":15,"adivinanza":"Chiquito como un ratón, cuida la casa como un león.","opciones":["Candado","Perro","Llave"],"respuesta_correcta":"Candado"},{"id":16,"adivinanza":"Tengo cuello pero no cabeza, tengo cuerpo pero no brazos.","opciones":["Botella","Jarra","Vaso"],"respuesta_correcta":"Botella"},{"id":17,"adivinanza":"Una señorita muy señoreada, siempre va en coche y siempre va mojada.","opciones":["Lengua","Cuchara","Esponja"],"respuesta_correcta":"Lengua"},{"id":18,"adivinanza":"Nace en el campo, se muele en el molino y se come en la mesa.","opciones":["Pan","Arroz","Trigo"],"respuesta_correcta":"Pan"},{"id":19,"adivinanza":"Vuela sin alas, silba sin boca, pega sin manos y no se le toca.","opciones":["Viento","Humo","Rayo"],"respuesta_correcta":"Viento"},{"id":20,"adivinanza":"Camina sin patas, vuela sin alas, habla sin boca. ¿Qué es?","opciones":["Carta","Avión","Eco"],"respuesta_correcta":"Carta"},{"id":21,"adivinanza":"Canta en la orilla, vive en el agua, no es pescado ni es cigarra.","opciones":["Rana","Pato","Grillo"],"respuesta_correcta":"Rana"},{"id":22,"adivinanza":"Tengo copa y no soy árbol, tengo ala y no soy ave.","opciones":["Sombrero","Copa","Avión"],"respuesta_correcta":"Sombrero"},{"id":23,"adivinanza":"En el mar no me mojo, en el fuego no me quemo.","opciones":["Sombra","Pez","Hielo"],"respuesta_correcta":"Sombra"},{"id":24,"adivinanza":"Si me nombras, desaparezco. ¿Qué soy?","opciones":["Silencio","Sombra","Eco"],"respuesta_correcta":"Silencio"},{"id":25,"adivinanza":"Tengo dientes pero no muerdo, arreglo el cabello de todos.","opciones":["Peine","Cepillo","Tijeras"],"respuesta_correcta":"Peine"},{"id":26,"adivinanza":"Tiene llaves pero no abre cerrojos, tiene notas pero no escribe cartas.","opciones":["Piano","Guitarra","Teléfono"],"respuesta_correcta":"Piano"},{"id":27,"adivinanza":"Cae de la torre y no se mata, cae al agua y se desbarata.","opciones":["Papel","Piedra","Moneda"],"respuesta_correcta":"Papel"},{"id":28,"adivinanza":"No soy ave pero vuelo, no soy pez pero me sumerjo, tengo alas de metal y por las nubes me deslizo.","opciones":["Avión","Pájaro","Cohete"],"respuesta_correcta":"Avión"},{"id":29,"adivinanza":"Tengo ojos pero no veo, vivo bajo la tierra y soy alargada y naranja.","opciones":["Zanahoria","Papa","Rábano"],"respuesta_correcta":"Zanahoria"},{"id":30,"adivinanza":"Te la digo y no me entiendes, te la repito y no me atiendes.","opciones":["Tela","Lana","Seda"],"respuesta_correcta":"Tela"},{"id":31,"adivinanza":"Me rompen para usarme, sin mí no hay tortilla ni pastel; blanco o marrón puede ser mi cascarón.","opciones":["Huevo","Nuez","Piedra"],"respuesta_correcta":"Huevo"},{"id":32,"adivinanza":"Cuanto más vivo, más pequeña me vuelvo, y al final de mi vida me apago sola.","opciones":["Vela","Persona","Árbol"],"respuesta_correcta":"Vela"},{"id":33,"adivinanza":"Sirvo para subir y bajar de piso, pero yo nunca me muevo de mi lugar.","opciones":["Escalera","Ascensor","Rampa"],"respuesta_correcta":"Escalera"},{"id":34,"adivinanza":"Te muestro tal cual eres, pero nunca te toco ni te hablo.","opciones":["Espejo","Foto","Sombra"],"respuesta_correcta":"Espejo"},{"id":35,"adivinanza":"Cuando llueve, me abren; cuando escampa, me cierran y me guardan.","opciones":["Paraguas","Sombrilla","Impermeable"],"respuesta_correcta":"Paraguas"},{"id":36,"adivinanza":"De noche brillo sin luz propia, y cambio de forma cada mes.","opciones":["Luna","Sol","Estrella"],"respuesta_correcta":"Luna"},{"id":37,"adivinanza":"Brillo en el cielo de noche y tengo puntas, aunque no soy una flor.","opciones":["Estrella","Luna","Cometa"],"respuesta_correcta":"Estrella"},{"id":38,"adivinanza":"Nazco pequeño y si me alimentan crezco, pero si me falta el aire, muero.","opciones":["Fuego","Río","Viento"],"respuesta_correcta":"Fuego"},{"id":39,"adivinanza":"Corro y corro sin tener pies, y nunca llego a ningún lado porque siempre estoy en movimiento.","opciones":["Río","Camino","Viento"],"respuesta_correcta":"Río"},{"id":40,"adivinanza":"Tejo mi casa sin usar hilo comprado y tengo ocho patas para caminar.","opciones":["Araña","Mosca","Escarabajo"],"respuesta_correcta":"Araña"},{"id":41,"adivinanza":"Vivo en un panal con muchas hermanas, hago dulce sin ser cocinera.","opciones":["Abeja","Hormiga","Mariposa"],"respuesta_correcta":"Abeja"},{"id":42,"adivinanza":"Maúllo de noche y cazo ratones, tengo bigotes y nueve vidas dicen.","opciones":["Gato","Perro","Ratón"],"respuesta_correcta":"Gato"},{"id":43,"adivinanza":"Tengo dos filos y una sola cabeza, corto papel y también tela.","opciones":["Tijeras","Cuchillo","Navaja"],"respuesta_correcta":"Tijeras"},{"id":44,"adivinanza":"Tengo cinco dedos pero no soy mano, te protejo del frío en invierno.","opciones":["Guante","Mitón","Bufanda"],"respuesta_correcta":"Guante"},{"id":45,"adivinanza":"Me pongo en los pies y ando contigo todo el día, sin mí te lastimarías.","opciones":["Zapato","Media","Sandalia"],"respuesta_correcta":"Zapato"},{"id":46,"adivinanza":"Abro puertas sin ser mano, y si me pierdes, quedas afuera.","opciones":["Llave","Candado","Puerta"],"respuesta_correcta":"Llave"},{"id":47,"adivinanza":"Dejo pasar la luz sin dejar pasar el viento, si me abres, se ve el jardín.","opciones":["Ventana","Puerta","Espejo"],"respuesta_correcta":"Ventana"},{"id":48,"adivinanza":"Me abren y me cierran muchas veces al día, pero nunca me canso de esperar.","opciones":["Puerta","Ventana","Cortina"],"respuesta_correcta":"Puerta"},{"id":49,"adivinanza":"Salgo cada mañana y doy calor y luz, sin mí no habría día.","opciones":["Sol","Luna","Fuego"],"respuesta_correcta":"Sol"},{"id":50,"adivinanza":"Tengo raíces pero no camino, doy sombra y frutos sin pedir nada a cambio.","opciones":["Árbol","Planta","Flor"],"respuesta_correcta":"Árbol"}];
+
+const TOTAL_QUESTIONS = 15;
+const TIME_LIMIT = 60;
+
+let quizQuestions = [];
+let score = 0;
+let timerInterval = null;
+let timeRemaining = TIME_LIMIT;
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function shuffleArray(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function pickRandomQuestions() {
+  return shuffleArray(QUESTIONS_POOL).slice(0, TOTAL_QUESTIONS);
+}
+
+function buildOptions(question, qIndex) {
+  const letters = ['a', 'b', 'c'];
+  const shuffledOptions = shuffleArray(question.opciones);
+  let correctLetter = '';
+  const liHtml = shuffledOptions.map((opt, i) => {
+    const letter = letters[i];
+    if (opt === question.respuesta_correcta) correctLetter = letter;
+    const id = `q${qIndex}-opt${letter}`;
+    return `<li><input type="radio" name="question-${qIndex}" id="${id}" value="${letter}"><label for="${id}">${letter.toUpperCase()}. ${escapeHtml(opt)}</label></li>`;
+  }).join('');
+  return { liHtml, correctLetter };
+}
+
+function stopTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+}
+
+function updateTimerDisplay() {
+  const timerText = document.getElementById('timer-text');
+  const timerBar = document.getElementById('timer-bar');
+  const timerContainer = document.getElementById('timer-container');
+  if (timerText) timerText.textContent = `Tiempo: ${timeRemaining}s`;
+  const percentage = (timeRemaining / TIME_LIMIT) * 100;
+  if (timerBar) {
+    timerBar.style.width = `${percentage}%`;
+    if (percentage <= 25) {
+      timerContainer.classList.add('timer-warning');
+      timerBar.style.background = '#dc3545';
+    } else if (percentage <= 50) {
+      timerContainer.classList.remove('timer-warning');
+      timerBar.style.background = 'linear-gradient(90deg, #ffc107, #dc3545)';
+    } else {
+      timerContainer.classList.remove('timer-warning');
+      timerBar.style.background = 'linear-gradient(90deg, #28a745, #ffc107, #dc3545)';
+    }
+  }
+}
+
+function timeUp() {
+  stopTimer();
+  const currentQuestion = document.querySelector('.question:not(.hidden)');
+  if (currentQuestion) {
+    const correctAnswer = currentQuestion.dataset.correctAnswer;
+    const correctInput = currentQuestion.querySelector(`input[value="${correctAnswer}"]`);
+    if (correctInput) correctInput.nextElementSibling.classList.add('correct');
+    currentQuestion.querySelectorAll('input').forEach(i => i.disabled = true);
+    document.getElementById('timer-text').textContent = '¡Tiempo agotado!';
+    document.getElementById('timer-container').classList.add('timer-warning');
+  }
+}
+
+function startTimer() {
+  stopTimer();
+  timeRemaining = TIME_LIMIT;
+  updateTimerDisplay();
+  document.getElementById('timer-container').classList.remove('timer-warning');
+  timerInterval = setInterval(() => {
+    timeRemaining--;
+    updateTimerDisplay();
+    if (timeRemaining <= 0) timeUp();
+  }, 1000);
+}
+
+function renderQuiz() {
+  stopTimer();
+  quizQuestions = pickRandomQuestions();
+  score = 0;
+
+  document.querySelector('.result-screen').classList.add('hidden');
+  document.querySelector('.quiz-progress-header').style.display = '';
+  document.getElementById('timer-container').style.display = '';
+
+  let html = '';
+  quizQuestions.forEach((q, i) => {
+    const { liHtml, correctLetter } = buildOptions(q, i);
+    const hiddenClass = i === 0 ? '' : 'hidden';
+    const btnLabel = (i === quizQuestions.length - 1) ? 'Ver Resultados' : 'Siguiente';
+    html += `
+      <div class="question ${hiddenClass}" data-correct-answer="${correctLetter}">
+        <div class="question-header"><span>${i + 1}</span>. <span>${escapeHtml(q.adivinanza)}</span></div>
+        <div class="question-content">
+          <div class="question-image-container">
+            <img class="question-image" src="images/${q.id}.jpg" alt="Adivinanza ${q.id}" onerror="this.style.opacity='0.3';">
+          </div>
+          <ul class="options">${liHtml}</ul>
+        </div>
+        <div class="btn-container">
+          <button class="primary-btn next-btn">${btnLabel}</button>
+        </div>
+      </div>`;
+  });
+
+  document.getElementById('questions-wrapper').innerHTML = html;
+  document.getElementById('progress-text').textContent = `Pregunta 1 de ${quizQuestions.length}`;
+  document.getElementById('progress-bar').style.width = `${(1 / quizQuestions.length) * 100}%`;
+
+  startTimer();
+}
+
+document.getElementById('questions-wrapper').addEventListener('click', (e) => {
+  const questionDiv = e.target.closest('.question');
+  if (!questionDiv) return;
+
+  if (e.target.tagName === 'INPUT' && e.target.type === 'radio' && !e.target.disabled) {
+    stopTimer();
+    const correctAnswer = questionDiv.dataset.correctAnswer;
+    if (e.target.value === correctAnswer) score++;
+    const selectedLabel = e.target.nextElementSibling;
+    selectedLabel.classList.add(e.target.value === correctAnswer ? 'correct' : 'incorrect');
+    if (e.target.value !== correctAnswer) {
+      const correctInput = questionDiv.querySelector(`input[value="${correctAnswer}"]`);
+      if (correctInput) correctInput.nextElementSibling.classList.add('correct');
+    }
+    questionDiv.querySelectorAll('input').forEach(i => i.disabled = true);
+  }
+
+  if (e.target.classList.contains('next-btn')) {
+    questionDiv.classList.add('hidden');
+    const nextQuestion = questionDiv.nextElementSibling;
+    if (nextQuestion && nextQuestion.classList.contains('question')) {
+      nextQuestion.classList.remove('hidden');
+      const currentQ = Array.from(document.querySelectorAll('.question')).indexOf(nextQuestion) + 1;
+      document.getElementById('progress-bar').style.width = `${(currentQ / quizQuestions.length) * 100}%`;
+      document.getElementById('progress-text').textContent = `Pregunta ${currentQ} de ${quizQuestions.length}`;
+      startTimer();
+    } else {
+      stopTimer();
+      const resultScreen = document.querySelector('.result-screen');
+      const percentage = Math.round((score / quizQuestions.length) * 100);
+      resultScreen.querySelector('#final-score-text').textContent = `Tu puntuación es: ${score} de ${quizQuestions.length} (${percentage}%)`;
+      resultScreen.querySelector('#final-message').textContent = percentage > 60 ? '¡Excelente trabajo!' : '¡Sigue aprendiendo!';
+      resultScreen.classList.remove('hidden');
+      document.querySelector('.quiz-progress-header').style.display = 'none';
+      document.getElementById('timer-container').style.display = 'none';
+    }
+  }
+});
+
+document.getElementById('new-quiz-btn').addEventListener('click', renderQuiz);
+document.getElementById('restart-btn').addEventListener('click', renderQuiz);
+
+// Iniciar el primer cuestionario al cargar la página
+renderQuiz();
+</script>
+</body>
+</html>
