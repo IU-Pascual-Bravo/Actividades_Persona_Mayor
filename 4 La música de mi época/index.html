@@ -259,22 +259,6 @@
             flex-wrap: wrap;
         }
 
-        .user-name-input {
-            width: 170px;
-            padding: 0.75rem 1rem;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-weight: 500;
-        }
-
-        .user-name-input:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-        }
-
         .chat-input {
             flex: 1;
             min-width: 260px;
@@ -583,7 +567,7 @@
              <h1 class="ai-title" id="mainTitle">La música de mi época</h1>
             </div>
 
-            <!-- Esquina superior derecha (con ancho alargado para texto completo) -->
+            <!-- Esquina superior derecha -->
             <div class="header-logo header-logo-right" title="Escuela de Pensamiento Educativo y Pedagógico">
                 <img id="logoEscuela" alt="Logo Escuela de Pensamiento Educativo y Pedagógico">
             </div>
@@ -598,7 +582,7 @@
                         alt="Asistente de historia" id="aiAvatar">
                 </div>
                 <div class="message-content" id="initialGreeting">
-                     ¡Hola! Soy tu asistente musical. Dame un año y crearé una narración única para ti, acompañada de una ilustración cartoon y un cuestionario interactivo para poner a prueba tu comprensión lectora.
+                     ¡Hola! Soy tu asistente musical. Escribe un año (ej. 1975) o un género musical (ej. rock, tango, parrandera, salsa, bolero...) y crearé una narración única para ti, con una ilustración cartoon y un cuestionario interactivo de comprensión lectora.
                 </div>
             </div>
         </div>
@@ -678,7 +662,7 @@
 
         <div class="chat-input-container">
             <input type="text" id="chatInput" class="chat-input"
-                placeholder="Escribe un año para descubrir la música de esa época..." onkeypress="handleKeyPress(event)">
+                placeholder="Escribe un año (ej. 1980) o un género musical (rock, tango, parrandera, salsa...)" onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()" class="send-btn" id="sendButton">Enviar</button>
             <button onclick="startNewQuery()" class="new-query-btn" id="newQueryButton" type="button">Nueva consulta</button>
         </div>
@@ -693,7 +677,7 @@
         const BACKEND_URL_IMAGE = 'https://node.proyectodescartes.org/api/ia/image';
 
         /* ==========================================================================
-           LOGOS EN BASE64 (Autonomía total para la App y la Historia descargada)
+           LOGOS EN BASE64
            ========================================================================== */
 
         // 1. Logo Pascual Bravo con franja "Acreditados en Alta Calidad" en Base64
@@ -705,14 +689,11 @@
             <text x="230" y="103.5" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="900" fill="#0b1c33" letter-spacing="2.6">ACREDITADOS EN ALTA CALIDAD</text>
         </svg>`)));
 
-        // 2. Logo Escuela de Pensamiento Educativo y Pedagógico (Alargado a 680px de ancho para evitar cortes de texto)
+        // 2. Logo Escuela de Pensamiento Educativo y Pedagógico
         let logoEscuelaBase64 = "data:image/svg+xml;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(`
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 160" width="560" height="160">
             <g transform="translate(10, 0)">
-                <!-- Árbol Cerebral / Circuitos -->
                 <path d="M 80 120 C 60 118 45 110 35 95 C 22 75 30 50 48 42 C 45 28 55 12 72 10 C 88 8 100 20 102 28 C 112 18 128 18 136 28 C 145 38 142 52 140 60 C 155 70 152 95 138 108 C 128 116 110 120 90 120 Z" fill="#ffffff" stroke="#1d2a44" stroke-width="4.5" stroke-linejoin="round"/>
-                
-                <!-- Conexiones y Nodos Tecnológicos -->
                 <circle cx="58" cy="55" r="9" fill="none" stroke="#1d2a44" stroke-width="3"/>
                 <circle cx="58" cy="55" r="4.5" fill="#00a3c4"/>
                 <circle cx="85" cy="40" r="8" fill="none" stroke="#1d2a44" stroke-width="3"/>
@@ -725,17 +706,11 @@
                 <circle cx="120" cy="88" r="4" fill="#00a3c4"/>
                 <circle cx="95" cy="72" r="8" fill="none" stroke="#1d2a44" stroke-width="3"/>
                 <circle cx="95" cy="72" r="4" fill="#00a3c4"/>
-
-                <!-- Circuitos y Tronco -->
                 <path d="M 83 48 L 83 120 M 58 64 L 58 85 L 83 95 M 115 64 L 115 88 L 83 100" fill="none" stroke="#00a3c4" stroke-width="3.5" stroke-linecap="round"/>
                 <path d="M 80 120 L 80 65" stroke="#f6b800" stroke-width="3.5" stroke-linecap="round"/>
-
-                <!-- Base Libro Abierto -->
                 <path d="M 20 138 Q 85 130 87 148 Q 89 130 154 138 L 154 146 Q 89 138 87 154 Q 85 138 20 146 Z" fill="#00a3c4"/>
                 <path d="M 18 146 Q 85 138 87 154 Q 89 138 156 146 L 152 153 Q 89 146 87 158 Q 85 146 22 153 Z" fill="#1d2a44"/>
             </g>
-            
-            <!-- Tipografía Institucional con amplio espacio horizontal -->
             <g transform="translate(178, 0)">
                 <text x="0" y="68" font-family="'Inter', sans-serif" font-size="44" font-weight="900" fill="#1d2a44" letter-spacing="1.5">ESCUELA</text>
                 <text x="0" y="104" font-family="'Inter', sans-serif" font-size="21.5" font-weight="800" fill="#1d2a44" letter-spacing="0.3">DE PENSAMIENTO EDUCATIVO</text>
@@ -743,10 +718,6 @@
             </g>
         </svg>`)));
 
-        /**
-         * Carga los logos en pantalla e intenta convertirlos desde archivos locales
-         * (Logo-I.U.Pascual-Bravo-2.png y logo_escuela.png) a Base64 dinámicamente.
-         */
         async function initLogos() {
             const imgPB = document.getElementById('logoPascualBravo');
             const imgEscuela = document.getElementById('logoEscuela');
@@ -796,7 +767,7 @@
             epico: {
                 label: "Épico",
                 badge: "Relato Épico",
-                desc: "narrativa heroica, grandiosa y legendaria donde el protagonista enfrenta retos mitológicos o épicos con gran valentía"
+                desc: "narrativa heroica, grandiosa y legendaria donde el protagonista o los músicos enfrentan retos épicos con gran valentía"
             },
             realismo_magico: {
                 label: "Realismo Mágico",
@@ -806,7 +777,7 @@
             comedia_costumbrista: {
                 label: "Comedia Costumbrista",
                 badge: "Comedia Costumbrista",
-                desc: "humor simpático, enredos familiares y detalles cotidianos tratados con mucha gracia y calidez"
+                desc: "humor simpático, enredos cotidianos y detalles de la vida popular tratados con gracia y calidez"
             },
             novela_negra: {
                 label: "Novela Negra / Policial Clásico",
@@ -821,7 +792,7 @@
             cronica: {
                 label: "Crónica Histórica / Periodística",
                 badge: "Crónica Histórica",
-                desc: "tono periodístico riguroso de crónica narrativa de época, precisión descriptiva y testimonio vivo"
+                desc: "tono periodístico riguroso de crónica narrativa, precisión descriptiva y testimonio vivo"
             },
             aventuras: {
                 label: "Novela de Aventuras Clásica",
@@ -843,8 +814,8 @@
         const TRANSLATIONS = {
             es: {
                 title: "La música de mi época",
-                greeting: "¡Hola! Soy tu asistente musical. Dame un año y crearé una narración única para ti, acompañada de una ilustración cartoon y un cuestionario interactivo para poner a prueba tu comprensión lectora.",
-                placeholder: "Escribe un año para descubrir la música de esa época...",
+                greeting: "¡Hola! Soy tu asistente musical. Escribe un año (ej. 1975) o un género musical (ej. rock, tango, parrandera, salsa, bolero...) y crearé una narración única para ti, con una ilustración cartoon y un cuestionario interactivo de comprensión lectora.",
+                placeholder: "Escribe un año (ej. 1980) o un género musical (rock, tango, parrandera, salsa...)...",
                 sendBtn: "Enviar",
                 newQueryBtn: "Nueva consulta",
                 colorPaletteBtn: "Paleta",
@@ -866,16 +837,19 @@
                 behavior: `
 INSTRUCCIONES OBLIGATORIAS:
 1. TÍTULO: Escribe en la primera línea exactamente:
-# TÍTULO: [Título atractivo sobre la música de {USER_TOPIC}]
+# TÍTULO: [Título atractivo sobre: {USER_TOPIC}]
 
-2. INVESTIGACIÓN MUSICAL: Consulta tus conocimientos sobre la música de habla hispana del año {USER_TOPIC}. Identifica y verifica, sin inventar datos, cantantes o grupos destacados, canciones representativas y hechos importantes de la música de esa época. Si el año no corresponde a un periodo con información suficiente, indícalo con honestidad.
+2. INVESTIGACIÓN Y ENFOQUE:
+- Si la consulta ({USER_TOPIC}) es un AÑO (o contiene un año): consulta tus conocimientos históricos sobre la música (principalmente en español o de gran impacto en esa época) de ese año. Identifica cantantes, agrupaciones destacadas, canciones icónicas y hechos históricos relevantes.
+- Si la consulta ({USER_TOPIC}) es un GÉNERO MUSICAL (como rock, tango, música parrandera, salsa, vallenato, bolero, etc.): la historia DEBE desarrollarse en torno a la historia de ese género, narrando su MOMENTO DE SURGIMIENTO / ORÍGENES, las condiciones culturales de su nacimiento, los cantantes o pioneros esenciales y las canciones más representativas que lo inmortalizaron.
+- Datos 100% verídicos y comprobables, sin inventar nombres ni canciones.
 
-3. NARRACIÓN: Relata una narración de 7 párrafos en estilo {STYLE_NAME} ({STYLE_DESC}) que integre de forma clara esos cantantes, canciones y hechos musicales. Empieza directamente con el relato, sin preámbulos.
+3. NARRACIÓN: Relata una historia de exactamente 7 párrafos en estilo {STYLE_NAME} ({STYLE_DESC}) que integre fluidamente los cantantes, canciones y el contexto musical/histórico indicado. Empieza directamente con el relato, sin preámbulos ni saludos.
 
 4. SEPARADOR OBLIGATORIO: Tras el séptimo párrafo escribe exactamente:
 ## Taller de Comprensión Lectora
 
-5. CUESTIONARIO OBLIGATORIO: Genera exactamente {QUESTIONS_COUNT} preguntas con el siguiente formato estricto:
+5. CUESTIONARIO OBLIGATORIO: Genera exactamente {QUESTIONS_COUNT} preguntas de comprensión lectora basadas estrictamente en los hechos, canciones, artistas y detalles mencionados en la narración previa, con el siguiente formato estricto:
 
 EJEMPLO DE ESTRUCTURA QUE DEBES SEGUIR AL PIE DE LA LETRA:
 1. ¿Pregunta de comprensión? (Pregunta Literal) [correct: A]
@@ -885,17 +859,16 @@ C) Tercera opción
 {FOURTH_OPTION_EXAMPLE}
 
 REGLAS INFLEXIBLES:
-- La etiqueta de la respuesta correcta [correct: LETRA] DEBE ir al final de la línea de la pregunta.
+- La etiqueta de la respuesta correcta [correct: LETRA] DEBE ir obligatoriamente al final de la línea de la pregunta.
 - Cada opción DEBE empezar en una línea separada con A), B), C){AND_D}.
-- NO uses asteriscos en los números ni viñetas en las opciones.
+- NO uses asteriscos en los números de pregunta ni viñetas en las opciones.
 - NO agregues conclusiones ni mensajes de despedida al final.
 `
             },
             en: {
-                title: "From My Memories to a Story",
-                greeting: "Hello! I'm your story assistant. Give me a memory and I will create a unique story for you, accompanied by a cartoon illustration and an interactive quiz.",
-                placeholder: "Write a memory to turn it into a story...",
-                namePlaceholder: "Your name...",
+                title: "The Music of My Times",
+                greeting: "Hello! I'm your music assistant. Enter a year (e.g. 1975) or a music genre (e.g. rock, tango, salsa, blues...) and I will create a unique story for you, accompanied by a cartoon illustration and an interactive quiz.",
+                placeholder: "Enter a year (e.g. 1980) or a music genre (rock, tango, salsa...)...",
                 sendBtn: "Send",
                 newQueryBtn: "New query",
                 colorPaletteBtn: "Palette",
@@ -913,19 +886,22 @@ REGLAS INFLEXIBLES:
                 of: "out of",
                 questions: "questions correct",
                 footer: "Designed by Juan Guillermo Rivera Berrío with Gemini 3.8 Flash technology and Pollinations APIs.",
-                aiName: "Story Assistant",
+                aiName: "Music Assistant",
                 behavior: `
 MANDATORY INSTRUCTIONS:
 1. TITLE: On the first line write exactly:
-# TÍTULO: [Catchy title matching the style '{STYLE_NAME}']
+# TÍTULO: [Catchy title about: {USER_TOPIC}]
 
-2. STORY: Write a 7-paragraph story in {STYLE_NAME} style ({STYLE_DESC}), inspired by: "{USER_TOPIC}".
-   - Start immediately with the story.
+2. RESEARCH AND FOCUS:
+- If '{USER_TOPIC}' is a YEAR: focus on the representative songs, singers, and musical milestones of that specific year.
+- If '{USER_TOPIC}' is a MUSIC GENRE (rock, tango, parrandera, salsa, etc.): tell the story of that genre, focusing on its ORIGINS and EMERGENCE, pioneering singers/bands, and iconic songs.
 
-3. MANDATORY SEPARATOR: After paragraph 7 write exactly:
+3. STORY: Write a 7-paragraph story in {STYLE_NAME} style ({STYLE_DESC}) that naturally blends the artists, songs, and historical musical background. Start immediately with the story.
+
+4. MANDATORY SEPARATOR: After paragraph 7 write exactly:
 ## Reading Comprehension Workshop
 
-4. MANDATORY QUIZ: Generate exactly {QUESTIONS_COUNT} questions using this strict format:
+5. MANDATORY QUIZ: Generate exactly {QUESTIONS_COUNT} questions using this strict format:
 
 EXAMPLE STRUCTURE TO FOLLOW STRICTLY:
 1. Comprehension question? (Literal Question) [correct: A]
@@ -942,10 +918,9 @@ INFLEXIBLE RULES:
 `
             },
             fr: {
-                title: "De mes souvenirs à une histoire",
-                greeting: "Bonjour ! Je suis votre assistante d'histoire. Donnez-moi un souvenir et je créerai un récit unique avec une illustration cartoon et un questionnaire interactif.",
-                placeholder: "Écrivez un souvenir...",
-                namePlaceholder: "Votre nom...",
+                title: "La musique de mon époque",
+                greeting: "Bonjour ! Je suis votre assistante musicale. Écrivez une année (ex. 1975) ou un genre musical (rock, tango, salsa...) et je créerai une histoire avec une illustration cartoon et un quiz.",
+                placeholder: "Écrivez une année ou un genre musical...",
                 sendBtn: "Envoyer",
                 newQueryBtn: "Nouvelle consultation",
                 colorPaletteBtn: "Palette",
@@ -963,18 +938,18 @@ INFLEXIBLE RULES:
                 of: "sur",
                 questions: "questions correctes",
                 footer: "Conçu par Juan Guillermo Rivera Berrío avec la technologie Gemini 3.8 Flash et les API Pollinations.",
-                aiName: "Assistante d'histoire",
+                aiName: "Assistante musicale",
                 behavior: `
 INSTRUCTIONS OBLIGATOIRES:
-1. TITRE: Sur la première línea, écrivez exactement:
-# TÍTULO: [Titre attrayant correspondant au style '{STYLE_NAME}']
+1. TITRE: Sur la première ligne, écrivez:
+# TÍTULO: [Titre attrayant sur '{USER_TOPIC}']
 
-2. HISTOIRE: Racontez une histoire de 7 paragraphes au style {STYLE_NAME} ({STYLE_DESC}), inspirée de: "{USER_TOPIC}".
+2. HISTOIRE: Racontez une histoire de 7 paragraphes au style {STYLE_NAME} ({STYLE_DESC}), centrée sur l'année ou sur l'émergence et les pionniers du genre musical: "{USER_TOPIC}".
 
-3. SÉPARATEUR: Après l'histoire écrivez exactement:
+3. SÉPARATEUR: Après l'histoire écrivez:
 ## Atelier de Compréhension de Lecture
 
-4. QUESTIONNAIRE: Générez exactement {QUESTIONS_COUNT} questions avec ce format strict:
+4. QUESTIONNAIRE: Générez exactement {QUESTIONS_COUNT} questions au format strict:
 1. Question posée ? (Question Littérale) [correct: A]
 A) Option A
 B) Option B
@@ -983,10 +958,9 @@ C) Option C
 `
             },
             de: {
-                title: "Von meinen Erinnerungen zu einer Geschichte",
-                greeting: "Hallo! Ich bin Ihre Geschichtsassistentin. Nennen Sie mir eine Erinnerung und ich erstelle eine Geschichte mit Cartoon-Bild und Quiz.",
-                placeholder: "Schreiben Sie eine Erinnerung...",
-                namePlaceholder: "Ihr Name...",
+                title: "Die Musik meiner Zeit",
+                greeting: "Hallo! Ich bin Ihre Musikassistentin. Geben Sie ein Jahr oder ein Musikgenre ein und ich erstelle eine Geschichte mit Cartoon-Bild und Quiz.",
+                placeholder: "Geben Sie ein Jahr oder ein Musikgenre ein...",
                 sendBtn: "Senden",
                 newQueryBtn: "Neue Abfrage",
                 colorPaletteBtn: "Palette",
@@ -1004,18 +978,18 @@ C) Option C
                 of: "von",
                 questions: "Fragen richtig beantwortet",
                 footer: "Entworfen von Juan Guillermo Rivera Berrío mit Gemini 3.8 Flash Technologie und Pollinations APIs.",
-                aiName: "Geschichtsassistentin",
+                aiName: "Musikassistentin",
                 behavior: `
 OBLIGATORISCHE ANWEISUNGEN:
-1. TITEL: In der ersten Zeile schreiben Sie genau:
-# TÍTULO: [Passender Titel zum Stil '{STYLE_NAME}']
+1. TITEL: In der ersten Zeile schreiben Sie:
+# TÍTULO: [Titel zu '{USER_TOPIC}']
 
 2. GESCHICHTE: Erzählen Sie eine Geschichte in 7 Absätzen im Stil {STYLE_NAME} ({STYLE_DESC}), inspiriert von: "{USER_TOPIC}".
 
-3. TRENNZEICHEN: Schreiben Sie genau:
+3. TRENNZEICHEN: Schreiben Sie:
 ## Leseverständnis-Workshop
 
-4. FRAGEBOGEN: Generieren Sie genau {QUESTIONS_COUNT} Fragen in folgendem Format:
+4. FRAGEBOGEN: Generieren Sie genau {QUESTIONS_COUNT} Fragen im Format:
 1. Frage hier? (Wörtliche Frage) [correct: A]
 A) Option A
 B) Option B
@@ -1164,29 +1138,31 @@ C) Option C
             const styleConfig = LITERARY_STYLES[selectedStyleKey] || LITERARY_STYLES.epico;
             const imageModel = document.getElementById('imageModelSelector').value;
 
-            const year = chatInput.value.trim();
-            if (!/^\d{4}$/.test(year)) {
-                chatInput.setCustomValidity('Escribe un año válido con cuatro cifras.');
+            const userInput = chatInput.value.trim();
+            if (!userInput || userInput.length < 2) {
+                chatInput.setCustomValidity('Escribe un año (ej. 1978) o un género musical (ej. rock, tango, parrandera).');
                 chatInput.reportValidity();
                 return;
             }
             chatInput.setCustomValidity('');
-            const userName = `Año ${year}`;
+
+            const isOnlyYear = /^\d{4}$/.test(userInput);
+            const displayLabel = isOnlyYear ? `Año: ${userInput}` : `Tema musical: ${userInput}`;
+            const metaUserName = isOnlyYear ? `Año ${userInput}` : userInput;
             
             const studentSeed = Math.floor(Math.random() * 1000);
             const studentAvatarUrl = await fetchImageFromBackend("vintage musical notes and a colorful record, cartoon style", studentSeed, 128, 128, imageModel);
             
-            const userDisplayMessage = `Año: ${year}`;
-            addMessage(userDisplayMessage, 'user', { userAvatar: studentAvatarUrl });
+            addMessage(displayLabel, 'user', { userAvatar: studentAvatarUrl });
             chatInput.value = '';
 
             const sceneSeed = Math.floor(Math.random() * 10000);
-            const sceneImagePrompt = `vibrant cartoon illustration, animated movie style, storybook art about Hispanic music in ${year}, singers, songs, vinyl records and musical instruments, style of ${styleConfig.label}, colorful, high quality vector cartoon aesthetic, cinematic lighting`;
+            const sceneImagePrompt = `vibrant cartoon illustration, animated movie style, storybook art about music theme "${userInput}", musical instruments, vinyl records, performers, singers, style of ${styleConfig.label}, colorful, high quality vector cartoon aesthetic, cinematic lighting`;
             const imagePromise = fetchImageFromBackend(sceneImagePrompt, sceneSeed, 800, 450, imageModel);
 
             let aiResponseText;
             try {
-                aiResponseText = await generateAIResponse(year, userName, styleConfig);
+                aiResponseText = await generateAIResponse(userInput, metaUserName, styleConfig);
             } catch (e) {
                 const t = TRANSLATIONS[currentLanguage];
                 aiResponseText = t.greeting.includes("Hola") ? "Error conectando con el servidor. Intenta nuevamente." : "Error connecting to server. Try again.";
@@ -1196,8 +1172,8 @@ C) Option C
             const aiAvatarUrl = document.getElementById('aiAvatar').src;
             
             addMessage(aiResponseText, 'ai', { 
-                userPrompt: year, 
-                userName: userName,
+                userPrompt: userInput, 
+                userName: metaUserName,
                 styleBadge: styleConfig.badge,
                 imageUrl: finalImageUrl, 
                 aiAvatar: aiAvatarUrl 
@@ -1343,7 +1319,7 @@ C) Option C
                     storyTitle = firstLineMatch[1].replace(/[*_#\[\]]/g, '').trim();
                     text = text.replace(/^#+\s*[^\n\r]+\n?/, '').trim();
                 } else {
-                    storyTitle = userName ? `La Historia de ${userName}` : (currentLanguage === 'es' ? "Relato Inolvidable" : "Unforgettable Tale");
+                    storyTitle = userName ? `La música: ${userName}` : (currentLanguage === 'es' ? "Relato Musical Inolvidable" : "Unforgettable Musical Tale");
                 }
             }
 
@@ -1369,7 +1345,7 @@ C) Option C
                 quizPart = quizPart.replace(workshopRegex, '').trim();
             }
 
-            const activeBadge = styleBadge || 'Relato';
+            const activeBadge = styleBadge || 'Relato Musical';
 
             let headerBarHtml = userPrompt ? `
                 <div class="story-header-bar">
@@ -1404,7 +1380,7 @@ C) Option C
             
             let imageHtml = '';
             if (sender === 'ai' && imageUrl) {
-                imageHtml = `<div class="image-display-container"><img src="${imageUrl}" alt="Ilustración estilo cartoon de la historia" loading="lazy"></div>`;
+                imageHtml = `<div class="image-display-container"><img src="${imageUrl}" alt="Ilustración estilo cartoon de la música y su época" loading="lazy"></div>`;
             }
             let messageContent = (sender === 'ai') ? formatRichText(message, userPrompt, userName, styleBadge) : message;
             
@@ -1465,13 +1441,13 @@ C) Option C
         }
 
         /**
-         * Descarga la historia generada como archivo autónomo, incrustando los logos en Base64
+         * Descarga la historia generada como archivo autónomo, incrustando logos en Base64
          */
         function downloadFunctionalClone(buttonElement) {
             const userPrompt = decodeURIComponent(buttonElement.dataset.prompt || '');
             const userName = decodeURIComponent(buttonElement.dataset.username || '');
-            const styleBadge = decodeURIComponent(buttonElement.dataset.badge || 'Relato');
-            const storyTitle = decodeURIComponent(buttonElement.dataset.title || '') || (userName ? `Historia de ${userName}` : 'Historia');
+            const styleBadge = decodeURIComponent(buttonElement.dataset.badge || 'Relato Musical');
+            const storyTitle = decodeURIComponent(buttonElement.dataset.title || '') || `Historia Musical: ${userName}`;
             const aiMessageContent = buttonElement.closest('.ai-message .message-content');
             if (!aiMessageContent) return;
 
@@ -1539,7 +1515,6 @@ C) Option C
     ${colorOverrideStyle}
 </head>
 <body class="${bodyClass}">
-    <!-- Encabezado con logos autónomos en Base64 -->
     <header class="header">
         <div class="header-content">
             <div class="header-logo header-logo-left">
@@ -1560,7 +1535,7 @@ C) Option C
                 <span class="story-badge">✨ ${styleBadge}</span>
             </div>
             <div class="standalone-meta">
-                Protagonista: <strong>${userName}</strong> | Recuerdo original: <em>«${userPrompt}»</em>
+                Consulta musical: <strong>${userName}</strong>
             </div>
 
             <article class="rich-text-content">
@@ -1682,13 +1657,12 @@ ${instructions}
 
 ------------------------------------------
 ESTILO LITERARIO: "${styleConfig.label}"
-PROTAGONISTA: "${userName}"
-AÑO DE CONSULTA MUSICAL: "${userMessage}"
+TEMA O AÑO INGRESADO: "${userMessage}"
 NUMERO DE PREGUNTAS A GENERAR OBLIGATORIAMENTE: ${numQuestions}
 NUMERO DE OPCIONES POR PREGUNTA: ${numOptions}
 `;
 
-            const systemIdentity = `You are ${AI_CONFIG.name}, an expert in Hispanic music, cultural history, storytelling and educational evaluation. Research from your reliable knowledge the singers, songs and important music events for the requested year. You MUST ALWAYS provide both the requested musical narrative and the exact multiple-choice interactive quiz workshop formatted with [correct: X] tag for each question. Never omit the questions or the options.`;
+            const systemIdentity = `You are ${AI_CONFIG.name}, an expert in music history, musicology, cultural storytelling, and educational evaluation. If the user provides a year, accurately integrate the music, singers, and songs from that specific year. If the user provides a music genre (such as rock, tango, parrandera, salsa, bolero, cumbia, jazz, etc.), your narrative MUST focus on the history and emergence of that genre, its origins, pioneer singers and bands, and its most iconic songs. You MUST ALWAYS provide both the requested 7-paragraph narrative and the exact interactive multiple-choice quiz formatted with [correct: X] tag for each question.`;
 
             return await fetchBackendText(systemIdentity, combinedUserPrompt, selectedModel);
         }

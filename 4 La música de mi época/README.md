@@ -1,85 +1,97 @@
-# La música de mi época
+# 🎶 La música de mi época
+### *Cuentos musicales, memoria viva y estimulación cognitiva para personas mayores*
 
-Aplicación educativa para que las personas mayores puedan recordar, explorar y conversar sobre la música de habla hispana de un año significativo de sus vidas.
+[![HTML5](https://img.shields.io/badge/Tecnología-HTML5%20%7C%20CSS3%20%7C%20JS-orange?style=flat-square)](#)
+[![Proyecto Descartes](https://img.shields.io/badge/Proyecto-Descartes-blue?style=flat-square)](#)
+[![Pascual Bravo](https://img.shields.io/badge/I.U.-Pascual%20Bravo-yellow?style=flat-square)](#)
+[![Accesibilidad](https://img.shields.io/badge/Diseño-Accesible%20e%20Inclusivo-green?style=flat-square)](#)
 
-## Propósito
+---
 
-La aplicación convierte un año en una experiencia de memoria y aprendizaje. La persona usuaria escribe un año y el asistente genera:
+## 📖 Descripción General
 
-- Una narración sobre la música de habla hispana de ese periodo.
-- Cantantes o grupos destacados.
-- Canciones representativas.
-- Hechos importantes de la historia musical.
-- Una ilustración estilo cartoon.
-- Un cuestionario interactivo de comprensión lectora.
+**«La música de mi época»** es una aplicación web interactiva concebida para transformar fechas, géneros musicales y recuerdos autobiográficos en narraciones literarias ilustradas, acompañadas de talleres evaluables de comprensión lectora.
 
-El objetivo es estimular los recuerdos, la conversación, la lectura y la participación activa de las personas mayores, sin exigir conocimientos técnicos ni musicales previos.
+La aplicación permite introducir con total libertad un **año representativo** (ej. *1958*, *1972*, *1985*) o un **género musical** tradicional o popular (*tango, bolero, música parrandera, salsa, rock and roll, vallenato, balada, cumbia...*). Con estos datos, la inteligencia artificial articula una narración cronológica y cultural de siete párrafos que rescata cantantes pioneros, canciones memorables y anécdotas de la época, complementada por una ilustración artística estilo *cartoon* y un cuestionario interactivo de opción múltiple.
 
-## Uso para personas mayores
+---
 
-1. Abra `index.html` en un navegador moderno.
-2. Lea el mensaje inicial del asistente.
-3. Escriba un año de cuatro cifras, por ejemplo `1968`, `1975` o `1989`.
-4. Pulse **Enviar** o presione la tecla `Enter`.
-5. Lea la narración y observe la ilustración generada.
-6. Responda el cuestionario seleccionando una opción por pregunta.
-7. Pulse **Evaluar Taller** para conocer el resultado.
-8. Pulse **Nueva consulta** para comenzar con otro año sin recargar la página.
+## 🧠 Valor Terapéutico y Aporte a las Personas Mayores
 
-## Diseño accesible
+La música constituye uno de los más poderosos catalizadores de la memoria humana. Diversos estudios de neuropsicología y gerontología señalan que la memoria musical permanece intacta incluso en etapas donde otras facultades cognitivas experimentan desgaste. Por ello, esta aplicación aporta significativamente a la calidad de vida y salud mental del adulto mayor en cuatro dimensiones clave:
 
-La interfaz está pensada para facilitar el uso durante actividades de acompañamiento, alfabetización digital y memoria autobiográfica:
+### 1. Estimulación de la Memoria y Terapia de Reminiscencia
+* **Evocación de vivencias autobiográficas:** Escribir un año o un ritmo favorito reabre de forma espontánea recuerdos de juventud, bailes populares, noviazgos, tertulias en la radio y celebraciones en el hogar.
+* **Activación de redes neuronales asociadas a la emoción:** Reconocer nombres de intérpretes (*Gardel, Agustín Lara, Celia Cruz, Rodolfo Aicardi, Sandro, Lucho Gatica, Los Panchos...*) fomenta la conexión de recuerdos a largo plazo y mejora el estado de ánimo.
 
-- Instrucciones iniciales claras y directas.
-- Una sola entrada principal: el año que se desea consultar.
-- Mensajes y botones visibles en español.
-- Validación que indica cuando el año no tiene cuatro cifras.
-- Contraste entre el fondo, el texto y los controles.
-- Tipografía sans-serif de lectura sencilla.
-- Botón **Nueva consulta** para evitar pasos técnicos como recargar la página.
-- Cuestionario visual con opciones grandes y resultados inmediatos.
-- Selector de paletas, incluido un modo claro.
-- La experiencia puede realizarse con acompañamiento de un familiar, docente o cuidador.
+### 2. Gimnasia Cerebral mediante la Lectura Activa
+* **Atención focalizada y sostenida:** La extensión fija de siete párrafos ofrece una lectura accesible, amable y libre de saturación informativa.
+* **Agilidad mental y retención:** El taller interactivo de preguntas literales e inferenciales invita a releer, deducir y comprobar respuestas de forma amena, reforzando la memoria de trabajo y la autoestima cognitiva mediante retroalimentación inmediata.
 
-Se recomienda usar la aplicación en una pantalla con buen tamaño, mantener el zoom del navegador entre 110 % y 125 % cuando sea necesario y leer en voz alta las instrucciones durante actividades grupales.
+### 3. Entretenimiento Digno y Saludable
+* **Combate a la soledad no deseada:** Proporciona un entorno digital cálido y seguro que llena el tiempo de ocio con recuerdos gratos, alejando el estrés y la pasividad frente a las pantallas.
+* **Puesta en valor de la propia biografía:** Recordar la música con la que crecieron reafirma su identidad, su dignidad histórica y el orgullo por sus raíces culturales.
 
-## Preferencias disponibles
+### 4. Vínculo y Diálogo Intergeneracional
+* Es una herramienta perfecta para ser utilizada entre **abuelos, hijos y nietos**. Facilita que las nuevas generaciones escuchen anécdotas vivas de sus mayores a partir de un cuento compartido, fortaleciendo los lazos afectivos familiares.
 
-La aplicación permite ajustar:
+---
 
-- Idioma de la interfaz.
-- Estilo de la narración.
-- Modelo de inteligencia artificial.
-- Modelo de imagen: `zimage`, `flux`, `klein` o `gptimage`.
-- Número de preguntas.
-- Número de opciones por pregunta.
-- Paleta de colores o modo claro.
+## ✨ Características Principales
 
-Estas preferencias permanecen al iniciar una nueva consulta.
+| Característica | Detalle |
+|---|---|
+| **Búsqueda Dual Flexible** | Acepta indistintamente un **año** (rescata canciones, solistas y sucesos de ese año) o un **género musical** (explora su surgimiento, orígenes culturales, pioneros y éxitos inmortales). |
+| **Diversidad de Estilos Literarios** | Modos narrativos configurables: *Épico, Realismo Mágico, Comedia Costumbrista, Novela Negra, Epistolar (carta íntima), Crónica Periodística, Romántica, Aventuras y Cuento de Misterio*. |
+| **Ilustración Contextual Cartoon** | Cada historia se ilustra con una imagen generada por IA que representa instrumentos, discos de vinilo, micrófonos antiguos y el ambiente de la época. |
+| **Taller de Comprensión Lectora** | Cuestionario interactivo personalizable (entre 5 y 10 preguntas; 3 o 4 opciones de respuesta) con calificación automática y retroalimentación cromática. |
+| **Descarga de Copia Autónoma (.html)** | Mediante el botón **«📥 Descargar historia»**, genera un archivo HTML autónomo con tipografías, estilos, logos en Base64 y cuestionario interactivo funcional para usar sin internet. |
+| **Accesibilidad Visual** | Tipografía legible (*Inter*), tamaños de fuente cómodos, paletas de colores contrastadas y modo claro/oscuro para evitar el cansancio visual. |
+| **Multilingüe** | Interfaz y narrativas disponibles en Español, Inglés, Francés y Alemán. |
 
-## Funcionamiento técnico
+---
 
-La aplicación está construida como una página web autónoma en `index.html`, con HTML, CSS y JavaScript integrados. Utiliza los siguientes servicios remotos:
+## 👵 Guía de Uso Paso a Paso
 
-- API de texto: `https://node.proyectodescartes.org/api/ia/text`
-- API de imágenes: `https://node.proyectodescartes.org/api/ia/image`
+```text
+[ 1. Ingresar Año o Ritmo ] ──▶ [ 2. Elegir Estilo y Preguntas ] ──▶ [ 3. Clic en Enviar ]
+                                                                             │
+                                                                             ▼
+[ 6. Descargar Archivo ]  ◀── [ 5. Resolver Cuestionario ]  ◀── [ 4. Disfrutar Historia ]
+```
 
-El prompt enviado al modelo solicita información sobre cantantes, canciones y hechos importantes de la música de habla hispana del año indicado. La respuesta se transforma en una narración y un cuestionario interactivo dentro de la página.
+1. **Escribir la consulta:** En la casilla de texto inferior, ingrese el año deseado (ej. `1965`, `1973`, `1980`) o un ritmo musical (ej. `bolero`, `tango`, `parrandera`, `rock en español`, `salsa`).
+2. **Seleccionar preferencias (opcional):** 
+   - En *Estilo*, elija el tono de la narración (la *Comedia Costumbrista* o el *Estilo Epistolar* resultan especialmente acogedores para adultos mayores).
+   - Ajuste la cantidad de preguntas del taller (se sugiere de 5 a 8 preguntas con 3 opciones para una experiencia ágil).
+3. **Pulsar «Enviar»:** En breves segundos aparecerá la ilustración y los siete párrafos del relato musical.
+4. **Completar el Taller:** Tras la lectura, elija con un clic la respuesta a cada pregunta y presione **«✓ Evaluar Taller»** para conocer el resultado.
+5. **Conservar o Compartir:** Presione **«📥 Descargar historia»** para guardar el archivo en su dispositivo. Este archivo puede abrirse en cualquier navegador sin conexión o imprimirse para lectura en papel.
 
-Para usarla sin conexión a internet sería necesario incorporar un modelo de texto y un generador de imágenes locales; la versión actual requiere conexión para generar el contenido.
+---
 
-## Consideraciones pedagógicas
+## 🛠️ Arquitectura Técnica
 
-La aplicación puede utilizarse para:
+* **Frontend:** Archivo único monolítico en HTML5 semántico, CSS3 estructurado con variables CSS y JavaScript estándar (Vanilla JS), sin dependencias pesadas ni compiladores.
+* **Integración con IA:** Conexión a endpoints protegidos de la Red Educativa Digital Descartes:
+  * **Generación de texto:** Modelos OpenAI GPT, Mistral y DeepSeek adaptados mediante prompts pedagógicos estructurados.
+  * **Generación de imágenes:** APIs de Pollinations con modelos gráficos especializados (*Flux, Klein, Zimage, GPTimage*).
+* **Autonomía total:** Los logos institucionales de la **I.U. Pascual Bravo** y la **Escuela de Pensamiento Educativo y Pedagógico** están vectorizados e incrustados en `Base64` directamente en el código fuente, asegurando que las historias descargadas nunca pierdan sus imágenes ni su identidad visual.
 
-- Evocar recuerdos asociados a una época de la vida.
-- Comparar gustos musicales entre generaciones.
-- Practicar comprensión lectora.
-- Conversar sobre cambios culturales y tecnológicos.
-- Fortalecer la autonomía digital de las personas mayores.
+---
 
-La información generada por inteligencia artificial debe revisarse y conversarse con la persona usuaria. Cuando un dato histórico o musical sea importante, se recomienda contrastarlo con fuentes confiables.
+## 👥 Ámbitos de Aplicación Sugeridos
 
-## Autoría
+* **Residencias y Centros de Día para Adultos Mayores:** Talleres grupales de estimulación cognitiva, reminiscencia y tertulia literario-musical.
+* **Programas de Envejecimiento Activo y Bibliotecas Públicas:** Dinámicas de animación a la lectura y preservación de la memoria histórica local.
+* **Actividades Familiares e Intergeneracionales:** Entrevistas guiadas de nietos a abuelos para inmortalizar las canciones preferidas de la familia.
+* **Entornos de Apoyo Terapéutico:** Dinámicas de estimulación temprana para personas con deterioro cognitivo leve o inicio de demencias.
 
-Proyecto educativo de la Institución Universitaria Pascual Bravo y la Escuela de Pensamiento Educativo y Pedagógico.
+---
+
+## 🏛️ Créditos y Reconocimientos
+
+* **Autor y Diseñador:** Juan Guillermo Rivera Berrío
+* **Institución Vinculada:** [Institución Universitaria Pascual Bravo](https://www.pascualbravo.edu.co/) — *Acreditados en Alta Calidad* (Medellín, Colombia)
+* **Unidad Académica:** Escuela de Pensamiento Educativo y Pedagógico
+* **Infraestructura y Red:** [Red Educativa Digital Descartes](https://proyectodescartes.org/)
